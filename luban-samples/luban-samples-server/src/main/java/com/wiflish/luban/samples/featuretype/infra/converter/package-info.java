@@ -1,9 +1,9 @@
 /*-
  * ************
  * luban-cloud
- * ************
+ * ------------
  * Copyright (C) 2023 - 2023 the original author or authors.
- * ************
+ * ------------
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -17,24 +17,10 @@
  * limitations under the License.
  * ************
  */
-package com.wiflish.luban.core.domain;
-
-import com.wiflish.luban.core.domain.spring.SpringContextHolder;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 /**
- * domainAutoConfiguration
+ * 类型转换器，把entity转换为po，po转换为vo等转换器。
+ *
  * @author wiflish
- * @since 2022-03-19
+ * @since 2023-08-18
  */
-@Configuration
-public class DomainAutoConfiguration {
-
-    @Bean
-    @ConditionalOnMissingBean(SpringContextHolder.class)
-    public SpringContextHolder applicationContextHelper() {
-        return new SpringContextHolder();
-    }
-}
+package com.wiflish.luban.samples.featuretype.infra.converter;
