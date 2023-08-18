@@ -20,6 +20,7 @@
     <license.addJavaLicenseAfterPackage>false</license.addJavaLicenseAfterPackage>
     <license.projectName> </license.projectName>
     <spring.boot.version>3.1.2</spring.boot.version>
+    <springdoc.version>2.1.0</springdoc.version>
     <wiflish.luban.version>${project.version}</wiflish.luban.version>
     <lombok.version>1.18.22</lombok.version>
     <fastjson2.version>2.0.28</fastjson2.version>
@@ -78,11 +79,12 @@
         <version>${wiflish.luban.version}</version>
       </dependency>
 
+      <!-- web -->
       <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>${mysql.version}</version>
-      </dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+        <version>${springdoc.version}</version>
+    </dependency>
       
       <!-- 日志 -->
       <dependency>
@@ -129,6 +131,12 @@
 
       <!-- db -->
       <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.version}</version>
+      </dependency>
+
+      <dependency>
         <groupId>com.baomidou</groupId>
         <artifactId>mybatis-plus-boot-starter</artifactId>
         <version>${mybatis-plus.version}</version>
@@ -164,6 +172,11 @@
   <build>
     <pluginManagement>
       <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <version>${spring.boot.version}</version>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
