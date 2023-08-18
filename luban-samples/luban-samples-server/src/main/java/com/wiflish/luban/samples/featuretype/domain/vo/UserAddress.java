@@ -17,22 +17,11 @@
  * limitations under the License.
  * ************
  */
-package com.wiflish.luban.core.web.config;
+package com.wiflish.luban.samples.featuretype.domain.vo;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
-
-/**
- * RestTemplate配置
- *
- * @author wiflish
- * @since 2022-11-28
- */
-@Configuration
-public class RestTemplateConfig {
-    @Bean
-    public RestTemplate restTemplate(){
-        return new RestTemplate();
-    }
+import lombok.Data;
+@Data
+public class UserAddress {
+    private String address;
+    private String zipcode;
 }

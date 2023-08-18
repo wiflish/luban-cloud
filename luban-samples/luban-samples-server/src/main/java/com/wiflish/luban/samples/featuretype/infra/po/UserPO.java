@@ -17,22 +17,32 @@
  * limitations under the License.
  * ************
  */
-package com.wiflish.luban.core.web.config;
+package com.wiflish.luban.samples.featuretype.infra.po;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.wiflish.luban.core.infra.po.BasePO;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * RestTemplate配置
- *
- * @author wiflish
- * @since 2022-11-28
- */
-@Configuration
-public class RestTemplateConfig {
-    @Bean
-    public RestTemplate restTemplate(){
-        return new RestTemplate();
-    }
+@Getter
+@Setter
+@TableName("t_user")
+public class UserPO extends BasePO {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 姓名
+     */
+    private String name;
+
+    /**
+     * 年龄
+     */
+    private Integer age;
+
+    /**
+     * 邮箱
+     */
+    private String email;
 }

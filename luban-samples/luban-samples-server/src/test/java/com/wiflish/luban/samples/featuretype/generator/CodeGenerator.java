@@ -1,4 +1,23 @@
-package com.wiflish.luban.samples.mybatis.generator;
+/*-
+ * ************
+ * luban-cloud
+ * ************
+ * Copyright (C) 2023 - 2023 the original author or authors.
+ * ************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ************
+ */
+package com.wiflish.luban.samples.featuretype.generator;
 
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.map.MapUtil;
@@ -10,29 +29,6 @@ import com.wiflish.luban.core.infra.po.BasePO;
 
 import java.util.HashMap;
 import java.util.List;
-
-/**
- * 代码生成工具.
- *
- * 用法:
- * 1. 在项目的resources目录下新增一个配置文件，限定文件名为：generator.properties，文件demo:
- *  <p/>
- *  <code>
- * <p># mybatis-plus code generator</p>
- * <p>generator.author=xiezhengrong</p>
- * <p>generator.parent.package=com.ppche.bp.broker.infra</p>
- * <p>generator.db.url=jdbc:mysql://localhost:3306/ppc_ee_sample_ddd?useUnicode=true&characterEncoding=utf8</p>
- * <p>generator.db.username=root</p>
- * <p>generator.db.password=123456</p>
- * <p>generator.db.include.table_prefix_names=t_</p>
- * <p>generator.db.include.table_names=t_task</p>
- * </code>
- * <p/>
- * 2. 新增一个带main方法的类，然后跑起来就可以生成代码了。
- * <br/>
- * @author xiezhengrong
- * @since 2023-03-09
- */
 public class CodeGenerator {
     private static String url = "";
     private static String username = "";

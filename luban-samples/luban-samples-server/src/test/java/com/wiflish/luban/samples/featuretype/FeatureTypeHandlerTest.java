@@ -1,11 +1,30 @@
-package com.wiflish.luban.samples.mybatis;
+/*-
+ * ************
+ * luban-cloud
+ * ************
+ * Copyright (C) 2023 - 2023 the original author or authors.
+ * ************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ************
+ */
+package com.wiflish.luban.samples.featuretype;
 
 import com.wiflish.luban.core.infra.po.FeatureBit;
 import com.wiflish.luban.core.infra.po.FeatureJson;
 import com.wiflish.luban.samples.LubanSamplesApplication;
-import com.wiflish.luban.samples.dao.UserDao;
-import com.wiflish.luban.samples.po.UserPO;
-import com.wiflish.luban.samples.vo.UserAddress;
+import com.wiflish.luban.samples.featuretype.infra.dao.UserDao;
+import com.wiflish.luban.samples.featuretype.infra.po.UserPO;
+import com.wiflish.luban.samples.featuretype.domain.vo.UserAddress;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +32,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
-
-/**
- * @author wiflish
- * @since 2023-08-15
- */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = LubanSamplesApplication.class)
 public class FeatureTypeHandlerTest {
@@ -38,7 +52,7 @@ public class FeatureTypeHandlerTest {
 
         UserAddress userAddress = userPO.getFeatureJson().getObject();
         assertTrue(userPO.getFeatureBit().getBits(1));
-        assertEquals("福田区建艺大厦2", userAddress.getAddress());
+        assertEquals("福田区2", userAddress.getAddress());
         assertEquals("518002", userAddress.getZipcode());
 
         userPO = userDao.selectById(3);
@@ -51,7 +65,7 @@ public class FeatureTypeHandlerTest {
         assertEquals(10, userPO.getAge().intValue());
         assertFalse(userPO.getFeatureBit().getBits(1));
         assertTrue(userPO.getFeatureBit().getBits(2));
-        assertEquals("福田区建艺大厦3", userAddress.getAddress());
+        assertEquals("福田区3", userAddress.getAddress());
         assertEquals("518003", userAddress.getZipcode());
 
         userPO = userDao.selectById(6);
@@ -74,7 +88,7 @@ public class FeatureTypeHandlerTest {
         userPO2.setFeatureBit(new FeatureBit(5L));
 
         UserAddress userAddress02 = new UserAddress();
-        userAddress02.setAddress("福田区建艺大厦 for test");
+        userAddress02.setAddress("福田区 for test");
         userAddress02.setZipcode("528000");
 
         userPO2.setFeatureJson(new FeatureJson(userAddress02));
@@ -93,7 +107,7 @@ public class FeatureTypeHandlerTest {
 
         UserAddress userAddressTest = userPO1.getFeatureJson().getObject();
         assertNotNull(userPO1);
-        assertEquals("福田区建艺大厦 for test", userAddressTest.getAddress());
+        assertEquals("福田区 for test", userAddressTest.getAddress());
         assertEquals("528000", userAddressTest.getZipcode());
     }
 
@@ -102,7 +116,7 @@ public class FeatureTypeHandlerTest {
         UserPO userPO = userDao.selectById(6);
         UserAddress userAddress = userPO.getFeatureJson().getObject();
         assertNotNull(userPO);
-        assertEquals("福田区建艺大厦3", userAddress.getAddress());
+        assertEquals("福田区3", userAddress.getAddress());
         assertEquals("518003", userAddress.getZipcode());
     }
 }
