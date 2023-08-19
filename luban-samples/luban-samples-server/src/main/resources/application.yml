@@ -1,19 +1,23 @@
 # DataSource Config
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.111.117.8:4306/luban_samples?useUnicode=true&characterEncoding=utf8
+    url: jdbc:h2:file:/tmp/luban_samples
     username: root
-    password: E7EVshwX7yRx4Ntuh5
+    password: root
   sql:
     init:
-      schema-locations: classpath:db/schema.sql
-      data-locations: classpath:db/data.sql
+      schema-locations: classpath:db/h2/schema.sql
+      data-locations: classpath:db/h2/data.sql
       mode: always
+
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
 
 mybatis-plus:
   type-handlers-package: com.wiflish.luban.core.mybatis.typehandler
-
 
 # Logger Config
 logging:

@@ -22,7 +22,7 @@ package com.wiflish.luban.samples.fastjson2;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONReader;
 import com.alibaba.fastjson2.JSONWriter;
-import com.wiflish.luban.samples.featuretype.domain.vo.UserAddress;
+import com.wiflish.luban.samples.mybatis.domain.vo.UserAddress;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -37,7 +37,7 @@ public class JsonSerializeTest {
 
         String out = JSON.toJSONString(userAddress, JSONWriter.Feature.WriteClassName);
         assertNotNull(out);
-        assertTrue(out.contains("com.wiflish.luban.samples.vo.UserAddress"));
+        assertTrue(out.contains(UserAddress.class.getName()));
 
         UserAddress userAddress1 = (UserAddress) JSON.parse(out, JSONReader.Feature.SupportAutoType);
 
