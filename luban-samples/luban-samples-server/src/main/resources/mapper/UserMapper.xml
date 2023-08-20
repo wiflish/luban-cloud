@@ -4,32 +4,32 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wiflish.luban.samples.mybatis.infra.po.UserPO">
-        <result column="id" property="id" />
-        <result column="feature_bit" property="featureBit" />
-        <result column="feature_json" property="featureJson" />
-        <result column="version" property="version" />
-        <result column="deleted" property="deleted" />
-        <result column="create_id" property="createId" />
-        <result column="create_time" property="createTime" />
-        <result column="update_id" property="updateId" />
-        <result column="update_time" property="updateTime" />
-        <result column="name" property="name" />
-        <result column="age" property="age" />
-        <result column="email" property="email" />
+        <result column="ID" property="id" />
+        <result column="FEATURE_BIT" property="featureBit" />
+        <result column="FEATURE_JSON" property="featureJson" />
+        <result column="VERSION" property="version" />
+        <result column="DELETED" property="deleted" />
+        <result column="CREATE_ID" property="createId" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="UPDATE_ID" property="updateId" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="NAME" property="name" />
+        <result column="AGE" property="age" />
+        <result column="EMAIL" property="email" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id,
-        feature_bit,
-        feature_json,
-        version,
-        deleted,
-        create_id,
-        create_time,
-        update_id,
-        update_time,
-        name, age, email
+        ID,
+        FEATURE_BIT,
+        FEATURE_JSON,
+        VERSION,
+        DELETED,
+        CREATE_ID,
+        CREATE_TIME,
+        UPDATE_ID,
+        UPDATE_TIME,
+        NAME, AGE, EMAIL
     </sql>
 
 </mapper>
