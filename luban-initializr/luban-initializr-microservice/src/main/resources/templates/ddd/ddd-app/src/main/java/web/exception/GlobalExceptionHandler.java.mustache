@@ -1,0 +1,53 @@
+package {{packageName}}.web.exception;
+
+import com.wiflish.luban.core.dto.Response;
+import com.wiflish.luban.core.dto.exception.BizException;
+import com.wiflish.luban.core.dto.exception.InvalidParamException;
+import com.wiflish.luban.core.dto.exception.SysException;
+
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+
+/**
+ * 全局异常处理.
+ *
+ * @author wiflish
+ * @since {{currentDate}}
+ */
+@Slf4j
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(InvalidParamException.class)
+    public ResponseEntity<?> handleInvalidParamException(InvalidParamException ex, HttpServletRequest request) {
+        log.error("参数异常:", ex);
+        Response response = Response.failure(ex.getErrCode(), ex.getMessage());
+        return new ResponseEntity(response, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BizException.class)
+    public ResponseEntity<?> handleBizException(BizException ex, HttpServletRequest request) {
+        log.error("业务异常:", ex);
+        Response response = Response.failure(ex.getErrCode(), ex.getMessage());
+        return new ResponseEntity(response, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(SysException.class)
+    public ResponseEntity<?> handleSysException(SysException ex, HttpServletRequest request) {
+        log.error("系统异常:", ex);
+        Response response = Response.failure(ex.getErrCode(), ex.getMessage());
+        return new ResponseEntity(response, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity<?> handleGeneralException(Throwable ex, HttpServletRequest request) {
+        log.error("服务器异常:", ex);
+        Response response = Response.failure("服务器异常, 请稍后再试!");
+        return new ResponseEntity(response, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}

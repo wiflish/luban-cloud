@@ -1,0 +1,17 @@
+package {{packageName}};
+
+import {{packageName}}.{{applicationName}};
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+{{#mysql}}import org.springframework.transaction.annotation.Transactional;{{/mysql}}
+
+/**
+ * @author wiflish
+ * @since {{currentDate}}
+ */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {{applicationName}}.class)
+{{#mysql}}@Transactional{{/mysql}}
+public abstract class BaseTests {
+}

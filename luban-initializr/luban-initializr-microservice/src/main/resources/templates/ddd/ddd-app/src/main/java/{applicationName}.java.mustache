@@ -1,0 +1,19 @@
+package {{packageName}};
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+
+/**
+ * 启动类
+ *
+ * @author wiflish
+ * @since {{currentDate}}
+ */
+@SpringBootApplication
+@ComponentScan(value = {"{{packageName}}", "com.wiflish.luban"})
+public class {{applicationName}} {
+    public static void main(String[] args) {
+        SpringApplication.run({{applicationName}}.class, args);
+    }
+}

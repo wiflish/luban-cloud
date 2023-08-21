@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>{{groupId}}</groupId>
+        <artifactId>{{artifactId}}</artifactId>
+        <version>{{version}}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>{{artifactId}}-domain</artifactId>
+    <name>{{artifactId}}-domain</name>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>{{groupId}}</groupId>
+            <artifactId>{{artifactId}}-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.wiflish.luban</groupId>
+            <artifactId>luban-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,65 @@
+package {{packageName}}.service;
+
+import com.ppche.ddd.dto.OneResponse;
+import com.ppche.ddd.dto.PageResponse;
+import com.ppche.ddd.dto.Response;
+import {{packageName}}.dto.TaskDTO;
+import {{packageName}}.dto.cmd.AddTaskCmd;
+import {{packageName}}.dto.query.TaskQuery;
+
+/**
+ * 任务服务.
+ *
+ * @author wiflish
+ * @since {{currentDate}}
+ */
+public interface TaskService {
+
+    /**
+     * 新增任务。
+     *
+     * @param addTaskCmd
+     * @return
+     */
+    OneResponse<Long> addTask(AddTaskCmd addTaskCmd);
+
+    /**
+     * 待做。
+     *
+     * @param taskId
+     * @return
+     */
+    Response todo(Long taskId);
+
+    /**
+     * 进行中。
+     *
+     * @param taskId
+     * @return
+     */
+    Response doing(Long taskId);
+
+    /**
+     * 已完成。
+     *
+     * @param taskId
+     * @return
+     */
+    Response done(Long taskId);
+
+    /**
+     * 根据名称模糊查询.
+     *
+     * @param query
+     * @return
+     */
+    PageResponse<TaskDTO> pagedTasks(TaskQuery query);
+
+    /**
+    * 根据id查询任务.
+    *
+    * @param taskId
+    * @return
+    */
+    OneResponse<TaskDTO> getTaskById(Long taskId);
+}

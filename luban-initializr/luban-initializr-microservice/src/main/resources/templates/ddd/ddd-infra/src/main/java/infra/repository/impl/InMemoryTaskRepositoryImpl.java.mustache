@@ -1,0 +1,86 @@
+package {{packageName}}.infra.repository.impl;
+
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.StrUtil;
+import com.wiflish.luban.core.dto.PageResponse;
+import {{packageName}}.domain.entity.Task;
+import {{packageName}}.domain.repository.TaskRepository;
+import {{packageName}}.dto.TaskDTO;
+import {{packageName}}.dto.query.TaskQuery;
+import {{packageName}}.infra.converter.TaskConverter;
+import org.springframework.stereotype.Repository;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
+
+/**
+ * 如果没有mysql依赖时，默认用内存做演示.
+ *
+ * @author wiflish
+ * @since {{currentDate}}
+ */
+{{^mysql}}@Repository{{/mysql}}
+public class InMemoryTaskRepositoryImpl implements TaskRepository {
+    private transient Map<Long, Task> taskCaches = MapUtil.newTreeMap(Comparator.comparingInt(Long::intValue));
+
+    private AtomicLong taskIdGenerator = new AtomicLong();
+
+    @Override
+    public Long save(Task task) {
+        long taskId = taskIdGenerator.incrementAndGet();
+        task.setId(taskId);
+        taskCaches.put(taskId, task);
+
+        return taskId;
+    }
+
+    @Override
+    public void update(Task task) {
+        Assert.notNull(task.getId(), "task.id不能为null");
+        Task fromCacheTask = findTask(task.getId());
+        BeanUtil.copyProperties(task, fromCacheTask, CopyOptions.create().ignoreNullValue());
+        taskCaches.put(task.getId(), fromCacheTask);
+    }
+
+    private Task findTask(long taskId) {
+        return taskCaches.containsKey(taskId) ? taskCaches.get(taskId) : null;
+    }
+
+    @Override
+    public Task selectById(Long taskId) {
+        return findTask(taskId);
+    }
+
+    @Override
+    public PageResponse<TaskDTO> selectByCriteria(TaskQuery query) {
+        //不做分页处理，直接返回所有结果.
+
+        List<Task> searchedList = ListUtil.of();
+        String taskName = query.getTaskName();
+        if (StrUtil.isNotBlank(taskName)) {
+            searchedList = taskCaches.values().stream().filter(task -> task.getName().indexOf(taskName) != -1).collect(Collectors.toList());
+            if (searchedList == null || searchedList.isEmpty()) {
+                return PageResponse.of();
+            }
+        }
+
+        Integer status = query.getStatus();
+        if (status != null) {
+            searchedList = searchedList.stream().filter(task -> task.getStatus() == status.intValue()).collect(Collectors.toList());
+            if (searchedList == null || searchedList.isEmpty()) {
+                return PageResponse.of();
+            }
+        }
+
+        List<TaskDTO> taskDTOS = searchedList.stream().map(TaskConverter::toTaskDTO).collect(Collectors.toList());
+
+        return PageResponse.of(taskDTOS, query.getPageNo(), query.getPageSize());
+    }
+}

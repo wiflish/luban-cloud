@@ -1,0 +1,125 @@
+initializr:
+  group-id:
+    value: com.wiflish.luban
+  artifact-id:
+    value: microservice
+  version:
+    value: 1.0.0-SNAPSHOT
+  application-name:
+    value: MicroApplication
+  name:
+    value: demo
+  package-name:
+    value: com.wiflish.luban.initializr.demo
+  description:
+    value: 项目脚手架.
+
+  dependencies:
+    - name: 架构
+      content:
+        - name: 领域驱动架构
+          id: luban-ddd
+          description: 领域驱动架构的项目脚手架.
+
+    - name: 微服务组件
+      content:
+        - name: Nacos
+          id: nacos
+          description: Nacos是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。
+          links:
+            - rel: docs
+              href: https://nacos.io/zh-cn/index.html
+              description: nacos官网
+        - name: Polaris
+          id: polaris
+          description: Polaris是腾讯开源的服务发现和治理中心，致力于解决分布式或者微服务架构中的服务可见、故障容错、流量控制和安全问题。
+          links:
+            - rel: docs
+              href: https://github.com/polarismesh/polaris/blob/main/README-zh.md
+              description: Polaris官网
+    - name: 关系型数据库
+      content:
+        - name: MySQL
+          id: mysql
+          description: MySQL包含mybatis-plus,druid,mysql-connector-java等组件, 提供开箱即用的MySQL服务.
+    - name: 其他
+      content:
+        - name: Springdoc
+          id: springdoc
+          description: springdoc-openapi java library helps to automate the generation of API documentation using spring boot projects.
+
+
+
+  #  dependencies:
+#    - name: Web
+#      content:
+#        - name: Web
+#          id: web
+#          description: Full-stack web development with Tomcat and Spring MVC
+#
+#
+#
+
+  bootVersions:
+    - id: 3.1.2
+      name: 3.1.2
+      default: true
+
+  packagings:
+    - name: Jar
+      id: jar
+      default: true
+    - name: War
+      id: war
+      default: false
+  javaVersions:
+    - id: 13
+      default: false
+    - id: 11
+      default: false
+    - id: 1.8
+      name: 8
+      default: true
+  languages:
+    - name: Java
+      id: java
+      default: true
+    - name: Kotlin
+      id: kotlin
+      default: false
+    - name: Groovy
+      id: groovy
+      default: false
+  types:
+    - name: Maven Project
+      id: maven-project
+      description: Generate a Maven based project archive.
+      tags:
+        build: maven
+        format: project
+      default: true
+      action: /starter.zip
+    - name: Maven POM
+      id: maven-build
+      description: Generate a Maven pom.xml.
+      tags:
+        build: maven
+        format: build
+      default: false
+      action: /pom.xml
+    - name: Gradle Project
+      id: gradle-project
+      description: Generate a Gradle based project archive.
+      tags:
+        build: gradle
+        format: project
+      default: false
+      action: /starter.zip
+    - name: Gradle Config
+      id: gradle-build
+      description: Generate a Gradle build file.
+      tags:
+        build: gradle
+        format: build
+      default: false
+      action: /build.gradle

@@ -1,0 +1,83 @@
+package {{packageName}}.domain.entity;
+
+import cn.hutool.core.lang.Assert;
+import com.wiflish.luban.domain.spring.SpringContextHolder;
+import com.wiflish.luban.domain.entity.BaseEntity;
+import {{packageName}}.constant.TaskStatusEnum;
+import {{packageName}}.domain.repository.TaskRepository;
+
+/**
+ * 任务实体.
+ *
+ * @author wiflish
+ * @since {{currentDate}}
+ */
+public class Task extends BaseEntity {
+    private TaskRepository taskRepository;
+
+    public Task() {
+        this.taskRepository = SpringContextHolder.getBean(TaskRepository.class);
+    }
+
+    /**
+     * 任务名称.
+     */
+    private String name;
+
+    /**
+     * 任务描述.
+     */
+    private String remark;
+
+    /**
+     * 任务状态. 1=待开始; 2=进行中; 3=已完成
+     */
+    private Integer status;
+
+    public void done() {
+        Assert.notNull(this.getId(), "id不能为null");
+        this.status = TaskStatusEnum.DONE.getValue();
+        taskRepository.update(this);
+    }
+
+    public void doing() {
+        Assert.notNull(this.getId(), "id不能为null");
+        this.status = TaskStatusEnum.DOING.getValue();
+        taskRepository.update(this);
+    }
+
+    public void todo() {
+        this.status = TaskStatusEnum.TODO.getValue();
+
+        if (this.getId() == null) {
+            Long returnId = taskRepository.save(this);
+            this.setId(returnId);
+        } else {
+            taskRepository.update(this);
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+}

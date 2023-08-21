@@ -37,5 +37,3 @@ hs_err_pid*
 .idea/vcs.xml
 .idea/inspectionProfiles/Project_Default.xml
 .idea
-bp-saas-store-server-infra/src/test/resources/generator.properties
-bp-saas-store-server-infra/src/test/java/com/ppche/bp/saas/store/infra/invoker/douyin/DouyinInvokerTest.java
