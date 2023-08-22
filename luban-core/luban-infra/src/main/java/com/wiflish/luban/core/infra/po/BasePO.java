@@ -19,6 +19,7 @@
  */
 package com.wiflish.luban.core.infra.po;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
@@ -37,12 +38,13 @@ public abstract class BasePO {
     /**
      * 创建人id.
      */
-    @TableField("id")
+    @TableField(fill = FieldFill.INSERT)
     private Long createId;
 
     /**
      * 修改人id.
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateId;
 
     /**
