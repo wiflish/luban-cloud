@@ -19,6 +19,7 @@
  */
 package com.wiflish.luban.core.infra.po;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -36,6 +37,7 @@ public abstract class BasePO {
     /**
      * 创建人id.
      */
+    @TableField("id")
     private Long createId;
 
     /**

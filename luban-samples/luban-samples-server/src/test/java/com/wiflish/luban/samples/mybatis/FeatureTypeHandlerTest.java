@@ -21,20 +21,15 @@ package com.wiflish.luban.samples.mybatis;
 
 import com.wiflish.luban.core.infra.po.FeatureBit;
 import com.wiflish.luban.core.infra.po.FeatureJson;
-import com.wiflish.luban.samples.LubanSamplesApplication;
+import com.wiflish.luban.samples.BaseTests;
+import com.wiflish.luban.samples.mybatis.domain.vo.UserAddress;
 import com.wiflish.luban.samples.mybatis.infra.dao.UserDao;
 import com.wiflish.luban.samples.mybatis.infra.po.UserPO;
-import com.wiflish.luban.samples.mybatis.domain.vo.UserAddress;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = LubanSamplesApplication.class)
-public class FeatureTypeHandlerTest {
+public class FeatureTypeHandlerTest extends BaseTests {
     @Autowired
     private UserDao userDao;
     @Test
