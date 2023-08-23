@@ -21,6 +21,7 @@ initializr:
           id: luban-ddd
           description: 领域驱动架构的项目脚手架.
 
+
     - name: 微服务组件
       content:
         - name: Nacos
@@ -37,11 +38,13 @@ initializr:
             - rel: docs
               href: https://github.com/polarismesh/polaris/blob/main/README-zh.md
               description: Polaris官网
+
     - name: 关系型数据库
       content:
         - name: MySQL
           id: mysql
           description: MySQL包含mybatis-plus,druid,mysql-connector-java等组件, 提供开箱即用的MySQL服务.
+
     - name: 其他
       content:
         - name: Springdoc
