@@ -24,8 +24,7 @@
     </properties>
 
     <modules>
-<!--        <module>luban-initializr-generator</module>-->
-        <module>luban-initializr-generator-microservice</module>
+        <module>luban-initializr-generator</module>
     </modules>
 
     <dependencyManagement>
