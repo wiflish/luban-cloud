@@ -17,12 +17,10 @@
  * limitations under the License.
  * ************
  */
-package com.wiflish.luban.initializr.generator.configuration;
+package com.wiflish.luban.initializr.generator.contributor;
 
 import com.wiflish.luban.initializr.generator.annotation.LubanProjectGenerationConfiguration;
-import com.wiflish.luban.initializr.generator.app.filter.DependencyFileFilter;
-import com.wiflish.luban.initializr.generator.contributor.DDDProjectContributor;
-import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
+import com.wiflish.luban.initializr.generator.project.filter.DependencyFileFilter;
 import io.spring.initializr.generator.io.template.TemplateRenderer;
 import io.spring.initializr.generator.project.ProjectDescription;
 import jakarta.annotation.Resource;
@@ -47,7 +45,7 @@ public class DDDProjectContributorConfiguration {
     }
 
     @Bean
-    @ConditionalOnRequestedDependency("ddd")
+//    @ConditionalOnRequestedDependency("ddd")
     public DDDProjectContributor dddContributor() {
         return new DDDProjectContributor(projectDescription, templateRenderer, dependencyFileFilters);
     }

@@ -17,23 +17,33 @@
  * limitations under the License.
  * ************
  */
-package com.wiflish.luban.initializr.generator.app.encrypt;
+package com.wiflish.luban.initializr.generator.project.filter;
 
-import cn.hutool.crypto.SmUtil;
-import cn.hutool.crypto.symmetric.SM4;
+import cn.hutool.core.collection.ListUtil;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
+ * mysql依赖处理.
+ *
  * @author wiflish
- * @since 2022-11-04
+ * @since 2022-10-26
  */
-public class Crypto {
-    public static void main(String[] args) {
-        SM4 sm4 = SmUtil.sm4();
-        String phone = "1234567890";
-        String encryptHex = sm4.encryptHex(phone);
+@Component
+public class MysqlDependencyFileFilter extends AbstractDependencyFileFilter {
+    private static final List<String> filterFileNames = ListUtil.of(
+            "TaskPO", "TaskMapper", "TaskRepositoryImpl",
+            "CodeGenerator", "CodeGeneratorTest",
+            "MybatisPlusConfig", "MybatisPlusUtil");
 
-        System.out.println(encryptHex);
+    @Override
+    protected List<String> getFilterFileNames() {
+        return filterFileNames;
+    }
 
-        System.out.println(sm4.encryptHex("123"));
+    @Override
+    String getDependencyId() {
+        return "mysql";
     }
 }

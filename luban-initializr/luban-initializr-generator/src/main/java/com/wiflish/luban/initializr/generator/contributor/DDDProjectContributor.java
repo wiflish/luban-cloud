@@ -20,11 +20,10 @@
 package com.wiflish.luban.initializr.generator.contributor;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
-import com.wiflish.luban.initializr.generator.app.filter.DependencyFileFilter;
+import com.wiflish.luban.initializr.generator.project.filter.DependencyFileFilter;
 import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.io.template.TemplateRenderer;
 import io.spring.initializr.generator.project.ProjectDescription;
@@ -35,7 +34,6 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -52,7 +50,6 @@ public class DDDProjectContributor implements ProjectContributor {
     private static final String fileSeparator = File.separator;
     private static final String dddModel = "ddd";
     private static final String rootResource = "classpath:templates/ddd";
-    private static final List<String> subModels = ListUtil.of("ddd-api", "ddd-app", "ddd-dist", "ddd-domain", "ddd-infra");
     private static final String javaSourceDir = "src/main/java";
     private static final String javaTestSourceDir = "src/test/java";
 
@@ -112,18 +109,23 @@ public class DDDProjectContributor implements ProjectContributor {
             generateFile(resource, projectRoot);
         }
 
-        //处理子模块.
-        subModels.stream().forEach(sourceModelName -> {
+        //process sub modules.
+        Resource[] subModelResources = this.resolver.getResources(rootResource + "/*");
+
+        for (Resource subModule : subModelResources) {
+            if (!subModule.getFile().isDirectory()) {
+                continue;
+            }
             //子模块下所有文件.
             try {
-                Resource[] resources = this.resolver.getResources(rootResource + fileSeparator + sourceModelName + "/**");
+                Resource[] resources = this.resolver.getResources(rootResource + "/" + subModule.getFilename() + "/**");
                 for (Resource resource : resources) {
                     generateFile(resource, projectRoot);
                 }
             } catch (IOException e) {
-                log.warn("代码生成过程处理失败. subModel: {}", sourceModelName, e);
+                log.warn("代码生成过程处理失败. subModel: {}", subModule.getFilename(), e);
             }
-        });
+        }
     }
 
     private void generateFile(Resource resource, Path projectRoot) throws IOException {
@@ -136,17 +138,15 @@ public class DDDProjectContributor implements ProjectContributor {
             return;
         }
         String dddModelPathStr = path.substring(dddModelIdx);
-        Path dddModelTargetRootPath = projectRoot.resolve(description.getArtifactId());
-
         int mustacheIdx = dddModelPathStr.lastIndexOf(".mustache");
         if (mustacheIdx != -1) {
             //mustache模板文件.
             String template = dddModelPathStr.substring(0, mustacheIdx);
             String targetPathStr = dddModelPathStr.substring(0, mustacheIdx).substring(dddModel.length() + 1);
             targetPathStr = targetPathStr.replace(dddModel, description.getArtifactId());
-            Path targetPath = dddModelTargetRootPath.resolve(targetPathStr);
+            Path targetPath = projectRoot.resolve(targetPathStr);
 
-            if (targetPathStr.indexOf(".java") != -1) {
+            if (targetPathStr.lastIndexOf(".java") != -1) {
                 generateJavaFile(template, targetPath);
             } else {
                 generateFile(template, targetPath);
@@ -155,7 +155,7 @@ public class DDDProjectContributor implements ProjectContributor {
             //不是模板文件，直接复制.
             String targetPathStr = dddModelPathStr.substring(dddModel.length() + 1);
             targetPathStr = targetPathStr.replace(dddModel, description.getArtifactId());
-            Path targetPath = dddModelTargetRootPath.resolve(targetPathStr);
+            Path targetPath = projectRoot.resolve(targetPathStr);
 
             Files.createDirectories(targetPath.getParent());
             Files.copy(resource.getInputStream(), targetPath);
@@ -172,7 +172,7 @@ public class DDDProjectContributor implements ProjectContributor {
         String javaRoot = parent.substring(0, idx + javaSourceDir.length());
         String javaFile = targetPath.toString().substring(idx + javaSourceDir.length());
 
-        if (javaFile.indexOf(filePathOrNameReplace) != -1) {
+        if (javaFile.contains(filePathOrNameReplace)) {
             javaFile = StrUtil.format(javaFile, paramMap);
         }
 
@@ -197,7 +197,7 @@ public class DDDProjectContributor implements ProjectContributor {
         String fileContent = templateRenderer.render(template, this.paramMap);
 
         Files.createDirectories(outputPath.getParent());
-        Files.write(outputPath, fileContent.getBytes(StandardCharsets.UTF_8));
+        Files.writeString(outputPath, fileContent);
     }
 
     private String convertPackage2Path() {

@@ -17,11 +17,12 @@
  * limitations under the License.
  * ************
  */
-package com.wiflish.luban.initializr.generator;
+package com.wiflish.luban.initializr.generator.start;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
@@ -35,6 +36,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @since 2022-09-13
  */
 @SpringBootApplication
+@ComponentScan("com.wiflish.luban.initializr.generator.project")
 @EnableCaching
 @EnableAsync
 public class InitializrApplication {

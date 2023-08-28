@@ -1,6 +1,5 @@
-package com.wiflish.luban.initializr.generator.configuration;
+package com.wiflish.luban.initializr.generator.project;
 
-import com.wiflish.luban.initializr.generator.project.LubanProjectRequest;
 import io.spring.initializr.generator.buildsystem.BuildSystem;
 import io.spring.initializr.generator.language.Language;
 import io.spring.initializr.generator.packaging.Packaging;

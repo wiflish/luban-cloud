@@ -1,2 +1,2 @@
 com.wiflish.luban.initializr.generator.annotation.LubanProjectGenerationConfiguration=\
-    com.wiflish.luban.initializr.generator.DDDProjectContributorConfiguration
+    com.wiflish.luban.initializr.generator.contributor.DDDProjectContributorConfiguration

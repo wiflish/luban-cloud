@@ -12,10 +12,6 @@
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
 
-	<properties>
-		<app.name>luban.initializr.generator</app.name>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -78,6 +74,5 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<finalName>${app.name}</finalName>
 	</build>
 </project>

@@ -17,7 +17,7 @@
  * limitations under the License.
  * ************
  */
-package com.wiflish.luban.initializr.generator.app.filter;
+package com.wiflish.luban.initializr.generator.project.filter;
 
 import cn.hutool.core.collection.ListUtil;
 import org.springframework.stereotype.Component;

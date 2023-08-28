@@ -1,8 +1,6 @@
-package com.wiflish.luban.initializr.generator.configuration;
+package com.wiflish.luban.initializr.generator.project;
 
 import com.wiflish.luban.initializr.generator.controller.LubanProjectGenerationController;
-import com.wiflish.luban.initializr.generator.project.LubanProjectGenerationInvoker;
-import com.wiflish.luban.initializr.generator.project.LubanProjectRequest;
 import io.spring.initializr.metadata.InitializrMetadataProvider;
 import io.spring.initializr.web.project.ProjectGenerationInvoker;
 import org.springframework.context.ApplicationContext;
