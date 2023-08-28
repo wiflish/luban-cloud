@@ -3,7 +3,6 @@ package com.wiflish.luban.initializr.generator.project;
 import io.spring.initializr.generator.buildsystem.BuildSystem;
 import io.spring.initializr.generator.language.Language;
 import io.spring.initializr.generator.packaging.Packaging;
-import io.spring.initializr.generator.project.MutableProjectDescription;
 import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.version.Version;
 import io.spring.initializr.metadata.*;
@@ -40,21 +39,12 @@ public class LubanProjectRequestToDescriptionConverter
 
     @Override
     public ProjectDescription convert(LubanProjectRequest request, InitializrMetadata metadata) {
-        MutableProjectDescription description = new MutableProjectDescription();
+        LubanProjectDescription description = new LubanProjectDescription();
         convert(request, description, metadata);
         return description;
     }
 
-    /**
-     * Validate the specified {@link ProjectRequest request} and initialize the specified
-     * {@link ProjectDescription description}. Override any attribute of the description
-     * that are managed by this instance.
-     *
-     * @param request     the request to validate
-     * @param description the description to initialize
-     * @param metadata    the metadata instance to use to apply defaults if necessary
-     */
-    public void convert(ProjectRequest request, MutableProjectDescription description, InitializrMetadata metadata) {
+    public void convert(LubanProjectRequest request, LubanProjectDescription description, InitializrMetadata metadata) {
         validate(request, metadata);
         Version platformVersion = getPlatformVersion(request, metadata);
         List<Dependency> resolvedDependencies = getResolvedDependencies(request, platformVersion, metadata);
@@ -72,6 +62,8 @@ public class LubanProjectRequestToDescriptionConverter
         description.setPackaging(Packaging.forId(request.getPackaging()));
         description.setPlatformVersion(platformVersion);
         description.setVersion(request.getVersion());
+        description.setArchitecture(request.getArchitecture());
+
         resolvedDependencies.forEach((dependency) -> description.addDependency(dependency.getId(),
                 MetadataBuildItemMapper.toDependency(dependency)));
     }

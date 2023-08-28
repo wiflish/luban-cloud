@@ -1,5 +1,6 @@
 package com.wiflish.luban.initializr.generator.project;
 
+import com.wiflish.luban.initializr.generator.constants.ArchitectureEnum;
 import io.spring.initializr.generator.buildsystem.BuildItemResolver;
 import io.spring.initializr.generator.project.*;
 import io.spring.initializr.metadata.InitializrMetadata;

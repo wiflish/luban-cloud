@@ -1,4 +1,4 @@
-package com.wiflish.luban.initializr.generator.project;
+package com.wiflish.luban.initializr.generator.constants;
 
 import lombok.Getter;
 

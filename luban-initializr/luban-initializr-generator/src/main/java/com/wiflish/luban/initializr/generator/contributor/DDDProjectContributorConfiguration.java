@@ -20,6 +20,7 @@
 package com.wiflish.luban.initializr.generator.contributor;
 
 import com.wiflish.luban.initializr.generator.annotation.LubanProjectGenerationConfiguration;
+import com.wiflish.luban.initializr.generator.annotation.condition.ConditionalOnRequestArchitecture;
 import com.wiflish.luban.initializr.generator.project.filter.DependencyFileFilter;
 import io.spring.initializr.generator.io.template.TemplateRenderer;
 import io.spring.initializr.generator.project.ProjectDescription;
@@ -45,7 +46,7 @@ public class DDDProjectContributorConfiguration {
     }
 
     @Bean
-//    @ConditionalOnRequestedDependency("ddd")
+    @ConditionalOnRequestArchitecture("ddd")
     public DDDProjectContributor dddContributor() {
         return new DDDProjectContributor(projectDescription, templateRenderer, dependencyFileFilters);
     }
