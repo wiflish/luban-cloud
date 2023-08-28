@@ -1,6 +1,7 @@
 package com.wiflish.luban.initializr.generator.annotation.condition;
 
 import cn.hutool.core.util.StrUtil;
+import com.wiflish.luban.initializr.generator.constants.ArchitectureEnum;
 import com.wiflish.luban.initializr.generator.project.LubanProjectDescription;
 import io.spring.initializr.generator.condition.ProjectGenerationCondition;
 import io.spring.initializr.generator.project.ProjectDescription;
@@ -18,10 +19,10 @@ public class OnRequestArchitectureCondition extends ProjectGenerationCondition {
     protected boolean matches(ProjectDescription description, ConditionContext context,
                               AnnotatedTypeMetadata metadata) {
 
-        String id = (String) Objects.requireNonNull(metadata.getAnnotationAttributes(
+        ArchitectureEnum architectureEnum = (ArchitectureEnum) Objects.requireNonNull(metadata.getAnnotationAttributes(
                 ConditionalOnRequestArchitecture.class.getName())).get("value");
         if (description instanceof LubanProjectDescription aDescription) {
-            return StrUtil.equals(aDescription.getArchitecture(), id);
+            return StrUtil.equals(aDescription.getArchitecture(), architectureEnum.getId());
         }
         return false;
     }

@@ -1,5 +1,6 @@
 package com.wiflish.luban.initializr.generator.annotation.condition;
 
+import com.wiflish.luban.initializr.generator.constants.ArchitectureEnum;
 import org.springframework.context.annotation.Conditional;
 
 import java.lang.annotation.*;
@@ -18,5 +19,5 @@ public @interface ConditionalOnRequestArchitecture {
 	/**
 	 * Architecture ID.
 	 */
-	String value();
+	ArchitectureEnum value();
 }

@@ -23,6 +23,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
+import com.wiflish.luban.initializr.generator.constants.ArchitectureEnum;
 import com.wiflish.luban.initializr.generator.project.filter.DependencyFileFilter;
 import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.io.template.TemplateRenderer;
@@ -48,7 +49,6 @@ import java.util.Map;
 @Slf4j
 public class DDDProjectContributor implements ProjectContributor {
     private static final String fileSeparator = File.separator;
-    private static final String dddModel = "ddd";
     private static final String rootResource = "classpath:templates/ddd";
     private static final String javaSourceDir = "src/main/java";
     private static final String javaTestSourceDir = "src/test/java";
@@ -61,7 +61,7 @@ public class DDDProjectContributor implements ProjectContributor {
 
     private final List<DependencyFileFilter> dependencyFileFilters;
 
-    private Map<String, Object> paramMap;
+    private final Map<String, Object> paramMap;
 
     public DDDProjectContributor(ProjectDescription description, TemplateRenderer templateRenderer,
                                  List<DependencyFileFilter> dependencyFileFilters) {
@@ -132,8 +132,9 @@ public class DDDProjectContributor implements ProjectContributor {
         if (!resource.isReadable()) {
             return;
         }
+        String ddd = ArchitectureEnum.DDD.getId();
         String path = resource.getURI().getPath();
-        int dddModelIdx = path.indexOf(dddModel);
+        int dddModelIdx = path.indexOf(ddd);
         if (dddModelIdx < 0) {
             return;
         }
@@ -142,8 +143,8 @@ public class DDDProjectContributor implements ProjectContributor {
         if (mustacheIdx != -1) {
             //mustache模板文件.
             String template = dddModelPathStr.substring(0, mustacheIdx);
-            String targetPathStr = dddModelPathStr.substring(0, mustacheIdx).substring(dddModel.length() + 1);
-            targetPathStr = targetPathStr.replace(dddModel, description.getArtifactId());
+            String targetPathStr = dddModelPathStr.substring(0, mustacheIdx).substring(ddd.length() + 1);
+            targetPathStr = targetPathStr.replace(ddd, description.getArtifactId());
             Path targetPath = projectRoot.resolve(targetPathStr);
 
             if (targetPathStr.lastIndexOf(".java") != -1) {
@@ -153,8 +154,8 @@ public class DDDProjectContributor implements ProjectContributor {
             }
         } else {
             //不是模板文件，直接复制.
-            String targetPathStr = dddModelPathStr.substring(dddModel.length() + 1);
-            targetPathStr = targetPathStr.replace(dddModel, description.getArtifactId());
+            String targetPathStr = dddModelPathStr.substring(ddd.length() + 1);
+            targetPathStr = targetPathStr.replace(ddd, description.getArtifactId());
             Path targetPath = projectRoot.resolve(targetPathStr);
 
             Files.createDirectories(targetPath.getParent());
