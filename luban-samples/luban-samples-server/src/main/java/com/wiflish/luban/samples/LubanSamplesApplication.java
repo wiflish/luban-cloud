@@ -19,6 +19,7 @@
  */
 package com.wiflish.luban.samples;
 
+import cn.hutool.core.lang.Assert;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,5 +31,8 @@ import org.springframework.context.annotation.ComponentScan;
 public class LubanSamplesApplication {
     public static void main(String[] args) {
         SpringApplication.run(LubanSamplesApplication.class, args);
+
+        Assert.notNull(args);
+
     }
 }

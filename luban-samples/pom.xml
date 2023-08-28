@@ -43,5 +43,6 @@
   <modules>
     <module>luban-samples-api</module>
     <module>luban-samples-server</module>
+    <module>luban-samples-ddd</module>
   </modules>
 </project>

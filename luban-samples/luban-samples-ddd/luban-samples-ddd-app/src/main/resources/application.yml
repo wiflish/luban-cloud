@@ -1,0 +1,36 @@
+# server
+server:
+  port: 8089 # 应用服务 WEB 访问端口
+
+spring:
+  application:
+    name: luban-samples-ddd
+  datasource:
+    url: jdbc:h2:file:/tmp/luban-samples-ddd
+    username: root
+    password: root
+  sql:
+    init:
+      schema-locations: classpath:db/h2/schema.sql
+      data-locations: classpath:db/h2/data.sql
+      mode: always
+
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+
+
+
+
+
+
+---
+# 生产环境配置.
+spring:
+  config:
+    activate:
+      on-profile:
+        - prod
+
