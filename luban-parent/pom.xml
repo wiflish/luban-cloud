@@ -66,6 +66,11 @@
             </dependency>
             <dependency>
                 <groupId>com.wiflish.luban</groupId>
+                <artifactId>luban-domain</artifactId>
+                <version>${wiflish.luban.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wiflish.luban</groupId>
                 <artifactId>luban-infra</artifactId>
                 <version>${wiflish.luban.version}</version>
             </dependency>

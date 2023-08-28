@@ -20,6 +20,8 @@
 package com.wiflish.luban.core.domain.entity;
 
 import com.wiflish.luban.core.domain.event.DomainEvent;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.util.ArrayList;
@@ -31,21 +33,15 @@ import java.util.List;
  * @author wiflish
  * @since 2022-08-29
  */
+@Getter
+@Setter
 public abstract class AggregateRoot extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1696567208629890967L;
     
     private final List<DomainEvent> domainEvents = new ArrayList<>();
 
-    protected void addDomainEvent(DomainEvent domainEvent) {
-        domainEvents.add(domainEvent);
-    }
-
     public void clearEvents() {
         domainEvents.clear();
-    }
-
-    public List<DomainEvent> getDomainEvents() {
-        return domainEvents;
     }
 }

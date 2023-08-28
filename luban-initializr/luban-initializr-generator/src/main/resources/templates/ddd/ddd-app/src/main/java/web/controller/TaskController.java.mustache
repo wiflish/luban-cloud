@@ -1,10 +1,9 @@
 package {{packageName}}.web.controller;
 
-import com.wiflish.luban.core.dto.OneResponse;
 import com.wiflish.luban.core.dto.Response;
-import com.wiflish.luban.core.dto.PageResponse;
-import com.wiflish.luban.core.dto.exception.Assert;
 import com.wiflish.luban.core.dto.exception.InvalidParamException;
+import java.util.List;
+
 import {{packageName}}.constant.TaskStatusEnum;
 import {{packageName}}.dto.TaskDTO;
 import {{packageName}}.dto.cmd.AddTaskCmd;
@@ -72,7 +71,7 @@ public class TaskController {
      * @return
      */
     @GetMapping("/tasks")
-    public PageResponse<TaskDTO> getTasks(TaskQuery query) {
+    public Response<List<TaskDTO>> getTasks(TaskQuery query) {
         return taskService.pagedTasks(query);
     }
 
@@ -83,7 +82,7 @@ public class TaskController {
     * @return
     */
     @GetMapping("/tasks/{taskId}")
-    public OneResponse<TaskDTO> getTask(@PathVariable Long taskId) {
+    public Response<TaskDTO> getTask(@PathVariable Long taskId) {
         return taskService.getTaskById(taskId);
     }
 }

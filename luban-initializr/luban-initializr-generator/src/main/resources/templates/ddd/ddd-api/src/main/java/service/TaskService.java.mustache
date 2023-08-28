@@ -1,8 +1,7 @@
 package {{packageName}}.service;
 
-import com.ppche.ddd.dto.OneResponse;
-import com.ppche.ddd.dto.PageResponse;
-import com.ppche.ddd.dto.Response;
+import java.util.List;
+import com.wiflish.luban.core.dto.Response;
 import {{packageName}}.dto.TaskDTO;
 import {{packageName}}.dto.cmd.AddTaskCmd;
 import {{packageName}}.dto.query.TaskQuery;
@@ -21,7 +20,7 @@ public interface TaskService {
      * @param addTaskCmd
      * @return
      */
-    OneResponse<Long> addTask(AddTaskCmd addTaskCmd);
+    Response<Long> addTask(AddTaskCmd addTaskCmd);
 
     /**
      * 待做。
@@ -53,7 +52,7 @@ public interface TaskService {
      * @param query
      * @return
      */
-    PageResponse<TaskDTO> pagedTasks(TaskQuery query);
+    Response<List<TaskDTO>> pagedTasks(TaskQuery query);
 
     /**
     * 根据id查询任务.
@@ -61,5 +60,5 @@ public interface TaskService {
     * @param taskId
     * @return
     */
-    OneResponse<TaskDTO> getTaskById(Long taskId);
+    Response<<TaskDTO> getTaskById(Long taskId);
 }

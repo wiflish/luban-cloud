@@ -43,6 +43,8 @@ public class Response<T> implements Serializable {
     private String message;
     private T data;
     private Long total;
+    private Integer pageNo;
+    private Integer pageSize;
 
     private Response() {
     }
@@ -66,6 +68,27 @@ public class Response<T> implements Serializable {
         response.setCode(BaseErrorCodeConstant.SUCCESS_CODE.getCode());
         response.setTotal(total);
         response.setData(data);
+
+        return response;
+    }
+
+    public static <T> Response of(T data, Integer pageNo, Integer pageSize) {
+        Response<T> response = new Response<>();
+        response.setCode(BaseErrorCodeConstant.SUCCESS_CODE.getCode());
+        response.setData(data);
+        response.setPageNo(pageNo);
+        response.setPageSize(pageSize);
+
+        return response;
+    }
+
+    public static <T> Response of(T data, Integer pageNo, Integer pageSize, Long total) {
+        Response<T> response = new Response<>();
+        response.setCode(BaseErrorCodeConstant.SUCCESS_CODE.getCode());
+        response.setData(data);
+        response.setPageNo(pageNo);
+        response.setPageSize(pageSize);
+        response.setTotal(total);
 
         return response;
     }

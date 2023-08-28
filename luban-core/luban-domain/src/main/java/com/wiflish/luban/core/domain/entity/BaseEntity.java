@@ -19,6 +19,9 @@
  */
 package com.wiflish.luban.core.domain.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -29,6 +32,8 @@ import java.time.LocalDateTime;
  * @author wiflish
  * @since 2022-08-26
  */
+@Getter
+@Setter
 public abstract class BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = -1794219784054488134L;
@@ -80,70 +85,11 @@ public abstract class BaseEntity implements Serializable {
             return false;
         }
 
-        return this.id.longValue() == entity.getId().longValue();
+        return this.id.equals(entity.getId());
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (id ^ (id >>> 32));
-        return result;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getCreateId() {
-        return createId;
-    }
-
-    public void setCreateId(Long createId) {
-        this.createId = createId;
-    }
-
-    public Long getUpdateId() {
-        return updateId;
-    }
-
-    public void setUpdateId(Long updateId) {
-        this.updateId = updateId;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
-
-    public Long getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Long deleted) {
-        this.deleted = deleted;
+        return this.getId().hashCode();
     }
 }

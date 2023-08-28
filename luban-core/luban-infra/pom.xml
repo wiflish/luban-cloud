@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.wiflish.luban</groupId>
-            <artifactId>luban-dto</artifactId>
+            <artifactId>luban-domain</artifactId>
         </dependency>
 
         <dependency>

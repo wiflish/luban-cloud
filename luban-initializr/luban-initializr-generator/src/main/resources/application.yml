@@ -15,13 +15,6 @@ initializr:
     value: 项目脚手架.
 
   dependencies:
-    - name: 架构
-      content:
-        - name: 领域驱动架构
-          id: luban-ddd
-          description: 领域驱动架构的项目脚手架.
-
-
     - name: 微服务组件
       content:
         - name: Nacos
@@ -76,13 +69,12 @@ initializr:
       id: war
       default: false
   javaVersions:
-    - id: 13
-      default: false
-    - id: 11
-      default: false
+    - id: 17
+      name: 17
+      default: true
     - id: 1.8
       name: 8
-      default: true
+      default: false
   languages:
     - name: Java
       id: java
