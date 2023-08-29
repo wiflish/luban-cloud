@@ -10,6 +10,8 @@ import com.wiflish.luban.samples.ddd.dto.query.TaskQuery;
 import com.wiflish.luban.samples.ddd.infra.po.TaskPO;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author wiflish
  * @since 2023-08-28
@@ -28,7 +30,7 @@ public class TaskRepositoryImpl extends BaseMybatisRepositoryImpl<Task, TaskPO> 
     }
 
     @Override
-    public Response<?> findTasks(TaskQuery taskQuery) {
+    public Response<List<Task>> findTasks(TaskQuery taskQuery) {
         return null;
     }
 }

@@ -8,14 +8,23 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>luban-infra</artifactId>
+    <artifactId>luban-app</artifactId>
     <name>${project.artifactId}:${project.version}</name>
-    <description>infra通用组件.</description>
+    <description>app通用组件.</description>
 
     <dependencies>
         <dependency>
             <groupId>com.wiflish.luban</groupId>
+            <artifactId>luban-dto</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.wiflish.luban</groupId>
             <artifactId>luban-domain</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
@@ -43,7 +52,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

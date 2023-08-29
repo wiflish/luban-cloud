@@ -2,7 +2,6 @@ package com.wiflish.luban.samples.ddd.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.wiflish.luban.core.dto.Response;
-import java.util.List;
 import com.wiflish.luban.samples.ddd.domain.entity.Task;
 import com.wiflish.luban.samples.ddd.domain.repository.TaskRepository;
 import com.wiflish.luban.samples.ddd.domain.service.TaskSyncDomainService;
@@ -14,6 +13,8 @@ import com.wiflish.luban.samples.ddd.service.TaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 任务服务
@@ -31,9 +32,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Response addTask(AddTaskCmd addTaskCmd) {
         Task task = BeanUtil.copyProperties(addTaskCmd, Task.class);
-
         task.todo();
-
         return Response.of(task.getId());
     }
 
@@ -60,12 +59,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Response<List<TaskDTO>> pagedTasks(TaskQuery query) {
-         return taskRepository.selectByCriteria(query);
+        Response<List<Task>> tasks = taskRepository.findTasks(query);
+        return null;
     }
 
     @Override
     public Response<TaskDTO> getTaskById(Long taskId) {
-        Task task = taskRepository.selectById(taskId);
+        Task task = taskRepository.find(taskId);
         TaskDTO taskDTO = TaskConverter.toTaskDTO(task);
 
         return Response.of(taskDTO);

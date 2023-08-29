@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.wiflish.luban</groupId>
-            <artifactId>luban-infra</artifactId>
+            <artifactId>luban-app</artifactId>
         </dependency>
 
         <dependency>
