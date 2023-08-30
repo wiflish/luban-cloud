@@ -45,6 +45,12 @@ public interface BaseRepository<E extends BaseEntity, Q extends Query> {
      */
     E find(@NotNull Long id);
 
+    /**
+     * 根据不为空的实体属性查询，多个属性查询是 and 连接。
+     *
+     * @param entity
+     * @return
+     */
     E find(@NotNull E entity);
 
     /**

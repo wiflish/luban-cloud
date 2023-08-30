@@ -17,6 +17,7 @@ import java.io.Serial;
 public class TaskQuery extends PageQuery {
     @Serial
     private static final long serialVersionUID = -163286587368888564L;
+
     private String taskName;
     private Integer status;
 }
