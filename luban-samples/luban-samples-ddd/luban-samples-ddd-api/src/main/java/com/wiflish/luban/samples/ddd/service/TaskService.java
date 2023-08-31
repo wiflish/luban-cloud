@@ -47,6 +47,8 @@ public interface TaskService {
      */
     Response done(Long taskId);
 
+    void delete(Long taskId);
+
     /**
      * 根据名称模糊查询.
      *

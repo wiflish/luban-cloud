@@ -20,7 +20,7 @@ public class TaskLambdaQueryWrapperFactory implements LambdaQueryWrapperFactory<
     public LambdaQueryWrapper<TaskPO> getLambdaQueryWrapper(TaskQuery query) {
         LambdaQueryWrapper<TaskPO> lambdaQueryWrapper = new LambdaQueryWrapper<>();
 
-        lambdaQueryWrapper.eq(query.getTaskName() != null, TaskPO::getName, query.getTaskName());
+        lambdaQueryWrapper.likeRight(query.getTaskName() != null, TaskPO::getName, query.getTaskName());
         lambdaQueryWrapper.eq(query.getStatus() != null, TaskPO::getStatus, query.getStatus());
 
         return lambdaQueryWrapper;

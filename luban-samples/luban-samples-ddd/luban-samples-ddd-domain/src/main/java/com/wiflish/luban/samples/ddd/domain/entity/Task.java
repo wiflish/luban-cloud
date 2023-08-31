@@ -1,14 +1,12 @@
 package com.wiflish.luban.samples.ddd.domain.entity;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.extra.spring.SpringUtil;
 import com.wiflish.luban.core.domain.entity.BaseEntity;
 import com.wiflish.luban.samples.ddd.domain.enums.TaskStatusEnum;
 import com.wiflish.luban.samples.ddd.domain.repository.TaskRepository;
-import jakarta.annotation.Resource;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.io.Serial;
 
@@ -20,14 +18,11 @@ import java.io.Serial;
  */
 @Setter
 @Getter
-@Component
-@Scope("prototype")
 public class Task extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Resource
-    private TaskRepository taskRepository;
+    private TaskRepository taskRepository = SpringUtil.getBean(TaskRepository.class);
 
     /**
      * 任务名称.

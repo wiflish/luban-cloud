@@ -5,8 +5,6 @@ import com.wiflish.luban.core.app.assembler.BaseAssembler;
 import com.wiflish.luban.samples.ddd.domain.entity.Task;
 import com.wiflish.luban.samples.ddd.dto.TaskDTO;
 import com.wiflish.luban.samples.ddd.dto.cmd.EditTaskCmd;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,19 +12,17 @@ import org.springframework.stereotype.Component;
  * @since 2023-08-28
  */
 @Component
-@Scope("prototype")
 public class TaskAssembler implements BaseAssembler<EditTaskCmd, TaskDTO, Task> {
-    @Autowired
-    private Task task;
-
     @Override
     public Task toEntity(TaskDTO dto) {
+        Task task = new Task();
         BeanUtil.copyProperties(dto, task);
         return task;
     }
 
     @Override
     public Task toEntity(EditTaskCmd cmd) {
+        Task task = new Task();
         BeanUtil.copyProperties(cmd, task);
         return task;
     }

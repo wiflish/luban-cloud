@@ -2,7 +2,7 @@ package com.wiflish.luban.samples.ddd.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import com.wiflish.luban.core.dto.ListResponse;
-import com.wiflish.luban.core.dto.Response;
+import com.wiflish.luban.core.dto.OneResponse;
 import com.wiflish.luban.samples.ddd.BaseTests;
 import com.wiflish.luban.samples.ddd.dto.TaskDTO;
 import com.wiflish.luban.samples.ddd.dto.cmd.EditTaskCmd;
@@ -11,7 +11,9 @@ import com.wiflish.luban.samples.ddd.service.TaskService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * @author wiflish
@@ -25,9 +27,16 @@ public class TaskServiceImplTest extends BaseTests {
     public void addTask() {
         EditTaskCmd addTaskCmd = new EditTaskCmd();
         addTaskCmd.setName("测试用例评审Review");
-        Response response = taskService.addTask(addTaskCmd);
+        OneResponse<Long> response = taskService.addTask(addTaskCmd);
 
         assertEquals("0", response.getCode());
+
+        taskService.delete(response.getData());
+
+        OneResponse<TaskDTO> result = taskService.getTaskById(response.getData());
+
+        assertNotNull(result);
+        assertNull(result.getData().getName());
     }
 
     @Test

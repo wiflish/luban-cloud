@@ -73,6 +73,11 @@ public class TaskServiceImpl extends BaseService<EditTaskCmd, TaskDTO, Task, Tas
     }
 
     @Override
+    public void delete(Long taskId) {
+        remove(taskId);
+    }
+
+    @Override
     public ListResponse<TaskDTO> pagedTasks(TaskQuery query) {
         return pageList(query, new Pager());
     }
