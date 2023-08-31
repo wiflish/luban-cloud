@@ -35,60 +35,16 @@ import java.io.Serializable;
  */
 @Setter
 @Getter
-public class Response<T> implements Serializable {
+public class Response implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     private String code;
     private String message;
-    private T data;
-    private Long total;
-    private Integer pageNo;
-    private Integer pageSize;
-
-    private Response() {
-    }
 
     public static Response of() {
         Response response = new Response();
         response.setCode(BaseErrorCodeConstant.SUCCESS_CODE.getCode());
-        return response;
-    }
-
-    public static <T> Response of(T data) {
-        Response<T> response = new Response<>();
-        response.setCode(BaseErrorCodeConstant.SUCCESS_CODE.getCode());
-        response.setData(data);
-
-        return response;
-    }
-
-    public static <T> Response of(T data, Long total) {
-        Response<T> response = new Response<>();
-        response.setCode(BaseErrorCodeConstant.SUCCESS_CODE.getCode());
-        response.setTotal(total);
-        response.setData(data);
-
-        return response;
-    }
-
-    public static <T> Response of(T data, Integer pageNo, Integer pageSize) {
-        Response<T> response = new Response<>();
-        response.setCode(BaseErrorCodeConstant.SUCCESS_CODE.getCode());
-        response.setData(data);
-        response.setPageNo(pageNo);
-        response.setPageSize(pageSize);
-
-        return response;
-    }
-
-    public static <T> Response of(T data, Integer pageNo, Integer pageSize, Long total) {
-        Response<T> response = new Response<>();
-        response.setCode(BaseErrorCodeConstant.SUCCESS_CODE.getCode());
-        response.setData(data);
-        response.setPageNo(pageNo);
-        response.setPageSize(pageSize);
-        response.setTotal(total);
 
         return response;
     }

@@ -21,18 +21,29 @@
         </dependency>
         <dependency>
             <groupId>com.wiflish.luban</groupId>
-            <artifactId>luban-samples-ddd-infra</artifactId>
+            <artifactId>luban-samples-ddd-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
+            <groupId>com.wiflish.luban</groupId>
+            <artifactId>luban-mybatis-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -45,20 +56,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.mybatis.scripting</groupId>
+            <artifactId>mybatis-freemarker</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-core</artifactId>
-            <version>3.6-jdk17-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.wiflish.luban</groupId>
-            <artifactId>luban-mybatis-starter</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <artifactId>mybatis-plus-generator</artifactId>
         </dependency>
     </dependencies>
 

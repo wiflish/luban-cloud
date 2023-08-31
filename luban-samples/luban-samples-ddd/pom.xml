@@ -46,11 +46,6 @@
             </dependency>
             <dependency>
                 <groupId>com.wiflish.luban</groupId>
-                <artifactId>luban-samples-ddd-infra</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.wiflish.luban</groupId>
                 <artifactId>luban-samples-ddd-domain</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
@@ -75,17 +70,17 @@
             </dependency>
             <dependency>
                 <groupId>com.wiflish.luban</groupId>
+                <artifactId>luban-mybatis-starter</artifactId>
+                <version>${luban.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wiflish.luban</groupId>
                 <artifactId>luban-dto</artifactId>
                 <version>${luban.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.wiflish.luban</groupId>
                 <artifactId>luban-domain</artifactId>
-                <version>${luban.core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.wiflish.luban</groupId>
-                <artifactId>luban-infra</artifactId>
                 <version>${luban.core.version}</version>
             </dependency>
             <dependency>
@@ -128,13 +123,24 @@
                 <version>${spring.boot.version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.mybatis.scripting</groupId>
+                <artifactId>mybatis-freemarker</artifactId>
+                <version>${mybatis.plus.freemarker.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis.plus.generator.version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <modules>
         <module>luban-samples-ddd-api</module>
         <module>luban-samples-ddd-domain</module>
-        <module>luban-samples-ddd-infra</module>
         <module>luban-samples-ddd-app</module>
         <module>luban-samples-ddd-dist</module>
     </modules>

@@ -1,41 +1,41 @@
 package com.wiflish.luban.core.mybatis.repository.impl;
 
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ReflectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wiflish.luban.core.domain.entity.BaseEntity;
 import com.wiflish.luban.core.domain.repository.BaseRepository;
+import com.wiflish.luban.core.dto.ListResponse;
 import com.wiflish.luban.core.dto.Pager;
-import com.wiflish.luban.core.dto.Response;
 import com.wiflish.luban.core.dto.query.Query;
 import com.wiflish.luban.core.infra.converter.BaseConverter;
 import com.wiflish.luban.core.infra.po.BasePO;
-import com.wiflish.luban.core.mybatis.query.MybatisQuery;
-import com.wiflish.luban.core.mybatis.query.QueryMapping;
+import com.wiflish.luban.core.mybatis.query.LambdaQueryWrapperFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author wiflish
  * @since 2023-08-28
  */
 @Slf4j
+@Component
 public abstract class BaseMybatisRepositoryImpl<E extends BaseEntity, PO extends BasePO, Q extends Query> implements BaseRepository<E, Q> {
-    /**
-     * 返回PO对象。
-     */
-    protected abstract PO newPO();
+    @Autowired
+    protected List<LambdaQueryWrapperFactory<PO, Q>> factories;
 
     protected abstract BaseMapper<PO> getMapper();
 
     protected abstract BaseConverter<E, PO> getConverter();
 
-    protected abstract MybatisQuery getMybatisQuery();
+    protected LambdaQueryWrapperFactory<PO, Q> getLambdaQueryWrapperFactory(Q query) {
+        return (factories.stream().filter(factory -> factory.getWrapperId().equals(query.getWrapperId())).findFirst().orElse(null));
+    }
 
     @Override
     public Long save(E entity) {
@@ -90,33 +90,32 @@ public abstract class BaseMybatisRepositoryImpl<E extends BaseEntity, PO extends
 
     @Override
     public List<E> listAll(Q query) {
-        Method[] methods = ReflectUtil.getMethods(newPO().getClass());
-
-        MybatisQuery mybatisQuery = getMybatisQuery();
-
-
-        Map<String, QueryMapping> mappingMap = mybatisQuery.getMappingMap(query);
-        if (MapUtil.isEmpty(mappingMap)) {
-            QueryWrapper<PO> wrapper = new QueryWrapper<>();
-            wrapper.last("limit 2000");
-            List<PO> pos = getMapper().selectList(wrapper);
-
-            return pos.stream().map(po -> getConverter().toEntity(po)).toList();
+        LambdaQueryWrapperFactory<PO, Q> lambdaQueryWrapperFactory = getLambdaQueryWrapperFactory(query);
+        LambdaQueryWrapper<PO> lambdaQueryWrapper;
+        if (lambdaQueryWrapperFactory == null) {
+            lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        } else {
+            lambdaQueryWrapper = lambdaQueryWrapperFactory.getLambdaQueryWrapper(query);
         }
+        lambdaQueryWrapper.last(" limit 2000 ");
+        List<PO> pos = getMapper().selectList(lambdaQueryWrapper);
 
-        LambdaQueryWrapper<PO> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-
-        mappingMap.keySet().forEach(key -> {
-            QueryMapping queryMapping = mappingMap.get(key);
-
-//            lambdaQueryWrapper.
-        });
-
-        return null;
+        return pos.stream().map(po -> getConverter().toEntity(po)).toList();
     }
 
     @Override
-    public Response<List<E>> listPage(Q query, Pager pager) {
-        return null;
+    public ListResponse<E> listPage(Q query, Pager pager) {
+        LambdaQueryWrapperFactory<PO, Q> lambdaQueryWrapperFactory = getLambdaQueryWrapperFactory(query);
+        LambdaQueryWrapper<PO> lambdaQueryWrapper;
+        if (lambdaQueryWrapperFactory == null) {
+            lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        } else {
+            lambdaQueryWrapper = lambdaQueryWrapperFactory.getLambdaQueryWrapper(query);
+        }
+
+        Page<PO> pageFromDB = getMapper().selectPage(new Page<>(pager.getPage(), pager.getSize()), lambdaQueryWrapper);
+        List<E> entities = pageFromDB.getRecords().stream().map(po -> getConverter().toEntity(po)).toList();
+
+        return ListResponse.of(entities, pageFromDB.getTotal(), pager.getPage(), pager.getSize());
     }
 }

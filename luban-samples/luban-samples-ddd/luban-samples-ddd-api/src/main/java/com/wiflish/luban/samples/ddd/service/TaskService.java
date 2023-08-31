@@ -1,11 +1,11 @@
 package com.wiflish.luban.samples.ddd.service;
 
+import com.wiflish.luban.core.dto.ListResponse;
+import com.wiflish.luban.core.dto.OneResponse;
 import com.wiflish.luban.core.dto.Response;
 import com.wiflish.luban.samples.ddd.dto.TaskDTO;
-import com.wiflish.luban.samples.ddd.dto.cmd.AddTaskCmd;
+import com.wiflish.luban.samples.ddd.dto.cmd.EditTaskCmd;
 import com.wiflish.luban.samples.ddd.dto.query.TaskQuery;
-
-import java.util.List;
 
 /**
  * 任务服务.
@@ -21,7 +21,7 @@ public interface TaskService {
      * @param addTaskCmd
      * @return
      */
-    Response addTask(AddTaskCmd addTaskCmd);
+    OneResponse<Long> addTask(EditTaskCmd addTaskCmd);
 
     /**
      * 待做。
@@ -53,7 +53,7 @@ public interface TaskService {
      * @param query
      * @return
      */
-    Response<List<TaskDTO>> pagedTasks(TaskQuery query);
+    ListResponse<TaskDTO> pagedTasks(TaskQuery query);
 
     /**
     * 根据id查询任务.
@@ -61,5 +61,5 @@ public interface TaskService {
     * @param taskId
     * @return
     */
-    Response<TaskDTO> getTaskById(Long taskId);
+    OneResponse<TaskDTO> getTaskById(Long taskId);
 }

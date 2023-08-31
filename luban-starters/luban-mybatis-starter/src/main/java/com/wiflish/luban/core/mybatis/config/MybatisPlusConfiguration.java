@@ -19,6 +19,9 @@
  */
 package com.wiflish.luban.core.mybatis.config;
 
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.wiflish.luban.core.mybatis.objecthandler.AuditMetaObjectHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -42,5 +45,15 @@ public class MybatisPlusConfiguration {
     @ConditionalOnProperty(value = PREFIX + ".enable", havingValue = "true", matchIfMissing = true)
     public AuditMetaObjectHandler getAuditMetaObjectHandler() {
         return new AuditMetaObjectHandler(lubanMybatisAutofillProperties);
+    }
+
+    /**
+     * 分页插件.
+     */
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        return interceptor;
     }
 }

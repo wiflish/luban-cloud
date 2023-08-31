@@ -1,6 +1,6 @@
 package com.wiflish.luban.samples.ddd;
 
-import com.wiflish.luban.samples.ddd.LubanSamplesDddApplication;
+import com.wiflish.luban.samples.LubanSamplesDddApplication;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;

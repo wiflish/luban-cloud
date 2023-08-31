@@ -1,8 +1,8 @@
 package com.wiflish.luban.samples.ddd.dto.query;
 
-import com.wiflish.luban.core.dto.query.PageQuery;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.wiflish.luban.core.dto.query.Query;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 
@@ -12,12 +12,17 @@ import java.io.Serial;
  * @author wiflish
  * @since 2023-08-28
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
-public class TaskQuery extends PageQuery {
+@Getter
+@Setter
+public class TaskQuery extends Query {
     @Serial
     private static final long serialVersionUID = -163286587368888564L;
 
     private String taskName;
     private Integer status;
+
+    @Override
+    public String getWrapperId(){
+        return TaskQuery.class.getName();
+    }
 }

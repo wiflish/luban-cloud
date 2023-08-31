@@ -11,8 +11,7 @@ spring:
     password: root
   sql:
     init:
-      schema-locations: classpath:db/h2/schema.sql
-      data-locations: classpath:db/h2/data.sql
+      schema-locations: classpath:h2/schema.sql
       mode: always
 
   h2:

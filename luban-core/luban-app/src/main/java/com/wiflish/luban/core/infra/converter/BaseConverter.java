@@ -11,5 +11,5 @@ public abstract class BaseConverter<E extends BaseEntity, PO extends BasePO> {
 
     public abstract PO toPO(E entity);
 
-    public abstract E toEntity(PO persistentObject);
+    public abstract E toEntity(PO po);
 }

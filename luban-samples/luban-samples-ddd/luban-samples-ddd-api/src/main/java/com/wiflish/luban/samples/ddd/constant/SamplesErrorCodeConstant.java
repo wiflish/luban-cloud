@@ -17,15 +17,15 @@
  * limitations under the License.
  * ************
  */
-package com.wiflish.luban.core.dto.exception;
+package com.wiflish.luban.samples.ddd.constant;
+
+import com.wiflish.luban.core.dto.exception.BaseErrorCodeConstant;
+import com.wiflish.luban.core.dto.exception.ErrorCode;
 
 /**
  * @author wiflish
  * @since 2023-03-22
  */
-public abstract class BaseErrorCodeConstant {
-    public static final ErrorCode SUCCESS_CODE = ErrorCode.of("0");
-    public static final ErrorCode SERVER_ERROR_CODE = ErrorCode.of("-1");
-    public static final ErrorCode INVALID_PARAM_CODE = ErrorCode.of("0001");
-    public static final ErrorCode INVALID_PERMISSION_CODE = ErrorCode.of("0002");
+public class SamplesErrorCodeConstant extends BaseErrorCodeConstant {
+    public static final ErrorCode SAMPLE_TASK_STATUS_CODE = ErrorCode.of("10001");
 }

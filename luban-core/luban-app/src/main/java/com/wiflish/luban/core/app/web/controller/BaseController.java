@@ -1,12 +1,14 @@
 package com.wiflish.luban.core.app.web.controller;
 
-import com.wiflish.luban.core.app.service.BaseService;
+import com.wiflish.luban.core.domain.entity.BaseEntity;
 import com.wiflish.luban.core.dto.BaseDTO;
+import com.wiflish.luban.core.dto.query.Query;
 
 /**
  * @author wiflish
  * @since 2023-08-29
  */
-public abstract class BaseController<T extends BaseDTO> {
-    public abstract BaseService<T> getService();
+public abstract class BaseController<T extends BaseDTO, E extends BaseEntity, Q extends Query> {
+//    public abstract BaseService<T, E, Q> getService();
+
 }

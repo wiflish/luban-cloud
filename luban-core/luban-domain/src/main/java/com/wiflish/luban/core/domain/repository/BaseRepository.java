@@ -1,8 +1,8 @@
 package com.wiflish.luban.core.domain.repository;
 
 import com.wiflish.luban.core.domain.entity.BaseEntity;
+import com.wiflish.luban.core.dto.ListResponse;
 import com.wiflish.luban.core.dto.Pager;
-import com.wiflish.luban.core.dto.Response;
 import com.wiflish.luban.core.dto.query.Query;
 import jakarta.validation.constraints.NotNull;
 
@@ -61,5 +61,12 @@ public interface BaseRepository<E extends BaseEntity, Q extends Query> {
      */
     List<E> listAll(@NotNull Q query);
 
-    Response<List<E>> listPage(@NotNull Q query, Pager pager);
+    /**
+     * 分页查找符合条件的记录.
+     *
+     * @param query
+     * @param pager
+     * @return
+     */
+    ListResponse<E> listPage(@NotNull Q query, Pager pager);
 }
