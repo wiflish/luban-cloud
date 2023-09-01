@@ -41,8 +41,7 @@
     </plugins>
   </build>
   <modules>
-    <module>luban-samples-api</module>
-    <module>luban-samples-server</module>
     <module>luban-samples-ddd</module>
+    <module>luban-samples-common</module>
   </modules>
 </project>
