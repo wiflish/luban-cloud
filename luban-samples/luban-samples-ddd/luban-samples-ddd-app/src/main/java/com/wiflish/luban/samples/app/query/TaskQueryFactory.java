@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @since 2023-08-31
  */
 @Component
-public class TaskLambdaQueryWrapperFactory implements LambdaQueryWrapperFactory<TaskPO, TaskQuery> {
+public class TaskQueryFactory implements LambdaQueryWrapperFactory<TaskPO, TaskQuery> {
     @Override
     public String getWrapperId() {
         return TaskQuery.class.getName();

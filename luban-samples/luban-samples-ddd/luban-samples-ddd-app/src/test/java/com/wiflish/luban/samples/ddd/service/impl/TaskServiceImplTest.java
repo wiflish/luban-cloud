@@ -4,6 +4,7 @@ import cn.hutool.core.util.RandomUtil;
 import com.wiflish.luban.core.dto.ListResponse;
 import com.wiflish.luban.core.dto.OneResponse;
 import com.wiflish.luban.samples.ddd.BaseTests;
+import com.wiflish.luban.samples.ddd.domain.enums.TaskStatusEnum;
 import com.wiflish.luban.samples.ddd.dto.TaskDTO;
 import com.wiflish.luban.samples.ddd.dto.cmd.EditTaskCmd;
 import com.wiflish.luban.samples.ddd.dto.query.TaskQuery;
@@ -28,13 +29,20 @@ public class TaskServiceImplTest extends BaseTests {
         EditTaskCmd addTaskCmd = new EditTaskCmd();
         addTaskCmd.setName("测试用例评审Review");
         OneResponse<Long> response = taskService.addTask(addTaskCmd);
-
         assertEquals("0", response.getCode());
 
-        taskService.delete(response.getData());
-
+        taskService.doing(response.getData());
         OneResponse<TaskDTO> result = taskService.getTaskById(response.getData());
+        assertNotNull(result);
+        assertEquals(TaskStatusEnum.DOING.getValue(), result.getData().getStatus());
 
+        taskService.done(response.getData());
+        result = taskService.getTaskById(response.getData());
+        assertNotNull(result);
+        assertEquals(TaskStatusEnum.DONE.getValue(), result.getData().getStatus());
+
+        taskService.delete(response.getData());
+        result = taskService.getTaskById(response.getData());
         assertNotNull(result);
         assertNull(result.getData().getName());
     }
@@ -56,13 +64,11 @@ public class TaskServiceImplTest extends BaseTests {
         taskQuery.setTaskName("测试");
         taskQuery.setStatus(1);
         tasks = taskService.pagedTasks(taskQuery);
-
         assertNotNull(tasks);
         assertEquals(10, tasks.getData().size());
 
         taskQuery.setStatus(2);
         tasks = taskService.pagedTasks(taskQuery);
-
         assertNotNull(tasks);
         assertEquals(0, tasks.getData().size());
     }
