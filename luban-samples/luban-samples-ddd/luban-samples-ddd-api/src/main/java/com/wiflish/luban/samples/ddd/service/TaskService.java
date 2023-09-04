@@ -21,7 +21,7 @@ public interface TaskService {
      * @param addTaskCmd
      * @return
      */
-    OneResponse<Long> addTask(EditTaskCmd addTaskCmd);
+    OneResponse<Long> save(EditTaskCmd addTaskCmd);
 
     /**
      * 待做。

@@ -72,6 +72,11 @@
             </dependency>
             <dependency>
                 <groupId>com.wiflish.luban</groupId>
+                <artifactId>luban-service</artifactId>
+                <version>${wiflish.luban.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wiflish.luban</groupId>
                 <artifactId>luban-app</artifactId>
                 <version>${wiflish.luban.version}</version>
             </dependency>

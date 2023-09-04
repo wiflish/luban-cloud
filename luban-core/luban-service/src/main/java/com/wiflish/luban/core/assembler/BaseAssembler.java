@@ -1,4 +1,4 @@
-package com.wiflish.luban.core.app.assembler;
+package com.wiflish.luban.core.assembler;
 
 import com.wiflish.luban.core.domain.entity.BaseEntity;
 import com.wiflish.luban.core.dto.BaseDTO;

@@ -42,7 +42,8 @@
   </build>
   <modules>
     <module>luban-dto</module>
-    <module>luban-app</module>
     <module>luban-domain</module>
+    <module>luban-service</module>
+    <module>luban-app</module>
   </modules>
 </project>

@@ -28,7 +28,7 @@ public class TaskServiceImplTest extends BaseTests {
     public void addTask() {
         EditTaskCmd addTaskCmd = new EditTaskCmd();
         addTaskCmd.setName("测试用例评审Review");
-        OneResponse<Long> response = taskService.addTask(addTaskCmd);
+        OneResponse<Long> response = taskService.save(addTaskCmd);
         assertEquals("0", response.getCode());
 
         taskService.doing(response.getData());
@@ -51,7 +51,7 @@ public class TaskServiceImplTest extends BaseTests {
     public void getTasks() {
         for (int i = 0; i < 10; i++) {
             EditTaskCmd addTaskCmd = buildAddTaskCmd("测试");
-            taskService.addTask(addTaskCmd);
+            taskService.save(addTaskCmd);
         }
         TaskQuery taskQuery = new TaskQuery();
         taskQuery.setTaskName("测试");

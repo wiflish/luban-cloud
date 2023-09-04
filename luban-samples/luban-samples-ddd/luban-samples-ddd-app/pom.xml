@@ -17,6 +17,10 @@
     <dependencies>
         <dependency>
             <groupId>com.wiflish.luban</groupId>
+            <artifactId>luban-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.wiflish.luban</groupId>
             <artifactId>luban-samples-ddd-api</artifactId>
         </dependency>
         <dependency>

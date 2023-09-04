@@ -84,6 +84,11 @@
                 <version>${luban.core.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.wiflish.luban</groupId>
+                <artifactId>luban-service</artifactId>
+                <version>${luban.core.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>

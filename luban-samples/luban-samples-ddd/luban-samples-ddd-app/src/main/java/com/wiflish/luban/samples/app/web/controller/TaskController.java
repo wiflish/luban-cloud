@@ -35,7 +35,7 @@ public class TaskController {
      */
     @PostMapping("/task")
     public Response addTask(@RequestBody EditTaskCmd addTaskCmd) {
-        return taskService.addTask(addTaskCmd);
+        return taskService.save(addTaskCmd);
     }
 
     /**

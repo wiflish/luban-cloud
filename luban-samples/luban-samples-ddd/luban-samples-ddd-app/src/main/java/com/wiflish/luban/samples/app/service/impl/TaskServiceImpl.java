@@ -1,7 +1,7 @@
 package com.wiflish.luban.samples.app.service.impl;
 
-import com.wiflish.luban.core.app.assembler.BaseAssembler;
-import com.wiflish.luban.core.app.service.BaseService;
+import com.wiflish.luban.core.assembler.BaseAssembler;
+import com.wiflish.luban.core.app.service.BaseServiceImpl;
 import com.wiflish.luban.core.domain.repository.BaseRepository;
 import com.wiflish.luban.core.dto.ListResponse;
 import com.wiflish.luban.core.dto.OneResponse;
@@ -27,12 +27,11 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class TaskServiceImpl extends BaseService<EditTaskCmd, TaskDTO, Task, TaskQuery> implements TaskService {
+public class TaskServiceImpl extends BaseServiceImpl<EditTaskCmd, TaskDTO, TaskQuery, Task> implements TaskService {
     @Autowired
     private TaskSyncDomainService taskSyncDomainService;
     @Autowired
     private TaskRepository taskRepository;
-
     @Autowired
     private TaskAssembler taskAssembler;
 
@@ -44,11 +43,6 @@ public class TaskServiceImpl extends BaseService<EditTaskCmd, TaskDTO, Task, Tas
     @Override
     public BaseRepository<Task, TaskQuery> getRepository() {
         return this.taskRepository;
-    }
-
-    @Override
-    public OneResponse<Long> addTask(EditTaskCmd editTaskCmd) {
-        return save(editTaskCmd);
     }
 
     @Override
