@@ -19,7 +19,7 @@ public class Pager {
     /**
      * 是否需要总记录数.
      */
-    private Boolean needTotalCount = false;
+    private Boolean needTotal = false;
 
     @Min(1)
     @Parameter(description = "页号要大于0", schema = @Schema(type = "integer", defaultValue = "1"))
@@ -36,9 +36,9 @@ public class Pager {
         this.page = page;
         this.size = size;
     }
-    public Pager(int page, int size, boolean needTotalCount) {
+    public Pager(int page, int size, boolean needTotal) {
         this.page = page;
         this.size = size;
-        this.needTotalCount = needTotalCount;
+        this.needTotal = needTotal;
     }
 }
