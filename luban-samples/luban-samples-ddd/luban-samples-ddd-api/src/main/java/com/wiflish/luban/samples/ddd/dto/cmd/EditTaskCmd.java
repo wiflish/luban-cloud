@@ -1,8 +1,8 @@
 package com.wiflish.luban.samples.ddd.dto.cmd;
 
 import com.wiflish.luban.core.dto.Command;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -13,8 +13,8 @@ import java.io.Serializable;
  * @author wiflish
  * @since 2023-08-28
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class EditTaskCmd extends Command implements Serializable {
     @Serial
     private static final long serialVersionUID = -3533082655423111828L;

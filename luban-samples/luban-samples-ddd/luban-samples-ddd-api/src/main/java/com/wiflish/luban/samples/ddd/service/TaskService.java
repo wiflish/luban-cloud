@@ -1,11 +1,11 @@
 package com.wiflish.luban.samples.ddd.service;
 
-import com.wiflish.luban.core.dto.ListResponse;
-import com.wiflish.luban.core.dto.OneResponse;
+import com.wiflish.luban.core.domain.entity.Entity;
+import com.wiflish.luban.core.dto.Command;
+import com.wiflish.luban.core.dto.DTO;
 import com.wiflish.luban.core.dto.Response;
-import com.wiflish.luban.samples.ddd.dto.TaskDTO;
-import com.wiflish.luban.samples.ddd.dto.cmd.EditTaskCmd;
-import com.wiflish.luban.samples.ddd.dto.query.TaskQuery;
+import com.wiflish.luban.core.dto.query.Query;
+import com.wiflish.luban.core.service.BaseService;
 
 /**
  * 任务服务.
@@ -13,16 +13,7 @@ import com.wiflish.luban.samples.ddd.dto.query.TaskQuery;
  * @author wiflish
  * @since 2023-08-28
  */
-public interface TaskService {
-
-    /**
-     * 新增任务。
-     *
-     * @param addTaskCmd
-     * @return
-     */
-    OneResponse<Long> save(EditTaskCmd addTaskCmd);
-
+public interface TaskService<C extends Command, Q extends Query, T extends DTO, E extends Entity> extends BaseService<C, Q, T, E> {
     /**
      * 待做。
      *
@@ -46,22 +37,4 @@ public interface TaskService {
      * @return
      */
     Response done(Long taskId);
-
-    void delete(Long taskId);
-
-    /**
-     * 根据名称模糊查询.
-     *
-     * @param query
-     * @return
-     */
-    ListResponse<TaskDTO> pagedTasks(TaskQuery query);
-
-    /**
-    * 根据id查询任务.
-    *
-    * @param taskId
-    * @return
-    */
-    OneResponse<TaskDTO> getTaskById(Long taskId);
 }

@@ -1,6 +1,6 @@
 package com.wiflish.luban.samples.ddd.dto;
 
-import com.wiflish.luban.core.dto.BaseDTO;
+import com.wiflish.luban.core.dto.DTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class TaskDTO extends BaseDTO implements Serializable {
+public class TaskDTO extends DTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**

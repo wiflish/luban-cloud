@@ -35,7 +35,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public abstract class AggregateRoot extends BaseEntity {
+public abstract class AggregateRoot extends Entity {
     @Serial
     private static final long serialVersionUID = 1696567208629890967L;
     

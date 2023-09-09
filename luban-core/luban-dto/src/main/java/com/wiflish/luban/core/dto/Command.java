@@ -32,7 +32,7 @@ import java.io.Serial;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public abstract class Command extends BaseDTO {
+public abstract class Command extends DTO {
     @Serial
     private static final long serialVersionUID = 8479849114074982304L;
 

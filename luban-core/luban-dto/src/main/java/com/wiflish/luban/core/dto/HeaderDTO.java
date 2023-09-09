@@ -30,7 +30,7 @@ import java.io.Serial;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class HeaderDTO extends BaseDTO {
+public class HeaderDTO extends DTO {
     @Serial
     private static final long serialVersionUID = 4213702337250862339L;
 

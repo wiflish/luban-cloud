@@ -4,7 +4,7 @@ import cn.hutool.core.util.ReflectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.wiflish.luban.core.domain.entity.BaseEntity;
+import com.wiflish.luban.core.domain.entity.Entity;
 import com.wiflish.luban.core.domain.repository.BaseRepository;
 import com.wiflish.luban.core.dto.ListResponse;
 import com.wiflish.luban.core.dto.Pager;
@@ -19,13 +19,16 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import static com.wiflish.luban.core.dto.constant.BaseConstant.DEFAULT_PAGE_NO;
+import static com.wiflish.luban.core.dto.constant.BaseConstant.DEFAULT_PAGE_SIZE_MAX;
+
 /**
  * @author wiflish
  * @since 2023-08-28
  */
 @Slf4j
 @Component
-public abstract class BaseMybatisRepositoryImpl<E extends BaseEntity, PO extends BasePO, Q extends Query> implements BaseRepository<E, Q> {
+public abstract class BaseMybatisRepositoryImpl<Q extends Query, E extends Entity, PO extends BasePO> implements BaseRepository<Q, E> {
     @Autowired
     protected List<LambdaQueryWrapperFactory<PO, Q>> factories;
 
@@ -50,7 +53,7 @@ public abstract class BaseMybatisRepositoryImpl<E extends BaseEntity, PO extends
     }
 
     @Override
-    public void remove(Long id) {
+    public void delete(Long id) {
         getMapper().deleteById(id);
     }
 
@@ -90,17 +93,12 @@ public abstract class BaseMybatisRepositoryImpl<E extends BaseEntity, PO extends
 
     @Override
     public List<E> listAll(Q query) {
-        LambdaQueryWrapperFactory<PO, Q> lambdaQueryWrapperFactory = getLambdaQueryWrapperFactory(query);
-        LambdaQueryWrapper<PO> lambdaQueryWrapper;
-        if (lambdaQueryWrapperFactory == null) {
-            lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        } else {
-            lambdaQueryWrapper = lambdaQueryWrapperFactory.getLambdaQueryWrapper(query);
-        }
-        lambdaQueryWrapper.last(" limit 2000 ");
-        List<PO> pos = getMapper().selectList(lambdaQueryWrapper);
+        Pager pager = new Pager();
+        pager.setPage(DEFAULT_PAGE_NO);
+        pager.setSize(DEFAULT_PAGE_SIZE_MAX);
 
-        return pos.stream().map(po -> getConverter().toEntity(po)).toList();
+        ListResponse<E> result = listPage(query, pager);
+        return result.getData();
     }
 
     @Override
@@ -113,7 +111,7 @@ public abstract class BaseMybatisRepositoryImpl<E extends BaseEntity, PO extends
             lambdaQueryWrapper = lambdaQueryWrapperFactory.getLambdaQueryWrapper(query);
         }
 
-        Page<PO> pageFromDB = getMapper().selectPage(new Page<>(pager.getPage(), pager.getSize()), lambdaQueryWrapper);
+        Page<PO> pageFromDB = getMapper().selectPage(new Page<>(pager.getPage(), pager.getSize(), pager.getNeedTotalCount()), lambdaQueryWrapper);
         List<E> entities = pageFromDB.getRecords().stream().map(po -> getConverter().toEntity(po)).toList();
 
         return ListResponse.of(entities, pageFromDB.getTotal(), pager.getPage(), pager.getSize());

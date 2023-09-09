@@ -26,4 +26,5 @@ package com.wiflish.luban.core.dto.constant;
 public class BaseConstant {
     public static final int DEFAULT_PAGE_NO = 1;
     public static final int DEFAULT_PAGE_SIZE = 20;
+    public static final int DEFAULT_PAGE_SIZE_MAX = 2000;
 }

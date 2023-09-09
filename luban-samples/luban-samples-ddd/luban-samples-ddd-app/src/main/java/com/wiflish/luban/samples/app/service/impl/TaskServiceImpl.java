@@ -1,11 +1,8 @@
 package com.wiflish.luban.samples.app.service.impl;
 
-import com.wiflish.luban.core.assembler.BaseAssembler;
 import com.wiflish.luban.core.app.service.BaseServiceImpl;
+import com.wiflish.luban.core.assembler.Assembler;
 import com.wiflish.luban.core.domain.repository.BaseRepository;
-import com.wiflish.luban.core.dto.ListResponse;
-import com.wiflish.luban.core.dto.OneResponse;
-import com.wiflish.luban.core.dto.Pager;
 import com.wiflish.luban.core.dto.Response;
 import com.wiflish.luban.samples.app.assembler.TaskAssembler;
 import com.wiflish.luban.samples.ddd.domain.entity.Task;
@@ -27,7 +24,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class TaskServiceImpl extends BaseServiceImpl<EditTaskCmd, TaskDTO, TaskQuery, Task> implements TaskService {
+public class TaskServiceImpl extends BaseServiceImpl implements TaskService {
     @Autowired
     private TaskSyncDomainService taskSyncDomainService;
     @Autowired
@@ -36,12 +33,12 @@ public class TaskServiceImpl extends BaseServiceImpl<EditTaskCmd, TaskDTO, TaskQ
     private TaskAssembler taskAssembler;
 
     @Override
-    public BaseAssembler<EditTaskCmd, TaskDTO, Task> getAssembler() {
+    public Assembler<EditTaskCmd, TaskDTO, Task> getAssembler() {
         return this.taskAssembler;
     }
 
     @Override
-    public BaseRepository<Task, TaskQuery> getRepository() {
+    public BaseRepository<TaskQuery, Task> getRepository() {
         return this.taskRepository;
     }
 
@@ -64,20 +61,5 @@ public class TaskServiceImpl extends BaseServiceImpl<EditTaskCmd, TaskDTO, TaskQ
         Task task = taskRepository.find(taskId);
         task.done();
         return Response.of();
-    }
-
-    @Override
-    public void delete(Long taskId) {
-        remove(taskId);
-    }
-
-    @Override
-    public ListResponse<TaskDTO> pagedTasks(TaskQuery query) {
-        return pageList(query, new Pager());
-    }
-
-    @Override
-    public OneResponse<TaskDTO> getTaskById(Long taskId) {
-        return get(taskId);
     }
 }

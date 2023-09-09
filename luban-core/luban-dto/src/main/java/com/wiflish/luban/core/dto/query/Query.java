@@ -19,7 +19,7 @@
  */
 package com.wiflish.luban.core.dto.query;
 
-import com.wiflish.luban.core.dto.BaseDTO;
+import com.wiflish.luban.core.dto.DTO;
 
 import java.io.Serial;
 import java.util.List;
@@ -30,7 +30,7 @@ import java.util.List;
  * @author wiflish
  * @since 2022-03-17
  */
-public abstract class Query extends BaseDTO {
+public abstract class Query extends DTO {
     @Serial
     private static final long serialVersionUID = 3614146467808258286L;
 

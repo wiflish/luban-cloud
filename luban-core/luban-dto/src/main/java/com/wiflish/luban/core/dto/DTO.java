@@ -28,7 +28,7 @@ import java.io.Serializable;
  * @author wiflish
  * @since 2022-03-17
  */
-public abstract class BaseDTO implements Serializable {
+public abstract class DTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 }

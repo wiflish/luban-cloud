@@ -1,30 +1,31 @@
 package com.wiflish.luban.core.service;
 
-import com.wiflish.luban.core.assembler.BaseAssembler;
-import com.wiflish.luban.core.domain.entity.BaseEntity;
+import com.wiflish.luban.core.assembler.Assembler;
+import com.wiflish.luban.core.domain.entity.Entity;
 import com.wiflish.luban.core.domain.repository.BaseRepository;
 import com.wiflish.luban.core.dto.*;
 import com.wiflish.luban.core.dto.query.Query;
 import jakarta.validation.constraints.NotNull;
 
 /**
+ * Command Service
  *
  * @author wiflish
  * @since 2023-09-04
  */
-public interface BaseService<C extends Command, T extends BaseDTO, Q extends Query, E extends BaseEntity> {
+public interface BaseService<C extends Command, Q extends Query, T extends DTO, E extends Entity> {
     /**
      * DTO to Entity assembler
      * @return
      */
-    BaseAssembler<C, T, E> getAssembler();
+    Assembler<C, T, E> getAssembler();
 
     /**
      * Repository
      *
      * @return
      */
-    BaseRepository<E, Q> getRepository();
+    BaseRepository<Q, E> getRepository();
 
     /**
      * save or update entity
@@ -35,18 +36,12 @@ public interface BaseService<C extends Command, T extends BaseDTO, Q extends Que
 
     /**
      * remove by entity id
-     * @param dto
-     */
-    void remove(T dto);
-
-    /**
-     * remove by entity id
      * @param id
      */
-
     void remove(@NotNull Long id);
 
     /**
+     * Get by entity id
      *
      * @param id
      * @return
@@ -54,6 +49,7 @@ public interface BaseService<C extends Command, T extends BaseDTO, Q extends Que
     OneResponse<T> get(@NotNull Long id);
 
     /**
+     * Get One Result By Condition
      *
      * @param dto
      * @return
@@ -66,5 +62,12 @@ public interface BaseService<C extends Command, T extends BaseDTO, Q extends Que
      * @param pager
      * @return
      */
-    ListResponse<T> pageList(Q query, Pager pager);
+    ListResponse<T> listPage(Q query, Pager pager);
+
+    /**
+     *
+     * @param query
+     * @return
+     */
+    ListResponse<T> listAll(Q query);
 }

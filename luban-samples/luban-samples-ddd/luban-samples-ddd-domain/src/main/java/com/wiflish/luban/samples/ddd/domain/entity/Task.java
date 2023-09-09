@@ -2,7 +2,7 @@ package com.wiflish.luban.samples.ddd.domain.entity;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.extra.spring.SpringUtil;
-import com.wiflish.luban.core.domain.entity.BaseEntity;
+import com.wiflish.luban.core.domain.entity.Entity;
 import com.wiflish.luban.samples.ddd.domain.enums.TaskStatusEnum;
 import com.wiflish.luban.samples.ddd.domain.repository.TaskRepository;
 import lombok.Getter;
@@ -18,7 +18,7 @@ import java.io.Serial;
  */
 @Setter
 @Getter
-public class Task extends BaseEntity {
+public class Task extends Entity {
     @Serial
     private static final long serialVersionUID = 1L;
 

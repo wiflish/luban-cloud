@@ -1,6 +1,6 @@
 package com.wiflish.luban.core.app.service;
 
-import com.wiflish.luban.core.domain.entity.BaseEntity;
+import com.wiflish.luban.core.domain.entity.Entity;
 import com.wiflish.luban.core.dto.*;
 import com.wiflish.luban.core.dto.query.Query;
 import com.wiflish.luban.core.service.BaseService;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author wiflish
  * @since 2023-08-29
  */
-public abstract class BaseServiceImpl<C extends Command, T extends BaseDTO, Q extends Query, E extends BaseEntity> implements BaseService<C, T, Q, E> {
+public abstract class BaseServiceImpl<C extends Command, Q extends Query, T extends DTO, E extends Entity> implements BaseService<C, Q, T, E> {
     @Override
     public OneResponse<Long> save(@NotNull C cmd) {
         E entity = getAssembler().toEntity(cmd);
@@ -21,14 +21,8 @@ public abstract class BaseServiceImpl<C extends Command, T extends BaseDTO, Q ex
     }
 
     @Override
-    public void remove(@NotNull T dto) {
-        E entity = getAssembler().toEntity(dto);
-        getRepository().remove(entity);
-    }
-
-    @Override
     public void remove(@NotNull Long id) {
-        getRepository().remove(id);
+        getRepository().delete(id);
     }
 
     @Override
@@ -47,10 +41,18 @@ public abstract class BaseServiceImpl<C extends Command, T extends BaseDTO, Q ex
     }
 
     @Override
-    public ListResponse<T> pageList(@NotNull Q query, Pager pager) {
+    public ListResponse<T> listPage(@NotNull Q query, Pager pager) {
         ListResponse<E> fromDB = getRepository().listPage(query, pager);
         List<T> result = fromDB.getData().stream().map(e -> getAssembler().toDTO(e)).toList();
 
         return ListResponse.of(result, fromDB.getTotal(), fromDB.getPage(), fromDB.getSize());
+    }
+
+    @Override
+    public ListResponse<T> listAll(@NotNull Q query) {
+        List<E> fromDB = getRepository().listAll(query);
+        List<T> result = fromDB.stream().map(e -> getAssembler().toDTO(e)).toList();
+
+        return ListResponse.of(result);
     }
 }

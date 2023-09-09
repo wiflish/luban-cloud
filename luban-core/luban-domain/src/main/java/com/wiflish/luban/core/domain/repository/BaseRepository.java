@@ -1,6 +1,6 @@
 package com.wiflish.luban.core.domain.repository;
 
-import com.wiflish.luban.core.domain.entity.BaseEntity;
+import com.wiflish.luban.core.domain.entity.Entity;
 import com.wiflish.luban.core.dto.ListResponse;
 import com.wiflish.luban.core.dto.Pager;
 import com.wiflish.luban.core.dto.query.Query;
@@ -16,7 +16,7 @@ import java.util.List;
  * @author wiflish
  * @since 2023-08-28
  */
-public interface BaseRepository<E extends BaseEntity, Q extends Query> {
+public interface BaseRepository<Q extends Query, E extends Entity> {
     /**
      * 保存/更新一个entity, 当Entity的id不为空时，更新。
      */
@@ -25,20 +25,7 @@ public interface BaseRepository<E extends BaseEntity, Q extends Query> {
     /**
      * 移除一个entity
      */
-    void remove(@NotNull Long id);
-
-    /**
-     * 移除一个entity
-     *
-     * @param entity entity需要有id.
-     */
-    default void remove(@NotNull E entity) {
-        Long id = entity.getId();
-        if (id == null) {
-            return;
-        }
-        remove(id);
-    }
+    void delete(@NotNull Long id);
 
     /**
      * 通过ID查找entity。

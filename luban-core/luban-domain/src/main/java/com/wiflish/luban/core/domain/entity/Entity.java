@@ -34,7 +34,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-public abstract class BaseEntity implements Serializable {
+public abstract class Entity implements Serializable {
     @Serial
     private static final long serialVersionUID = -1794219784054488134L;
 
@@ -75,7 +75,7 @@ public abstract class BaseEntity implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof BaseEntity entity)) {
+        if (!(o instanceof Entity entity)) {
             return false;
         }
         if (!this.getClass().equals(o.getClass())) {

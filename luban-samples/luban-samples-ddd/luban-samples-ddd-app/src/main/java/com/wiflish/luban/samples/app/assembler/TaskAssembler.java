@@ -1,7 +1,7 @@
 package com.wiflish.luban.samples.app.assembler;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.wiflish.luban.core.assembler.BaseAssembler;
+import com.wiflish.luban.core.assembler.Assembler;
 import com.wiflish.luban.samples.ddd.domain.entity.Task;
 import com.wiflish.luban.samples.ddd.dto.TaskDTO;
 import com.wiflish.luban.samples.ddd.dto.cmd.EditTaskCmd;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @since 2023-08-28
  */
 @Component
-public class TaskAssembler implements BaseAssembler<EditTaskCmd, TaskDTO, Task> {
+public class TaskAssembler implements Assembler<EditTaskCmd, TaskDTO, Task> {
     @Override
     public Task toEntity(TaskDTO dto) {
         Task task = new Task();

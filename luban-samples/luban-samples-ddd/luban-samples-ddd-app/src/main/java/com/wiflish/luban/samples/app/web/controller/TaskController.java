@@ -5,6 +5,7 @@ import com.wiflish.luban.core.dto.OneResponse;
 import com.wiflish.luban.core.dto.Response;
 import com.wiflish.luban.core.dto.exception.BizException;
 import com.wiflish.luban.samples.ddd.constant.SamplesErrorCodeConstant;
+import com.wiflish.luban.samples.ddd.domain.entity.Task;
 import com.wiflish.luban.samples.ddd.domain.enums.TaskStatusEnum;
 import com.wiflish.luban.samples.ddd.dto.TaskDTO;
 import com.wiflish.luban.samples.ddd.dto.cmd.EditTaskCmd;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/sample/ddd")
 public class TaskController {
     @Autowired
-    private TaskService taskService;
+    private TaskService<EditTaskCmd, TaskQuery, TaskDTO, Task> taskService;
 
     /**
      * 新增任务.
@@ -69,7 +70,7 @@ public class TaskController {
      */
     @GetMapping("/tasks")
     public ListResponse<TaskDTO> getTasks(TaskQuery query) {
-        return taskService.pagedTasks(query);
+        return taskService.listAll(query);
     }
 
     /**
@@ -80,6 +81,6 @@ public class TaskController {
     */
     @GetMapping("/tasks/{taskId}")
     public OneResponse<TaskDTO> getTask(@PathVariable Long taskId) {
-        return taskService.getTaskById(taskId);
+        return taskService.get(taskId);
     }
 }
