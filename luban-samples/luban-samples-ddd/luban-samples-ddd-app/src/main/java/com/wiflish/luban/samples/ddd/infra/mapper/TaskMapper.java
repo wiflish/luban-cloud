@@ -1,6 +1,6 @@
-package com.wiflish.luban.samples.infra.mapper;
+package com.wiflish.luban.samples.ddd.infra.mapper;
 
-import com.wiflish.luban.samples.infra.po.TaskPO;
+import com.wiflish.luban.samples.ddd.infra.po.TaskPO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

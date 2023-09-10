@@ -1,10 +1,10 @@
-package com.wiflish.luban.samples.app.service.impl;
+package com.wiflish.luban.samples.ddd.app.service.impl;
 
 import com.wiflish.luban.core.app.service.BaseServiceImpl;
 import com.wiflish.luban.core.assembler.Assembler;
 import com.wiflish.luban.core.domain.repository.BaseRepository;
 import com.wiflish.luban.core.dto.Response;
-import com.wiflish.luban.samples.app.assembler.TaskAssembler;
+import com.wiflish.luban.samples.ddd.app.assembler.TaskAssembler;
 import com.wiflish.luban.samples.ddd.domain.entity.Task;
 import com.wiflish.luban.samples.ddd.domain.repository.TaskRepository;
 import com.wiflish.luban.samples.ddd.domain.service.TaskSyncDomainService;

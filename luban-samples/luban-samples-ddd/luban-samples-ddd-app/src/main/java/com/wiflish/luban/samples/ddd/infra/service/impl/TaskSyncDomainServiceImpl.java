@@ -1,4 +1,4 @@
-package com.wiflish.luban.samples.infra.service.impl;
+package com.wiflish.luban.samples.ddd.infra.service.impl;
 
 import com.wiflish.luban.core.dto.Response;
 import com.wiflish.luban.samples.ddd.domain.entity.Task;

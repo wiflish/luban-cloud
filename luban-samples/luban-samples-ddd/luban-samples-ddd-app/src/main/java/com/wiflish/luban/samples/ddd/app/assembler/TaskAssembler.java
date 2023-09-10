@@ -1,4 +1,4 @@
-package com.wiflish.luban.samples.app.assembler;
+package com.wiflish.luban.samples.ddd.app.assembler;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.wiflish.luban.core.assembler.Assembler;

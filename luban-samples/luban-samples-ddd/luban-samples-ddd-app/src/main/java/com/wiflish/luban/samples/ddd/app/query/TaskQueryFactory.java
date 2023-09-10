@@ -1,8 +1,8 @@
-package com.wiflish.luban.samples.app.query;
+package com.wiflish.luban.samples.ddd.app.query;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wiflish.luban.core.mybatis.query.LambdaQueryWrapperFactory;
-import com.wiflish.luban.samples.infra.po.TaskPO;
+import com.wiflish.luban.samples.ddd.infra.po.TaskPO;
 import com.wiflish.luban.samples.ddd.dto.query.TaskQuery;
 import org.springframework.stereotype.Component;
 

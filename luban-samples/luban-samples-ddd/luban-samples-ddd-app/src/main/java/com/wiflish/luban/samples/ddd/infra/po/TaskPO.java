@@ -1,4 +1,4 @@
-package com.wiflish.luban.samples.infra.po;
+package com.wiflish.luban.samples.ddd.infra.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.wiflish.luban.core.infra.po.BasePO;

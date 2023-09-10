@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wiflish.luban.samples.infra.mapper.TaskMapper">
+<mapper namespace="com.wiflish.luban.samples.ddd.infra.mapper.TaskMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.wiflish.luban.samples.infra.po.TaskPO">
+    <resultMap id="BaseResultMap" type="com.wiflish.luban.samples.ddd.infra.po.TaskPO">
         <result column="ID" property="id" />
         <result column="VERSION" property="version" />
         <result column="DELETED" property="deleted" />

@@ -1,9 +1,9 @@
-package com.wiflish.luban.samples.infra.converter;
+package com.wiflish.luban.samples.ddd.infra.converter;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.wiflish.luban.core.infra.converter.BaseConverter;
+import com.wiflish.luban.samples.ddd.infra.po.TaskPO;
 import com.wiflish.luban.samples.ddd.domain.entity.Task;
-import com.wiflish.luban.samples.infra.po.TaskPO;
 import org.springframework.stereotype.Component;
 
 /**

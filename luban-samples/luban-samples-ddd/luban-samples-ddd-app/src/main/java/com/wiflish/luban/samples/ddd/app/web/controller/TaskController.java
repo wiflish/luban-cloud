@@ -1,4 +1,4 @@
-package com.wiflish.luban.samples.app.web.controller;
+package com.wiflish.luban.samples.ddd.app.web.controller;
 
 import com.wiflish.luban.core.dto.ListResponse;
 import com.wiflish.luban.core.dto.OneResponse;
