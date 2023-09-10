@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan(value = {"com.wiflish.luban.samples.ddd", "com.wiflish.luban"})
-@MapperScan("com.wiflish.luban.samples.infra.mapper")
+@MapperScan("com.wiflish.luban.samples.**.infra.mapper")
 public class LubanSamplesDddApplication {
     public static void main(String[] args) {
         SpringApplication.run(LubanSamplesDddApplication.class, args);
