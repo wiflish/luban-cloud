@@ -24,14 +24,14 @@ spring:
       settings:
         web-allow-others: true
 
+logging:
+  level:
+    org.springframework.security.web: DEBUG
+
 luban:
   mybatis:
     autofill:
       enable: false
-
-
-
-
 
 ---
 # 生产环境配置.
