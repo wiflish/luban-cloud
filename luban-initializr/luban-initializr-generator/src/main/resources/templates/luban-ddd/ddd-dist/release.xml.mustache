@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly>
+    <id>{{artifactId}}-${project.version}</id>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <formats>
+        <format>dir</format>
+        <format>tar.gz</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <includes>
+                <include>bin/*</include>
+            </includes>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../{{artifactId}}-app/target</directory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+            <outputDirectory>lib/</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>

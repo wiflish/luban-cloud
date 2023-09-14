@@ -11,7 +11,9 @@ import lombok.Setter;
 @Setter
 @Getter
 public class LubanProjectDescription extends MutableProjectDescription {
+    private String author;
     private String architecture;
+    private String port;
 
     public LubanProjectDescription() {
     }

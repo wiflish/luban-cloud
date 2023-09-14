@@ -24,10 +24,10 @@ import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.wiflish.luban.initializr.generator.constants.ArchitectureEnum;
+import com.wiflish.luban.initializr.generator.project.LubanProjectDescription;
 import com.wiflish.luban.initializr.generator.project.filter.DependencyFileFilter;
 import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.io.template.TemplateRenderer;
-import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.contributor.ProjectContributor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -55,7 +55,7 @@ public class DDDProjectContributor implements ProjectContributor {
 
     private static final String filePathOrNameReplace = "{";
 
-    private final ProjectDescription description;
+    private final LubanProjectDescription description;
     private final PathMatchingResourcePatternResolver resolver;
     private final TemplateRenderer templateRenderer;
 
@@ -63,7 +63,7 @@ public class DDDProjectContributor implements ProjectContributor {
 
     private final Map<String, Object> paramMap;
 
-    public DDDProjectContributor(ProjectDescription description, TemplateRenderer templateRenderer,
+    public DDDProjectContributor(LubanProjectDescription description, TemplateRenderer templateRenderer,
                                  List<DependencyFileFilter> dependencyFileFilters) {
         this.templateRenderer = templateRenderer;
         this.description = description;
@@ -74,7 +74,7 @@ public class DDDProjectContributor implements ProjectContributor {
         initParamMap(description);
     }
 
-    private void initParamMap(ProjectDescription description) {
+    private void initParamMap(LubanProjectDescription description) {
         this.paramMap.put("name", description.getName());
         this.paramMap.put("applicationName", description.getApplicationName());
         this.paramMap.put("groupId", description.getGroupId());
@@ -83,13 +83,14 @@ public class DDDProjectContributor implements ProjectContributor {
         this.paramMap.put("packageName", description.getPackageName());
         this.paramMap.put("currentDate", LocalDateTimeUtil.format(LocalDateTime.now(), "yyyy-MM-dd"));
         this.paramMap.put("description", description.getDescription());
+        this.paramMap.put("author", description.getAuthor());
+        this.paramMap.put("port", description.getPort());
 
         //FIXME 需要作为参数传进来.
-        this.paramMap.put("logRootDir", "/data/logs/java");
-        this.paramMap.put("port", "8089");
-        this.paramMap.put("dbName", "demo");
-        this.paramMap.put("dbUsername", "root");
-        this.paramMap.put("dbPassword", "root");
+//        this.paramMap.put("logRootDir", "/data/logs/java");
+//        this.paramMap.put("dbName", "demo");
+//        this.paramMap.put("dbUsername", "root");
+//        this.paramMap.put("dbPassword", "root");
 
 
         Map<String, Dependency> requestedDependencies = description.getRequestedDependencies();

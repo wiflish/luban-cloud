@@ -22,9 +22,9 @@ package com.wiflish.luban.initializr.generator.contributor;
 import com.wiflish.luban.initializr.generator.annotation.LubanProjectGenerationConfiguration;
 import com.wiflish.luban.initializr.generator.annotation.condition.ConditionalOnRequestArchitecture;
 import com.wiflish.luban.initializr.generator.constants.ArchitectureEnum;
+import com.wiflish.luban.initializr.generator.project.LubanProjectDescription;
 import com.wiflish.luban.initializr.generator.project.filter.DependencyFileFilter;
 import io.spring.initializr.generator.io.template.TemplateRenderer;
-import io.spring.initializr.generator.project.ProjectDescription;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 
@@ -36,12 +36,12 @@ import java.util.List;
  */
 @LubanProjectGenerationConfiguration
 public class DDDProjectContributorConfiguration {
-    private final ProjectDescription projectDescription;
+    private final LubanProjectDescription projectDescription;
     private final TemplateRenderer templateRenderer;
     @Resource
     private List<DependencyFileFilter> dependencyFileFilters;
 
-    public DDDProjectContributorConfiguration(ProjectDescription projectDescription, TemplateRenderer templateRenderer) {
+    public DDDProjectContributorConfiguration(LubanProjectDescription projectDescription, TemplateRenderer templateRenderer) {
         this.projectDescription = projectDescription;
         this.templateRenderer = templateRenderer;
     }

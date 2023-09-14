@@ -1,0 +1,16 @@
+package {{packageName}};
+
+import {{packageName}}.{{applicationName}}Application;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+
+/**
+ * @author {{author}}
+ * @since {{currentDate}}
+ */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {{applicationName}}Application.class)
+public abstract class BaseTests {
+}

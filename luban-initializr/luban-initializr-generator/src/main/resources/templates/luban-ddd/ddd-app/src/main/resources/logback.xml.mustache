@@ -2,15 +2,14 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
 
-    <property name="APP_NAME" value="luban-samples-ddd" />
+    <property name="APP_NAME" value="{{artifactId}}" />
     <property name="LOG_FILE" value="${LOG_DIR:-logs}/${APP_NAME}/server.log" />
 
     <!-- 彩色日志依赖的渲染 -->
     <property name="FILE_PATTERN" value="%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } %thread %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
     <property name="CONSOLE_PATTERN" value="%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} %highlight(${LOG_LEVEL_PATTERN:-%5p} ${PID:- }) %boldYellow(%thread) %boldGreen(%-40.40logger{39}) : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
 
-    <appender name="SERVER_LOG"
-              class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="SERVER_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_FILE}</file>
         <encoder>
             <pattern>${FILE_PATTERN}</pattern>
