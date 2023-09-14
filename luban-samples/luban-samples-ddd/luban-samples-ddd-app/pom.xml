@@ -40,6 +40,10 @@
             <artifactId>luban-mybatis-starter</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.wiflish.luban</groupId>
+            <artifactId>luban-web-starter</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>

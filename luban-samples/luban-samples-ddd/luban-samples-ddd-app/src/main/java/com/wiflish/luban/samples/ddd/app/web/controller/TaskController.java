@@ -2,6 +2,7 @@ package com.wiflish.luban.samples.ddd.app.web.controller;
 
 import com.wiflish.luban.core.dto.ListResponse;
 import com.wiflish.luban.core.dto.OneResponse;
+import com.wiflish.luban.core.dto.Pager;
 import com.wiflish.luban.core.dto.Response;
 import com.wiflish.luban.core.dto.exception.BizException;
 import com.wiflish.luban.samples.ddd.constant.SamplesErrorCodeConstant;
@@ -69,8 +70,8 @@ public class TaskController {
      * @return
      */
     @GetMapping("/tasks")
-    public ListResponse<TaskDTO> getTasks(TaskQuery query) {
-        return taskService.listAll(query);
+    public ListResponse<TaskDTO> getTasks(TaskQuery query, Pager pager) {
+        return taskService.listPage(query, pager);
     }
 
     /**

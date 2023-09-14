@@ -1,4 +1,4 @@
-package com.wiflish.luban.samples.ddd.app.config;
+package com.wiflish.luban.samples.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
