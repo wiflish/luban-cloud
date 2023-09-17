@@ -6,10 +6,9 @@
         <groupId>{{groupId}}</groupId>
         <artifactId>{{artifactId}}</artifactId>
         <version>{{version}}</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>{{artifactId}}-domain</artifactId>
-    <name>{{artifactId}}-domain</name>
+    <name>${project.artifactId}</name>
 
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
@@ -17,13 +16,18 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.wiflish.luban</groupId>
+            <artifactId>luban-domain</artifactId>
+        </dependency>
+        <dependency>
             <groupId>{{groupId}}</groupId>
             <artifactId>{{artifactId}}-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.wiflish.luban</groupId>
-            <artifactId>luban-domain</artifactId>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
         </dependency>
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>

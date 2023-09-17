@@ -1,17 +1,16 @@
 package {{packageName}};
 
-import {{packageName}}.{{applicationName}};
+import {{packageName}}.{{applicationName}}Application;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-{{#mysql}}import org.springframework.transaction.annotation.Transactional;{{/mysql}}
+
 
 /**
- * @author wiflish
+ * @author {{author}}
  * @since {{currentDate}}
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {{applicationName}}.class)
-{{#mysql}}@Transactional{{/mysql}}
+@SpringBootTest(classes = {{applicationName}}Application.class)
 public abstract class BaseTests {
 }

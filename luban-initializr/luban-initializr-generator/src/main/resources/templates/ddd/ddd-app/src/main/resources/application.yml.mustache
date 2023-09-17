@@ -6,19 +6,34 @@ spring:
   application:
     name: {{artifactId}}
 
+{{#h2}}
+  datasource:
+    url: jdbc:h2:file:/tmp/{{artifactId}}
+    username: root
+    password: root
+  sql:
+    init:
+      schema-locations: classpath:h2/schema.sql
+      mode: always
+  h2:
+    console:
+      enabled: false
+      settings:
+        web-allow-others: true
+{{/h2}}
+
 {{#polaris}}
   cloud:
     polaris:
       address: grpc://localhost:8091
       namespace: default
       discovery:
-        enabled: false
+        enabled: true
       config:
-        enabled: false # 先关闭.
-        refresh-type: reflect # 反射刷新，提高效率.
+        enabled: true
+        refresh-type: reflect # 反射刷新，提高性能.
         data-source: local # 本地模式, 默认本地模式.
         auto-refresh: true # 自动刷新
-
 {{/polaris}}
 
 {{#nacos}}
@@ -26,7 +41,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 47.111.117.8:8848
+        server-addr: localhost:8848
 {{/nacos}}
 
 {{#mysql}}
@@ -35,7 +50,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password:  root
-
     hikari:
       connection-timeout: 3000
       idle-timeout: 600000
@@ -52,36 +66,25 @@ spring:
       pool-prepared-statements: true
       max-open-prepared-statements: 20
       async-init: true
+  sql:
+    init:
+      schema-locations: classpath:mysql/schema.sql
+      mode: always
+{{/mysql}}
 
-#spring:
-#  datasource:
-#    druid:
-#      driver-class-name: com.mysql.cj.jdbc.Driver
-#      url: jdbc:mysql://localhost:3306/{{dbName}}?useUnicode=true&characterEncoding=utf8
-#      username: {{dbUsername}}
-#      password: {{dbPassword}}
-#
-#      filters: stat,wall,slf4j
-#      max-active: 20
-#      initial-size: 1
-#      max-wait: 6000
-#      min-idle: 1
-#      time-between-eviction-runs-millis: 60000
-#      min-evictable-idle-time-millis: 300000
-#      test-while-idle: true
-#      test-on-borrow: false
-#      test-on-return: false
-#      pool-prepared-statements: true
-#      max-open-prepared-statements: 20
-#      async-init: true
-
+{{#mybatis-plus}}
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   global-config:
     db-config:
       logic-delete-field: deleted
-{{/mysql}}
+{{/mybatis-plus}}
 
+{{#spring-security}}
+logging:
+  level:
+    org.springframework.security.web: DEBUG
+{{/spring-security}}
 
 {{#springdoc}}
 springdoc:
@@ -89,6 +92,11 @@ springdoc:
   api-docs:
     enabled: true
 {{/springdoc}}
+
+luban:
+  mybatis:
+    autofill:
+      enable: false
 
 ---
 # 生产环境配置.

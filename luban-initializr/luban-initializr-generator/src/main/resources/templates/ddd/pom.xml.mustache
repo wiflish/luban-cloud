@@ -7,14 +7,14 @@
     <artifactId>{{artifactId}}</artifactId>
     <version>{{version}}</version>
     <packaging>pom</packaging>
-    <description>ddd的微服务脚手架，快速生成微服务骨架代码.</description>
+    <description>{{description}}</description>
     <properties>
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <app.name>{{name}}</app.name>
+        <app.name>{{artifactId}}</app.name>
 
-        <spring.boot.version>3.1.2</spring.boot.version>
+        <spring.boot.version>3.1.3</spring.boot.version>
         <luban.core.version>1.0.0-SNAPSHOT</luban.core.version>
         <logback.version>1.4.5</logback.version>
         <fastjson.version>1.2.83</fastjson.version>
@@ -42,11 +42,6 @@
             <dependency>
                 <groupId>{{groupId}}</groupId>
                 <artifactId>{{artifactId}}-api</artifactId>
-                <version>{{version}}</version>
-            </dependency>
-            <dependency>
-                <groupId>{{groupId}}</groupId>
-                <artifactId>{{artifactId}}-infra</artifactId>
                 <version>{{version}}</version>
             </dependency>
             <dependency>
@@ -84,47 +79,22 @@
                 <version>${luban.core.version}</version>
             </dependency>
             <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${logback.version}</version>
+                <groupId>com.wiflish.luban</groupId>
+                <artifactId>luban-service</artifactId>
+                <version>${luban.core.version}</version>
             </dependency>
             <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-core</artifactId>
-                <version>${logback.version}</version>
+                <groupId>com.wiflish.luban</groupId>
+                <artifactId>luban-mybatis-starter</artifactId>
+                <version>${luban.core.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-                <optional>true</optional>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
+                <groupId>com.wiflish.luban</groupId>
+                <artifactId>luban-web-starter</artifactId>
+                <version>${luban.core.version}</version>
             </dependency>
 
-            {{#springdoc}}
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-ui</artifactId>
-                <version>${springdoc.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.swagger.core.v3</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger.version}</version>
-                <optional>true</optional>
-            </dependency>
-            {{/springdoc}}
-
-            {{#mysql}}
+            {{#mybatis-plus}}
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -140,11 +110,9 @@
                 <artifactId>mybatis-plus-extension</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.version}</version>
-            </dependency>
+            {{/mybatis-plus}}
+
+            {{#mysql}}
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
@@ -179,6 +147,47 @@
             </dependency>
             {{/polaris}}
 
+            {{#springdoc}}
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.version}</version>
+                <optional>true</optional>
+            </dependency>
+            {{/springdoc}}
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
             <!-- 测试包 -->
             <dependency>
                 <groupId>junit</groupId>
@@ -192,7 +201,7 @@
                 <version>${spring.boot.version}</version>
                 <scope>test</scope>
             </dependency>
-            {{#mysql}}
+            {{#mybatis-plus}}
             <dependency>
                 <groupId>org.mybatis.scripting</groupId>
                 <artifactId>mybatis-freemarker</artifactId>
@@ -205,14 +214,13 @@
                 <version>${mybatis.plus.generator.version}</version>
                 <scope>test</scope>
             </dependency>
-            {{/mysql}}
+            {{/mybatis-plus}}
         </dependencies>
     </dependencyManagement>
 
     <modules>
         <module>{{artifactId}}-api</module>
         <module>{{artifactId}}-domain</module>
-        <module>{{artifactId}}-infra</module>
         <module>{{artifactId}}-app</module>
         <module>{{artifactId}}-dist</module>
     </modules>
