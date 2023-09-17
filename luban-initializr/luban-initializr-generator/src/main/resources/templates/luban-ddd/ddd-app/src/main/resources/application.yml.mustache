@@ -72,13 +72,13 @@ spring:
       mode: always
 {{/mysql}}
 
-{{#mybatis}}
+{{#mybatis-plus}}
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   global-config:
     db-config:
       logic-delete-field: deleted
-{{/mybatis}}
+{{/mybatis-plus}}
 
 {{#spring-security}}
 logging:

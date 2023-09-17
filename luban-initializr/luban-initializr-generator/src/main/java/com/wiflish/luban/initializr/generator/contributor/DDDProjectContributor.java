@@ -49,7 +49,7 @@ import java.util.Map;
 @Slf4j
 public class DDDProjectContributor implements ProjectContributor {
     private static final String fileSeparator = File.separator;
-    private static final String rootResource = "classpath:templates/ddd";
+    private static final String rootResource = "classpath:templates/luban-ddd";
     private static final String javaSourceDir = "src/main/java";
     private static final String javaTestSourceDir = "src/test/java";
 

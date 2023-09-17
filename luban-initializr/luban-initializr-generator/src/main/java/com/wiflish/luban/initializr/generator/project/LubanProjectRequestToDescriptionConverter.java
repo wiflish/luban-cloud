@@ -63,6 +63,8 @@ public class LubanProjectRequestToDescriptionConverter
         description.setPlatformVersion(platformVersion);
         description.setVersion(request.getVersion());
         description.setArchitecture(request.getArchitecture());
+        description.setPort(request.getPort());
+        description.setAuthor(request.getAuthor());
 
         resolvedDependencies.forEach((dependency) -> description.addDependency(dependency.getId(),
                 MetadataBuildItemMapper.toDependency(dependency)));

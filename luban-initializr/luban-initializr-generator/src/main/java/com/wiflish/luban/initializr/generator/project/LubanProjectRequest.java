@@ -11,5 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LubanProjectRequest extends WebProjectRequest {
+    private String author;
     private String architecture;
+    private String port;
 }

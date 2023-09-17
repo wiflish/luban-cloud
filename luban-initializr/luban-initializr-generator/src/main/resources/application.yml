@@ -36,7 +36,13 @@ initializr:
       content:
         - name: MySQL
           id: mysql
-          description: MySQL包含mybatis-plus,druid,mysql-connector-java等组件, 提供开箱即用的MySQL服务.
+          description: MySQL包含mysql-connector-java等组件, 提供开箱即用的MySQL服务.
+
+    - name: 数据库访问组件
+      content:
+        - name: Mybatis
+          id: mybatis-plus
+          description: Mybatis-Plus组件.
 
     - name: 其他
       content:
