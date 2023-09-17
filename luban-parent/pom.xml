@@ -82,6 +82,11 @@
             </dependency>
             <dependency>
                 <groupId>com.wiflish.luban</groupId>
+                <artifactId>luban-tools</artifactId>
+                <version>${wiflish.luban.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wiflish.luban</groupId>
                 <artifactId>luban-web-starter</artifactId>
                 <version>${wiflish.luban.version}</version>
             </dependency>

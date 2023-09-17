@@ -21,5 +21,6 @@
     <module>luban-initializr</module>
     <module>luban-starters</module>
     <module>luban-samples</module>
+      <module>luban-core/luban-tools</module>
   </modules>
 </project>

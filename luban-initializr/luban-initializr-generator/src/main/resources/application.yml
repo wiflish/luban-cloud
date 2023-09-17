@@ -5,8 +5,6 @@ initializr:
     value: microservice
   version:
     value: 1.0.0-SNAPSHOT
-  application-name:
-    value: MicroApplication
   name:
     value: demo
   package-name:

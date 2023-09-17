@@ -41,6 +41,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author wiflish
@@ -49,7 +50,7 @@ import java.util.Map;
 @Slf4j
 public class DDDProjectContributor implements ProjectContributor {
     private static final String fileSeparator = File.separator;
-    private static final String rootResource = "classpath:templates/luban-ddd";
+    private static final String rootResource = "classpath:templates/ddd";
     private static final String javaSourceDir = "src/main/java";
     private static final String javaTestSourceDir = "src/test/java";
 
@@ -83,8 +84,8 @@ public class DDDProjectContributor implements ProjectContributor {
         this.paramMap.put("packageName", description.getPackageName());
         this.paramMap.put("currentDate", LocalDateTimeUtil.format(LocalDateTime.now(), "yyyy-MM-dd"));
         this.paramMap.put("description", description.getDescription());
-        this.paramMap.put("author", description.getAuthor());
-        this.paramMap.put("port", description.getPort());
+        this.paramMap.put("author", Optional.ofNullable(description.getAuthor()).orElse("wiflish"));
+        this.paramMap.put("port", Optional.ofNullable(description.getPort()).orElse("9001"));
 
         //FIXME 需要作为参数传进来.
 //        this.paramMap.put("logRootDir", "/data/logs/java");

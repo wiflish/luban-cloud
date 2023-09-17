@@ -55,6 +55,10 @@
 			<artifactId>bcprov-jdk18on</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.wiflish.luban</groupId>
+			<artifactId>luban-tools</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>cn.hutool</groupId>
 			<artifactId>hutool-all</artifactId>
 		</dependency>
