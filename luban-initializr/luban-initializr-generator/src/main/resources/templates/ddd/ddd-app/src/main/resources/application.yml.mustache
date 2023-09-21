@@ -74,6 +74,7 @@ spring:
 
 {{#mybatis-plus}}
 mybatis-plus:
+  type-handlers-package: com.wiflish.luban.core.mybatis.typehandler
   mapper-locations: classpath*:/mapper/**/*.xml
   global-config:
     db-config:
@@ -92,11 +93,6 @@ springdoc:
   api-docs:
     enabled: true
 {{/springdoc}}
-
-luban:
-  mybatis:
-    autofill:
-      enable: false
 
 ---
 # 生产环境配置.

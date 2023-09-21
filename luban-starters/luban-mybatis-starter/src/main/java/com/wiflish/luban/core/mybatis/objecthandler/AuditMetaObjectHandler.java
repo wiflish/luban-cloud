@@ -42,13 +42,14 @@ public class AuditMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CurrentUser principal = (CurrentUser) authentication.getPrincipal();
-        if (principal == null) {
-            return;
+        Long userId = 0L;
+        if (authentication != null) {
+            CurrentUser principal = (CurrentUser) authentication.getPrincipal();
+            if (principal != null) {
+                userId = principal.getUserId();
+            }
         }
-
         log.debug("start insert autofill....");
-        Long userId = principal.getUserId();
         this.strictInsertFill(metaObject, lubanMybatisAutofillProperties.getCreateIdField(), Long.class, userId);
         this.strictInsertFill(metaObject, lubanMybatisAutofillProperties.getUpdateIdField(), Long.class, userId);
     }
@@ -56,13 +57,14 @@ public class AuditMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CurrentUser principal = (CurrentUser) authentication.getPrincipal();
-        if (principal == null) {
-            return;
+        Long userId = 0L;
+        if (authentication != null) {
+            CurrentUser principal = (CurrentUser) authentication.getPrincipal();
+            if (principal != null) {
+                userId = principal.getUserId();
+            }
         }
-
         log.debug("start update autofill....");
-        Long userId = principal.getUserId();
         this.strictUpdateFill(metaObject, lubanMybatisAutofillProperties.getUpdateIdField(), Long.class, userId);
     }
 }

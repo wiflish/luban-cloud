@@ -38,11 +38,6 @@ public class LubanMybatisAutofillProperties {
      */
     public static final String PREFIX = "luban.mybatis.autofill";
 
-    /**
-     * 是否开启自动填入createId和updateId.
-     */
-    private Boolean enable = Boolean.TRUE;
-
     private String createIdField = "createId";
     private String updateIdField = "updateId";
 }
