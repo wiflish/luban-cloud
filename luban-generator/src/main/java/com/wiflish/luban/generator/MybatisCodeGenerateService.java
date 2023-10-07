@@ -17,49 +17,26 @@
  * limitations under the License.
  * ************
  */
-package com.wiflish.luban.samples.common.generator;
+package com.wiflish.luban.generator;
 
-import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.map.MapUtil;
-import cn.hutool.setting.Setting;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.wiflish.luban.core.infra.po.BasePO;
+import com.wiflish.luban.generator.dto.GeneratorDTO;
 
 import java.util.HashMap;
-import java.util.List;
-public class CodeGenerator {
-    private static String url = "";
-    private static String username = "";
-    private static String password = "";
+public class MybatisCodeGenerateService implements CodeGenerateService {
+    private static final String defaultPathTemplate = "/tmp/.code_gen/%s";
 
-    private static String author = "";
-    private static List<String> includeTableNames = ListUtil.empty();
-    private static List<String> tablePrefixNames = ListUtil.empty();
-    private static String parentPackage = "";
-
-    private static void loadProperties() {
-        Setting setting = new Setting("generator.properties");
-
-        author = setting.getStr("generator.author");
-        parentPackage = setting.getStr("generator.parent.package");
-
-        url = setting.getStr("generator.db.url");
-        username = setting.getStr("generator.db.username");
-        password = setting.getStr("generator.db.password");
-        tablePrefixNames = ListUtil.of(setting.getStrings("generator.db.include.table_prefix_names"));
-        includeTableNames = ListUtil.of(setting.getStrings("generator.db.include.table_names"));
-    }
-
-    public static void generate() {
-        loadProperties();
-
-        String projectRootPath = CodeGenerator.class.getClassLoader().getResource("").getPath();
-        try {
-            projectRootPath = projectRootPath.substring(0, projectRootPath.indexOf("/target/test-classes/"));
-        } catch (Exception e) {
-            projectRootPath = projectRootPath.substring(0, projectRootPath.indexOf("/target/classes/"));
+    @Override
+    public void generate(GeneratorDTO generatorDTO) {
+        String projectRootPath = generatorDTO.getOutputBasePath();
+        if (StrUtil.isEmpty(projectRootPath)) {
+            projectRootPath = String.format(defaultPathTemplate, RandomUtil.randomNumbers(20));
         }
 
         String codePath = projectRootPath + "/src/main/java";
@@ -72,17 +49,16 @@ public class CodeGenerator {
         configMap.put(OutputFile.service, "/tmp");
         configMap.put(OutputFile.serviceImpl, "/tmp");
 
-        FastAutoGenerator.create(url, username, password)
+        FastAutoGenerator.create(generatorDTO.getDbUrl(), generatorDTO.getDbUsername(), generatorDTO.getDbPassword())
                 .injectionConfig(builder -> {
 //                    builder.customFile()
                 })
                 .globalConfig(builder -> {
-                    builder.author(author) // 设置作者
-                            .disableOpenDir()
+                    builder.author(generatorDTO.getAuthor()) // 设置作者
                             .outputDir(codePath); // 指定输出目录
                 })
                 .packageConfig(builder -> {
-                    builder.parent(parentPackage) // 设置父包名
+                    builder.parent(generatorDTO.getParentPackage()) // 设置父包名
                             .entity("po")
                             .mapper("dao")
                             .pathInfo(configMap);
@@ -114,14 +90,10 @@ public class CodeGenerator {
                             .enableHyphenStyle()
                             .enableRestStyle()
                             .build();
-                    builder.addInclude(includeTableNames) // 设置需要生成的表名
-                            .addTablePrefix(tablePrefixNames); // 设置过滤表前缀
+                    builder.addInclude(generatorDTO.getIncludeTableNames()) // 设置需要生成的表名
+                            .addTablePrefix(generatorDTO.getTablePrefixNames()); // 设置过滤表前缀
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
-    }
-
-    public static void main(String[] args) {
-        CodeGenerator.generate();
     }
 }

@@ -19,8 +19,8 @@
     <module>luban-parent</module>
     <module>luban-core</module>
     <module>luban-initializr</module>
+    <module>luban-generator</module>
     <module>luban-starters</module>
     <module>luban-samples</module>
-      <module>luban-core/luban-tools</module>
   </modules>
 </project>

@@ -45,5 +45,6 @@
     <module>luban-domain</module>
     <module>luban-service</module>
     <module>luban-app</module>
+    <module>luban-tools</module>
   </modules>
 </project>

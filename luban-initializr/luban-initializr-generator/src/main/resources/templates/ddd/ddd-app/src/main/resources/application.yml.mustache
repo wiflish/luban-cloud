@@ -68,7 +68,7 @@ spring:
       async-init: true
   sql:
     init:
-      schema-locations: classpath:mysql/schema.sql
+      schema-locations: optional:classpath:mysql/schema.sql
       mode: always
 {{/mysql}}
 
