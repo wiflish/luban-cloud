@@ -1,7 +1,6 @@
-package com.wiflish.luban.generator.dto;
+package com.wiflish.luban.generator.api.dto;
 
 import cn.hutool.core.collection.ListUtil;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serial;
@@ -17,15 +16,12 @@ public class GeneratorDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 5429015360123068542L;
 
-    @NotNull
     private String dbUrl;
     private String dbUsername;
     private String dbPassword;
     private List<String> includeTableNames = ListUtil.empty();
     private List<String> tablePrefixNames = ListUtil.empty();
     private String author;
-    private String baseParentPackage;
-    private String boundedContext;
-    private String mapperResourcesDir;
+    private String parentPackage;
     private String outputBasePath;
 }

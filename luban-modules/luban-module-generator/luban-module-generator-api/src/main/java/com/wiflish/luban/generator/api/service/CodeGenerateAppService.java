@@ -1,12 +1,12 @@
-package com.wiflish.luban.generator;
+package com.wiflish.luban.generator.api.service;
 
-import com.wiflish.luban.generator.dto.GeneratorDTO;
+import com.wiflish.luban.generator.api.dto.GeneratorDTO;
 
 /**
  * @author wiflish
  * @since 2023-10-07
  */
-public interface CodeGenerateService {
+public interface CodeGenerateAppService {
     /**
      * 生成代码.
      *

@@ -23,6 +23,8 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -32,7 +34,10 @@ import java.time.LocalDateTime;
  * @since 2022-10-12
  */
 @Data
-public abstract class BasePO {
+public abstract class BasePO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private Long id;
 
     /**

@@ -119,6 +119,16 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.mybatis.scripting</groupId>
+                <artifactId>mybatis-freemarker</artifactId>
+                <version>${mybatis.plus.freemarker.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis.plus.generator.version}</version>
+            </dependency>
 
             <!-- 测试包 -->
             <dependency>
@@ -131,18 +141,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
                 <version>${spring.boot.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mybatis.scripting</groupId>
-                <artifactId>mybatis-freemarker</artifactId>
-                <version>${mybatis.plus.freemarker.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-generator</artifactId>
-                <version>${mybatis.plus.generator.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>

@@ -78,7 +78,8 @@ public class CodeGenerator {
                 })
                 .globalConfig(builder -> {
                     builder.author(author) // 设置作者
-                            .disableOpenDir()
+                            .commentDate("yyyy-MM-dd")
+                            .enableSpringdoc()
                             .outputDir(codePath); // 指定输出目录
                 })
                 .packageConfig(builder -> {

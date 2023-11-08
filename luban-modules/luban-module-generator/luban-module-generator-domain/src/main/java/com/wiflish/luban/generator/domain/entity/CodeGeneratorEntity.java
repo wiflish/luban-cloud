@@ -24,7 +24,8 @@ public class CodeGeneratorEntity extends Entity implements Serializable {
     private Long datasourceId;
     private List<String> includeTableNames = ListUtil.empty();
     private List<String> tablePrefixNames = ListUtil.empty();
-    private String author;
+    private Boolean needSkeleton = true;
+    private String author = "luban";
     private String parentPackage;
     private String outputBasePath;
 
