@@ -1,4 +1,4 @@
-package {{packageName}};
+package {{groupId}};
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -12,8 +12,8 @@ import org.springframework.context.annotation.ComponentScan;
  * @since {{currentDate}}
  */
 @SpringBootApplication
-@ComponentScan(value = {"{{packageName}}", "com.wiflish.luban"})
-@MapperScan("{{packageName}}.**.infra.mapper")
+@ComponentScan(value = {"{{groupId}}", "com.wiflish.luban"})
+@MapperScan("{{groupId}}.**.infra.mapper")
 public class {{applicationName}}Application {
     public static void main(String[] args) {
         SpringApplication.run({{applicationName}}Application.class, args);
