@@ -59,4 +59,12 @@ public class ListResponse<T> extends Response {
 
       return response;
    }
+
+   public static <T> ListResponse<T> of(List<T> data, long total, long page, long size) {
+      ListResponse<T> response = of(data, total);
+      response.setPage((int) page);
+      response.setSize((int) size);
+
+      return response;
+   }
 }

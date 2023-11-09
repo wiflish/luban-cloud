@@ -41,14 +41,7 @@ public class AuditMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Long userId = 0L;
-        if (authentication != null) {
-            CurrentUser principal = (CurrentUser) authentication.getPrincipal();
-            if (principal != null) {
-                userId = principal.getUserId();
-            }
-        }
+        long userId = getUserId();
         log.debug("start insert autofill....");
         this.strictInsertFill(metaObject, lubanMybatisAutofillProperties.getCreateIdField(), Long.class, userId);
         this.strictInsertFill(metaObject, lubanMybatisAutofillProperties.getUpdateIdField(), Long.class, userId);
@@ -56,15 +49,24 @@ public class AuditMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Long userId = 0L;
-        if (authentication != null) {
-            CurrentUser principal = (CurrentUser) authentication.getPrincipal();
-            if (principal != null) {
-                userId = principal.getUserId();
-            }
-        }
+        long userId = getUserId();
         log.debug("start update autofill....");
         this.strictUpdateFill(metaObject, lubanMybatisAutofillProperties.getUpdateIdField(), Long.class, userId);
+    }
+
+    private long getUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            CurrentUser principal = null;
+            try {
+                principal = (CurrentUser) authentication.getPrincipal();
+            } catch (Exception e) {
+                log.warn("当前用户转化失败. error: {}", e.getMessage());
+            }
+            if (principal != null) {
+                return principal.getUserId() == null ? 0 : principal.getUserId();
+            }
+        }
+        return 0;
     }
 }

@@ -19,17 +19,20 @@ public class Pager {
     /**
      * 是否需要总记录数.
      */
-    private Boolean needTotal = false;
+    private Boolean needTotal;
 
     @Min(1)
     @Parameter(description = "页号要大于0", schema = @Schema(type = "integer", defaultValue = "1"))
-    private Integer page = BaseConstant.DEFAULT_PAGE_NO;
+    private Integer page;
 
     @Min(1)
     @Parameter(description = "每页记录数最低为1", schema = @Schema(type = "integer", defaultValue = "20"))
-    private Integer size = BaseConstant.DEFAULT_PAGE_SIZE;
+    private Integer size;
 
     public Pager() {
+        this.needTotal = false;
+        this.page = BaseConstant.DEFAULT_PAGE_NO;
+        this.size = BaseConstant.DEFAULT_PAGE_SIZE;
     }
 
     public Pager(int page, int size) {
