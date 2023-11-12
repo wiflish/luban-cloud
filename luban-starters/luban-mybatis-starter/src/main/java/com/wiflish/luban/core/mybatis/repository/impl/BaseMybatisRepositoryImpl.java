@@ -1,6 +1,5 @@
 package com.wiflish.luban.core.mybatis.repository.impl;
 
-import cn.hutool.core.util.ReflectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -15,7 +14,6 @@ import com.wiflish.luban.core.mybatis.query.QueryFunction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 import static com.wiflish.luban.core.dto.constant.BaseConstant.DEFAULT_PAGE_NO;
@@ -32,7 +30,9 @@ public abstract class BaseMybatisRepositoryImpl<Q extends Query, E extends Entit
 
     protected abstract BaseConverter<Q, E, PO> getConverter();
 
-    protected abstract QueryFunction<Q, PO> getQueryFunction();
+    protected QueryFunction<Q, PO> getQueryFunction() {
+        return query -> new LambdaQueryWrapper<>();
+    }
 
     @Override
     public Long save(E entity) {
@@ -64,27 +64,7 @@ public abstract class BaseMybatisRepositoryImpl<Q extends Query, E extends Entit
 
     @Override
     public E find(Q query) {
-        PO po = getConverter().toPO(query);
-
-        LambdaQueryWrapper<PO> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        Method[] methods = ReflectUtil.getMethods(po.getClass());
-        for (Method method : methods) {
-            if (!method.getName().startsWith("get")) {
-                continue;
-            }
-            try {
-                Object value = method.invoke(po);
-                lambdaQueryWrapper.eq(value != null, t -> {
-                    try {
-                        return method.invoke(po);
-                    } catch (Exception ignored) {
-                    }
-                    return null;
-                }, value);
-            } catch (Exception e) {
-                log.warn("拼接SQL失败，方法名：{}", method.getName(), e);
-            }
-        }
+        LambdaQueryWrapper<PO> lambdaQueryWrapper = getQueryFunction().apply(query);
 
         PO fromDB = getMapper().selectOne(lambdaQueryWrapper);
         return getConverter().toEntity(fromDB);
@@ -102,8 +82,7 @@ public abstract class BaseMybatisRepositoryImpl<Q extends Query, E extends Entit
 
     @Override
     public ListResponse<E> listPage(Q query, Pager pager) {
-        QueryFunction<Q, PO> queryFunction = getQueryFunction();
-        LambdaQueryWrapper<PO> lambdaQueryWrapper = queryFunction.apply(query);
+        LambdaQueryWrapper<PO> lambdaQueryWrapper = getQueryFunction().apply(query);
         if (lambdaQueryWrapper == null) {
             lambdaQueryWrapper = new LambdaQueryWrapper<>();
         }
