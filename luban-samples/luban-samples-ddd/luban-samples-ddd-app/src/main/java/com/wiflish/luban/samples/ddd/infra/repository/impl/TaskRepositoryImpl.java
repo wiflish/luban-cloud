@@ -1,7 +1,9 @@
 package com.wiflish.luban.samples.ddd.infra.repository.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wiflish.luban.core.infra.converter.BaseConverter;
+import com.wiflish.luban.core.mybatis.query.QueryFunction;
 import com.wiflish.luban.core.mybatis.repository.impl.BaseMybatisRepositoryImpl;
 import com.wiflish.luban.samples.ddd.infra.po.TaskPO;
 import com.wiflish.luban.samples.ddd.domain.entity.Task;
@@ -30,7 +32,19 @@ public class TaskRepositoryImpl extends BaseMybatisRepositoryImpl<TaskQuery, Tas
     }
 
     @Override
-    protected BaseConverter<Task, TaskPO> getConverter() {
+    protected BaseConverter<TaskQuery, Task, TaskPO> getConverter() {
         return taskConverter;
+    }
+
+    @Override
+    protected QueryFunction<TaskQuery, TaskPO> getQueryFunction() {
+        return query -> {
+            LambdaQueryWrapper<TaskPO> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+
+            lambdaQueryWrapper.likeRight(query.getTaskName() != null, TaskPO::getName, query.getTaskName());
+            lambdaQueryWrapper.eq(query.getStatus() != null, TaskPO::getStatus, query.getStatus());
+
+            return lambdaQueryWrapper;
+        };
     }
 }

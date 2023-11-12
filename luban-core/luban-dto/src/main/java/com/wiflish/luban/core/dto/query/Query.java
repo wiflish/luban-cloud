@@ -20,6 +20,7 @@
 package com.wiflish.luban.core.dto.query;
 
 import com.wiflish.luban.core.dto.DTO;
+import lombok.Getter;
 
 import java.io.Serial;
 import java.util.List;
@@ -30,6 +31,7 @@ import java.util.List;
  * @author wiflish
  * @since 2022-03-17
  */
+@Getter
 public abstract class Query extends DTO {
     @Serial
     private static final long serialVersionUID = 3614146467808258286L;
@@ -42,16 +44,8 @@ public abstract class Query extends DTO {
 
     private String groupBy;
 
-    public String getWrapperId() {
-        return wrapperId;
-    }
-
     public void setWrapperId(String wrapperId) {
         this.wrapperId = wrapperId;
-    }
-
-    public String getKeyword() {
-        return keyword;
     }
 
     public Query setKeyword(String keyword) {
@@ -59,17 +53,9 @@ public abstract class Query extends DTO {
         return this;
     }
 
-    public List<OrderBy> getOrderBys() {
-        return orderBys;
-    }
-
     public Query setOrderBys(List<OrderBy> orderBys) {
         this.orderBys = orderBys;
         return this;
-    }
-
-    public String getGroupBy() {
-        return groupBy;
     }
 
     public Query setGroupBy(String groupBy) {

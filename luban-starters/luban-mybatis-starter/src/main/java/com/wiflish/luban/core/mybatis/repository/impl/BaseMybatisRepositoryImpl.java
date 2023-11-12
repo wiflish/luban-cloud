@@ -11,9 +11,8 @@ import com.wiflish.luban.core.dto.Pager;
 import com.wiflish.luban.core.dto.query.Query;
 import com.wiflish.luban.core.infra.converter.BaseConverter;
 import com.wiflish.luban.core.infra.po.BasePO;
-import com.wiflish.luban.core.mybatis.query.LambdaQueryWrapperFactory;
+import com.wiflish.luban.core.mybatis.query.QueryFunction;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -29,16 +28,11 @@ import static com.wiflish.luban.core.dto.constant.BaseConstant.DEFAULT_PAGE_SIZE
 @Slf4j
 @Component
 public abstract class BaseMybatisRepositoryImpl<Q extends Query, E extends Entity, PO extends BasePO> implements BaseRepository<Q, E> {
-    @Autowired
-    protected List<LambdaQueryWrapperFactory<PO, Q>> factories;
-
     protected abstract BaseMapper<PO> getMapper();
 
-    protected abstract BaseConverter<E, PO> getConverter();
+    protected abstract BaseConverter<Q, E, PO> getConverter();
 
-    protected LambdaQueryWrapperFactory<PO, Q> getLambdaQueryWrapperFactory(Q query) {
-        return (factories.stream().filter(factory -> factory.getWrapperId().equals(query.getWrapperId())).findFirst().orElse(null));
-    }
+    protected abstract QueryFunction<Q, PO> getQueryFunction();
 
     @Override
     public Long save(E entity) {
@@ -53,8 +47,13 @@ public abstract class BaseMybatisRepositoryImpl<Q extends Query, E extends Entit
     }
 
     @Override
-    public void delete(Long id) {
-        getMapper().deleteById(id);
+    public Integer delete(Long id) {
+        return getMapper().deleteById(id);
+    }
+
+    @Override
+    public Integer delete(List<Long> ids) {
+        return getMapper().deleteBatchIds(ids);
     }
 
     @Override
@@ -64,8 +63,8 @@ public abstract class BaseMybatisRepositoryImpl<Q extends Query, E extends Entit
     }
 
     @Override
-    public E find(E entity) {
-        PO po = getConverter().toPO(entity);
+    public E find(Q query) {
+        PO po = getConverter().toPO(query);
 
         LambdaQueryWrapper<PO> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         Method[] methods = ReflectUtil.getMethods(po.getClass());
@@ -103,12 +102,10 @@ public abstract class BaseMybatisRepositoryImpl<Q extends Query, E extends Entit
 
     @Override
     public ListResponse<E> listPage(Q query, Pager pager) {
-        LambdaQueryWrapperFactory<PO, Q> lambdaQueryWrapperFactory = getLambdaQueryWrapperFactory(query);
-        LambdaQueryWrapper<PO> lambdaQueryWrapper;
-        if (lambdaQueryWrapperFactory == null) {
+        QueryFunction<Q, PO> queryFunction = getQueryFunction();
+        LambdaQueryWrapper<PO> lambdaQueryWrapper = queryFunction.apply(query);
+        if (lambdaQueryWrapper == null) {
             lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        } else {
-            lambdaQueryWrapper = lambdaQueryWrapperFactory.getLambdaQueryWrapper(query);
         }
 
         Page<PO> pageFromDB = getMapper().selectPage(new Page<>(pager.getPage(), pager.getSize(), pager.getNeedTotal()), lambdaQueryWrapper);

@@ -7,8 +7,10 @@ import com.wiflish.luban.core.dto.*;
 import com.wiflish.luban.core.dto.query.Query;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.List;
+
 /**
- * Command Service
+ * Base Service
  *
  * @author wiflish
  * @since 2023-09-04
@@ -30,7 +32,7 @@ public interface BaseService<C extends Command, Q extends Query, T extends DTO, 
     /**
      * save or update entity
      * @param cmd
-     * @return
+     * @return id
      */
     OneResponse<Long> save(C cmd);
 
@@ -38,7 +40,13 @@ public interface BaseService<C extends Command, Q extends Query, T extends DTO, 
      * remove by entity id
      * @param id
      */
-    void remove(@NotNull Long id);
+    OneResponse<Integer> remove(@NotNull Long id);
+
+    /**
+     * batch remove by entity id
+     * @param ids
+     */
+    OneResponse<Integer> remove(@NotNull List<Long> ids);
 
     /**
      * Get by entity id
@@ -51,10 +59,10 @@ public interface BaseService<C extends Command, Q extends Query, T extends DTO, 
     /**
      * Get One Result By Condition
      *
-     * @param dto
+     * @param query
      * @return
      */
-    OneResponse<T> get(T dto);
+    OneResponse<T> get(Q query);
 
     /**
      *

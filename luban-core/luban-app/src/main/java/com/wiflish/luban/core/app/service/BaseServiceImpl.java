@@ -21,8 +21,13 @@ public abstract class BaseServiceImpl<C extends Command, Q extends Query, T exte
     }
 
     @Override
-    public void remove(@NotNull Long id) {
-        getRepository().delete(id);
+    public OneResponse<Integer> remove(@NotNull Long id) {
+        return OneResponse.of(getRepository().delete(id));
+    }
+
+    @Override
+    public OneResponse<Integer> remove(List<Long> ids) {
+        return OneResponse.of(getRepository().delete(ids));
     }
 
     @Override
@@ -33,9 +38,8 @@ public abstract class BaseServiceImpl<C extends Command, Q extends Query, T exte
     }
 
     @Override
-    public OneResponse<T> get(@NotNull T dto) {
-        E entity = getAssembler().toEntity(dto);
-        E fromDB = getRepository().find(entity);
+    public OneResponse<T> get(@NotNull Q query) {
+        E fromDB = getRepository().find(query);
 
         return OneResponse.of(getAssembler().toDTO(fromDB));
     }

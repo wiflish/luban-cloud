@@ -25,7 +25,14 @@ public interface BaseRepository<Q extends Query, E extends Entity> {
     /**
      * 移除一个entity
      */
-    void delete(@NotNull Long id);
+    Integer delete(@NotNull Long id);
+
+    /**
+     * 批量删除多个entity
+     *
+     * @param ids
+     */
+    Integer delete(List<Long> ids);
 
     /**
      * 通过ID查找entity。
@@ -35,10 +42,10 @@ public interface BaseRepository<Q extends Query, E extends Entity> {
     /**
      * 根据不为空的实体属性查询，多个属性查询是 and 连接。
      *
-     * @param entity
+     * @param query
      * @return
      */
-    E find(@NotNull E entity);
+    E find(@NotNull Q query);
 
     /**
      * 返回符合条件的所有记录，默认限制最大条数2000.
