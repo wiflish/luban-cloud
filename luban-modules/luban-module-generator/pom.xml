@@ -15,7 +15,7 @@
         <app.name>luban-module-generator</app.name>
 
         <spring.boot.version>3.1.3</spring.boot.version>
-        <luban.core.version>1.0.0-SNAPSHOT</luban.core.version>
+        <luban.version>1.0.0-SNAPSHOT</luban.version>
         <logback.version>1.4.5</logback.version>
         <fastjson.version>1.2.83</fastjson.version>
         <lombok.version>1.18.24</lombok.version>
@@ -71,27 +71,27 @@
             <dependency>
                 <groupId>com.wiflish.luban</groupId>
                 <artifactId>luban-dto</artifactId>
-                <version>${luban.core.version}</version>
+                <version>${luban.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.wiflish.luban</groupId>
                 <artifactId>luban-domain</artifactId>
-                <version>${luban.core.version}</version>
+                <version>${luban.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.wiflish.luban</groupId>
                 <artifactId>luban-service</artifactId>
-                <version>${luban.core.version}</version>
+                <version>${luban.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.wiflish.luban</groupId>
                 <artifactId>luban-mybatis-starter</artifactId>
-                <version>${luban.core.version}</version>
+                <version>${luban.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.wiflish.luban</groupId>
                 <artifactId>luban-web-starter</artifactId>
-                <version>${luban.core.version}</version>
+                <version>${luban.version}</version>
             </dependency>
 
             <dependency>

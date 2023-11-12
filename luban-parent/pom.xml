@@ -37,6 +37,7 @@
         <mybatis-plus.version>3.5.3.2</mybatis-plus.version>
         <mybatis.plus.generator.version>3.5.3.2</mybatis.plus.generator.version>
         <mybatis.plus.freemarker.version>1.2.4</mybatis.plus.freemarker.version>
+        <redisson.version>3.24.3</redisson.version>
         <springdoc.version>2.2.0</springdoc.version>
         <junit.version>4.13.2</junit.version>
     </properties>
@@ -156,6 +157,11 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
             </dependency>
 
             <dependency>

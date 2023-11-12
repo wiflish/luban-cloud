@@ -15,34 +15,17 @@
   <packaging>pom</packaging>
   <name>${project.artifactId}:${project.version}</name>
   <description>${project.artifactId}</description>
-  
+
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-  
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>3.3.1</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.9.0</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>3.1.1</version>
-      </plugin>
-    </plugins>
-  </build>
+
   <modules>
     <module>luban-i18n-starter</module>
     <module>luban-mybatis-starter</module>
     <module>luban-web-starter</module>
+    <module>luban-cache-starter</module>
   </modules>
 </project>
