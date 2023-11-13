@@ -1,7 +1,0 @@
-/**
- * 应用服务层，应用服务核心层，对底层的业务领域逻辑做包装、编排和参数转换、验证等逻辑，不涉及具体的业务逻辑代码。
- *
- * @author wiflish
- * @since 2023-10-08
- */
-package com.wiflish.luban.generator.app;

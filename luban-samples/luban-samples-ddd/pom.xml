@@ -12,6 +12,7 @@
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <maven.deploy.skip>true</maven.deploy.skip>
         <app.name>luban-samples-ddd</app.name>
 
         <spring.boot.version>3.1.2</spring.boot.version>

@@ -12,6 +12,10 @@
     <name>${project.artifactId}:${project.version}</name>
     <description>${project.artifactId}:${project.version}</description>
 
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.wiflish.luban</groupId>
