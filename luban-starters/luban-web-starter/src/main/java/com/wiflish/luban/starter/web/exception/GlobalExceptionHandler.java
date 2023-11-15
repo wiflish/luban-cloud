@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,9 +25,10 @@ import com.wiflish.luban.core.dto.exception.BizException;
 import com.wiflish.luban.core.dto.exception.InvalidParamException;
 import com.wiflish.luban.core.dto.exception.InvalidPermissionException;
 import com.wiflish.luban.core.dto.exception.SysException;
-import com.wiflish.luban.starter.i18n.MessageSourceResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.text.MessageFormat;
+import java.util.Locale;
 
 import static com.wiflish.luban.core.dto.exception.BaseErrorCodeConstant.*;
 
@@ -50,22 +52,21 @@ import static com.wiflish.luban.core.dto.exception.BaseErrorCodeConstant.*;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @Autowired
-    private MessageSourceResolver messageSourceResolver;
+    private MessageSource messageSource;
 
     @ExceptionHandler(InvalidParamException.class)
     public ResponseEntity<?> handleInvalidParamException(InvalidParamException ex) {
         log.error("参数异常: {}", ex.getMessage());
         Response response = Response.failure(INVALID_PARAM_CODE);
-        response.setMessage(messageSourceResolver.getMessage(INVALID_PARAM_CODE.getKey()));
+        response.setMessage(getLocalizedMessage(INVALID_PARAM_CODE.getKey()));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity<?> handleBindException(BindException ex) {
         log.error("参数异常: {}", ex.getMessage());
-        StringBuilder message = new StringBuilder();
-
         int idx = 0;
+        StringBuilder message = new StringBuilder();
         for (FieldError fieldError : ex.getFieldErrors()) {
             String errorMessage = fieldError.getDefaultMessage();
             if (StrUtil.isEmpty(errorMessage)) {
@@ -80,15 +81,15 @@ public class GlobalExceptionHandler {
 
         //FIXME 需要将Validation的相关消息转换为国际化消息.
         Response response = Response.failure(INVALID_PARAM_CODE);
-        response.setMessage(messageSourceResolver.getMessage(INVALID_PARAM_CODE.getKey()));
+        response.setMessage(getLocalizedMessage(INVALID_PARAM_CODE.getKey()));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidPermissionException.class)
     public ResponseEntity<?> handleInvalidPermissionException(InvalidPermissionException ex) {
         log.error("权限异常: {}", ex.getMessage());
-        Response response = Response.failure(INVALID_PERMISSION_CODE);
-        response.setMessage(messageSourceResolver.getMessage(INVALID_PERMISSION_CODE.getKey()));
+        Response response = Response.failure(NO_PERMISSION);
+        response.setMessage(getLocalizedMessage(NO_PERMISSION.getKey()));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
 
@@ -96,7 +97,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleBizException(BizException ex) {
         log.error("业务异常: {}", ex.getErrCode());
         Response response = Response.failure(ex.getErrCode());
-        response.setMessage(messageSourceResolver.getMessage(ex.getErrCode().getKey()));
+        response.setMessage(getLocalizedMessage(ex.getErrCode().getKey()));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -104,7 +105,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleSysException(SysException ex) {
         log.error("系统繁忙: ", ex);
         Response response = Response.failure(ex.getErrCode());
-        response.setMessage(messageSourceResolver.getMessage(ex.getErrCode().getKey()));
+        response.setMessage(getLocalizedMessage(ex.getErrCode().getKey()));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -112,7 +113,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleGeneralException(Throwable ex) {
         log.error("服务器繁忙: ", ex);
         Response response = Response.failure(SERVER_ERROR_CODE);
-        response.setMessage(messageSourceResolver.getMessage(SERVER_ERROR_CODE.getKey()));
+        response.setMessage(getLocalizedMessage(SERVER_ERROR_CODE.getKey()));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private String getLocalizedMessage(String key) {
+        Locale locale = LocaleContextHolder.getLocale();
+        return messageSource.getMessage(key, null, locale);
     }
 }

@@ -20,12 +20,15 @@
 package com.wiflish.luban.core.dto.exception;
 
 /**
+ * 1000以下为系统错误码.
+ *
  * @author wiflish
  * @since 2023-03-22
  */
 public abstract class BaseErrorCodeConstant {
     public static final ErrorCode SUCCESS_CODE = ErrorCode.of("0");
-    public static final ErrorCode SERVER_ERROR_CODE = ErrorCode.of("-1");
-    public static final ErrorCode INVALID_PARAM_CODE = ErrorCode.of("0001");
-    public static final ErrorCode INVALID_PERMISSION_CODE = ErrorCode.of("0002");
+    public static final ErrorCode INVALID_PARAM_CODE = ErrorCode.of("400");
+    public static final ErrorCode UNAUTHORIZED = ErrorCode.of("401");
+    public static final ErrorCode NO_PERMISSION = ErrorCode.of("403");
+    public static final ErrorCode SERVER_ERROR_CODE = ErrorCode.of("500");
 }

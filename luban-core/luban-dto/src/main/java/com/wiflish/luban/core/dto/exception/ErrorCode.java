@@ -21,11 +21,10 @@ package com.wiflish.luban.core.dto.exception;
 
 import lombok.Getter;
 import lombok.Setter;
+@Getter
 public class ErrorCode {
-    @Getter
-    private String prefix = "error.";
+    private final String prefix = "error.";
 
-    @Getter
     @Setter
     private String code;
 

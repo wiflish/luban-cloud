@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableConfigurationProperties(SecurityProperties.class)
+@EnableConfigurationProperties(LubanSecurityProperties.class)
 public class BaseSecurityConfig {
 
     @Bean

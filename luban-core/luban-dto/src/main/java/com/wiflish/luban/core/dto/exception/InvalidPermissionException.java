@@ -32,6 +32,6 @@ public class InvalidPermissionException extends BaseException {
     private static final long serialVersionUID = 1L;
 
     public InvalidPermissionException() {
-        super(BaseErrorCodeConstant.INVALID_PERMISSION_CODE);
+        super(BaseErrorCodeConstant.NO_PERMISSION);
     }
 }
