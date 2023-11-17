@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @since 2023-08-28
  */
 @Component
-public class TaskConverter extends BaseConverter<TaskQuery, Task, TaskPO> {
+public class TaskConverter implements BaseConverter<TaskQuery, Task, TaskPO> {
     @Override
     public TaskPO toPO(Task entity) {
         TaskPO taskPO = new TaskPO();
