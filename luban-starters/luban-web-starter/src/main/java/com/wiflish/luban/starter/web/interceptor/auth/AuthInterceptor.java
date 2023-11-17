@@ -55,7 +55,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         String token = request.getHeader(authService.getTokenName());
         Object logon = authService.checkLogin(new AuthCmd(token));
         if (logon == null) {
-            throw new BizException(BaseErrorCodeConstant.INVALID_PERMISSION_CODE);
+            throw new BizException(BaseErrorCodeConstant.NO_PERMISSION);
         }
 
         return true;
