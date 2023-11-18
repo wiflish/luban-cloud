@@ -97,10 +97,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<?> accessDeniedException(AccessDeniedException ex) {
-        log.error("认证异常: {}", ex.getMessage());
-        Response response = Response.failure(UNAUTHORIZED);
-        response.setMessage(getLocalizedMessage(UNAUTHORIZED.getKey()));
-        return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+        log.error("权限异常: {}", ex.getMessage());
+        Response response = Response.failure(NO_PERMISSION);
+        response.setMessage(getLocalizedMessage(NO_PERMISSION.getKey()));
+        return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(AuthenticationException.class)
