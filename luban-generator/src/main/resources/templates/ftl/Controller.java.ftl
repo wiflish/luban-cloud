@@ -22,7 +22,7 @@ package ${package.Parent}.app.controller;
 import cn.hutool.core.collection.ListUtil;
 import ${package.Parent}.domain.entity.${luban.entityName};
 import ${package.Parent}.api.dto.${luban.entityName}DTO;
-import ${package.Parent}.api.dto.${luban.entityName}Query;
+import ${package.Parent}.api.dto.query.${luban.entityName}Query;
 import ${package.Parent}.api.dto.cmd.${luban.entityName}EditCmd;
 import ${package.Parent}.api.service.${luban.entityName}AService;
 import com.wiflish.luban.core.dto.ListResponse;

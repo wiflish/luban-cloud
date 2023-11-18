@@ -19,6 +19,7 @@
  */
 package com.wiflish.luban.generator.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
@@ -33,6 +34,7 @@ import com.wiflish.luban.generator.dto.GeneratorDTO;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -49,20 +51,59 @@ public class MybatisCodeGenerator implements CodeGenerator {
         String codePath = projectRootPath + "/src/main/java";
         String mapperPath = projectRootPath + buildMapperPath(generatorDTO);
 
+        String domainRootPath = projectRootPath.replace("-app", "-domain");
+        String apiRootPath = projectRootPath.replace("-app", "-api");
+
         // 设置controller, mapperXml生成路径
         HashMap<OutputFile, String> configMap = MapUtil.newHashMap();
         configMap.put(OutputFile.xml, mapperPath);
 
         FastAutoGenerator.create(generatorDTO.getDbUrl(), generatorDTO.getDbUsername(), generatorDTO.getDbPassword())
                 .injectionConfig(builder -> {
+
                     CustomFile.Builder controllerBuilder = new CustomFile.Builder();
                     controllerBuilder.enableFileOverride()
                             .templatePath("templates/ftl/Controller.java.ftl")
                             .packageName("app.controller")
                             .formatNameFunction(tableInfo -> StrUtil.upperFirst(StrUtil.toCamelCase(tableInfo.getName())))
                             .fileName("Controller.java");
+                    CustomFile.Builder entityBuilder = new CustomFile.Builder();
+                    entityBuilder.enableFileOverride()
+                            .templatePath("templates/ftl/Entity.java.ftl")
+                            .packageName("domain.entity")
+                            .formatNameFunction(tableInfo -> StrUtil.upperFirst(StrUtil.toCamelCase(tableInfo.getName())))
+                            .fileName(".java")
+                            .filePath(buildDomainCodePath(domainRootPath, generatorDTO));
+                    CustomFile.Builder queryBuilder = new CustomFile.Builder();
+                    queryBuilder.enableFileOverride()
+                            .templatePath("templates/ftl/Query.java.ftl")
+                            .packageName("api.dto.query")
+                            .formatNameFunction(tableInfo -> StrUtil.upperFirst(StrUtil.toCamelCase(tableInfo.getName())) + "Query")
+                            .fileName(".java")
+                            .filePath(buildApiCodePath(apiRootPath, generatorDTO));
+                    CustomFile.Builder dtoBuilder = new CustomFile.Builder();
+                    dtoBuilder.enableFileOverride()
+                            .templatePath("templates/ftl/DTO.java.ftl")
+                            .packageName("api.dto")
+                            .formatNameFunction(tableInfo -> StrUtil.upperFirst(StrUtil.toCamelCase(tableInfo.getName())) + "DTO")
+                            .fileName(".java")
+                            .filePath(buildApiCodePath(apiRootPath, generatorDTO));
+                    CustomFile.Builder cmdBuilder = new CustomFile.Builder();
+                    cmdBuilder.enableFileOverride()
+                            .templatePath("templates/ftl/Cmd.java.ftl")
+                            .packageName("api.dto.cmd")
+                            .formatNameFunction(tableInfo -> StrUtil.upperFirst(StrUtil.toCamelCase(tableInfo.getName())) + "EditCmd")
+                            .fileName(".java")
+                            .filePath(buildApiCodePath(apiRootPath, generatorDTO));
 
-                    builder.customFile(controllerBuilder.build())
+                    List<CustomFile> customFiles = CollectionUtil.newArrayList();
+                    customFiles.add(controllerBuilder.build());
+                    customFiles.add(queryBuilder.build());
+                    customFiles.add(entityBuilder.build());
+                    customFiles.add(dtoBuilder.build());
+                    customFiles.add(cmdBuilder.build());
+
+                    builder.customFile(customFiles)
                             .beforeOutputFile((tableInfo, map) -> {
                                 String name = tableInfo.getName();
 
@@ -117,6 +158,28 @@ public class MybatisCodeGenerator implements CodeGenerator {
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
 
+    }
+
+    private String buildApiCodePath(String apiRootPath, GeneratorDTO generatorDTO) {
+        StringBuilder resourcePath = new StringBuilder();
+        resourcePath.append(apiRootPath);
+        resourcePath.append("/src/main/java");
+        resourcePath.append("/").append(generatorDTO.getBaseParentPackage().replace(".", "/"));
+        if (StrUtil.isNotEmpty(generatorDTO.getBoundedContext())) {
+            resourcePath.append("/").append(generatorDTO.getBoundedContext());
+        }
+        return resourcePath.toString();
+    }
+
+    private String buildDomainCodePath(String domainRootPath, GeneratorDTO generatorDTO) {
+        StringBuilder resourcePath = new StringBuilder();
+        resourcePath.append(domainRootPath);
+        resourcePath.append("/src/main/java");
+        resourcePath.append("/").append(generatorDTO.getBaseParentPackage().replace(".", "/"));
+        if (StrUtil.isNotEmpty(generatorDTO.getBoundedContext())) {
+            resourcePath.append("/").append(generatorDTO.getBoundedContext());
+        }
+        return resourcePath.toString();
     }
 
     private String buildMapping(String name) {
