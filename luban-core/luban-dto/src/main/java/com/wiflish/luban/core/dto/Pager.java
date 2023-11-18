@@ -19,6 +19,7 @@ public class Pager {
     /**
      * 是否需要总记录数.
      */
+    @Parameter(description = "是否需要查询总记录数", schema = @Schema(type = "boolean", defaultValue = "1"))
     private Boolean needTotal;
 
     @Min(1)

@@ -10,6 +10,7 @@ import com.wiflish.luban.core.dto.Pager;
 import com.wiflish.luban.core.dto.query.Query;
 import com.wiflish.luban.core.infra.converter.BaseConverter;
 import com.wiflish.luban.core.infra.po.BasePO;
+import com.wiflish.luban.core.infra.util.PageUtil;
 import com.wiflish.luban.starter.mybatis.query.QueryFunction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -83,8 +84,9 @@ public abstract class BaseMybatisRepositoryImpl<Q extends Query, E extends Entit
     @Override
     public ListResponse<E> listPage(Q query, Pager pager) {
         LambdaQueryWrapper<PO> lambdaQueryWrapper = getQueryFunction().apply(query);
+        Page<PO> page = PageUtil.toMybatisPlusPage(pager);
 
-        Page<PO> pageFromDB = getMapper().selectPage(new Page<>(pager.getPage(), pager.getSize(), pager.getNeedTotal()), lambdaQueryWrapper);
+        Page<PO> pageFromDB = getMapper().selectPage(page, lambdaQueryWrapper);
         List<E> entities = pageFromDB.getRecords().stream().map(po -> getConverter().toEntity(po)).toList();
 
         return ListResponse.of(entities, pageFromDB.getTotal(), pager.getPage(), pager.getSize());

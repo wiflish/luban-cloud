@@ -32,6 +32,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -81,7 +83,7 @@ public class GlobalExceptionHandler {
 
         //FIXME 需要将Validation的相关消息转换为国际化消息.
         Response response = Response.failure(INVALID_PARAM_CODE);
-        response.setMessage(getLocalizedMessage(INVALID_PARAM_CODE.getKey()));
+        response.setMessage(getLocalizedMessage(INVALID_PARAM_CODE.getKey()) + ", " + message);
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
@@ -91,6 +93,22 @@ public class GlobalExceptionHandler {
         Response response = Response.failure(NO_PERMISSION);
         response.setMessage(getLocalizedMessage(NO_PERMISSION.getKey()));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<?> accessDeniedException(AccessDeniedException ex) {
+        log.error("认证异常: {}", ex.getMessage());
+        Response response = Response.failure(UNAUTHORIZED);
+        response.setMessage(getLocalizedMessage(UNAUTHORIZED.getKey()));
+        return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<?> authenticationException(AuthenticationException ex) {
+        log.error("认证异常: {}", ex.getMessage());
+        Response response = Response.failure(UNAUTHORIZED);
+        response.setMessage(getLocalizedMessage(UNAUTHORIZED.getKey()));
+        return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(BizException.class)
