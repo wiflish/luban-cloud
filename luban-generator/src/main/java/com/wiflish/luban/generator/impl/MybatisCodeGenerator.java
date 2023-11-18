@@ -23,9 +23,12 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
+import com.baomidou.mybatisplus.generator.config.TemplateType;
+import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.wiflish.luban.core.infra.po.BasePO;
 import com.wiflish.luban.generator.CodeGenerator;
+import com.wiflish.luban.generator.config.LubanGeneratorConfig;
 import com.wiflish.luban.generator.dto.GeneratorDTO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,23 +55,43 @@ public class MybatisCodeGenerator implements CodeGenerator {
 
         FastAutoGenerator.create(generatorDTO.getDbUrl(), generatorDTO.getDbUsername(), generatorDTO.getDbPassword())
                 .injectionConfig(builder -> {
-//                    builder.customFile()
-//                    builder.customFile()
+                    CustomFile.Builder controllerBuilder = new CustomFile.Builder();
+                    controllerBuilder.enableFileOverride()
+                            .templatePath("templates/ftl/Controller.java.ftl")
+                            .packageName("app.controller")
+                            .formatNameFunction(tableInfo -> StrUtil.upperFirst(StrUtil.toCamelCase(tableInfo.getName())))
+                            .fileName("Controller.java");
 
+                    builder.customFile(controllerBuilder.build())
+                            .beforeOutputFile((tableInfo, map) -> {
+                                String name = tableInfo.getName();
+
+                                LubanGeneratorConfig generatorConfig = new LubanGeneratorConfig();
+
+                                generatorConfig.setEntityName(StrUtil.upperFirst(StrUtil.toCamelCase(name)));
+                                generatorConfig.setMapping(buildMapping(name));
+
+                                map.put(LUBAN_CONFIG, generatorConfig);
+
+                            });
 //                    CustomerFile customerFile = new CustomerFile();
                 })
                 .globalConfig(builder -> {
                     builder.author(generatorDTO.getAuthor()) // 设置作者
                             .commentDate("yyyy-MM-dd")
                             .enableSpringdoc()
+                            .disableOpenDir()
                             .outputDir(codePath); // 指定输出目录
                 })
+                .templateConfig(builder -> {
+                    builder.disable(TemplateType.CONTROLLER)
+                            .disable(TemplateType.SERVICE)
+                            .disable(TemplateType.SERVICE_IMPL);
+                })
                 .packageConfig(builder -> {
-                    builder.parent(buildBaseParentPackage(generatorDTO)) // 设置父包名
-                            .entity("po")
-                            .mapper("dao")
-                            .service("app.service")
-                            .controller("app.web.controller")
+                    builder.parent(generatorDTO.getBaseParentPackage()) // 设置父包名
+                            .entity("infra.po")
+                            .mapper("infra.mapper")
                             .moduleName(generatorDTO.getBoundedContext())
                             .pathInfo(configMap);
                 })
@@ -77,78 +100,43 @@ public class MybatisCodeGenerator implements CodeGenerator {
                             .enableFileOverride()
                             .enableBaseColumnList()
                             .enableBaseResultMap()
-                            .formatMapperFileName("%sDao")
                             .build();
                     builder.entityBuilder()
                             .enableFileOverride()
                             .enableLombok()
                             .addTableFills()
                             .logicDeleteColumnName("deleted")
-                            .logicDeletePropertyName("deleted")
                             .versionColumnName("version")
-                            .versionPropertyName("version")
                             .formatFileName("%sPO")
                             .superClass(BasePO.class)
-                            .disableSerialVersionUID()
                             .addSuperEntityColumns("id", "create_id", "create_time", "update_id", "update_time", "version", "deleted", "feature_bit", "feature_json")
-                            .build();
-
-                    builder.serviceBuilder()
-                            .enableFileOverride()
-                            .build();
-                    builder.controllerBuilder()
-                            .enableFileOverride()
-                            .enableHyphenStyle()
-                            .enableRestStyle()
                             .build();
                     builder.addInclude(generatorDTO.getIncludeTableNames()) // 设置需要生成的表名
                             .addTablePrefix(generatorDTO.getTablePrefixNames()); // 设置过滤表前缀
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
+
     }
 
-    private static String buildBaseDaoPackage(GeneratorDTO generatorDTO) {
-        String baseParentPackage = buildBaseParentPackage(generatorDTO);
-        return baseParentPackage + ".infra";
-    }
-
-    private static String buildBaseDomainPackage(GeneratorDTO generatorDTO) {
-        String baseParentPackage = buildBaseParentPackage(generatorDTO);
-        return baseParentPackage + ".domain.entity";
-    }
-
-    private static String buildBaseServicePackage(GeneratorDTO generatorDTO) {
-        String baseParentPackage = buildBaseParentPackage(generatorDTO);
-        return baseParentPackage + ".app.service";
-    }
-
-    private static String buildBaseControllerPackage(GeneratorDTO generatorDTO) {
-        String baseParentPackage = buildBaseParentPackage(generatorDTO);
-        return baseParentPackage + ".app.web.controller";
-    }
-
-    private static String buildBaseParentPackage(GeneratorDTO generatorDTO) {
-        String baseParentPackage = generatorDTO.getBaseParentPackage();
-        String boundedContext = generatorDTO.getBoundedContext();
-        if (StrUtil.isNotEmpty(boundedContext)) {
-            baseParentPackage = baseParentPackage + "." + boundedContext;
+    private String buildMapping(String name) {
+        String result = StrUtil.replace(name, "_", "/");
+        if (!result.endsWith("s")) {
+            result += "s";
         }
-        return baseParentPackage;
+        result = "/" + result;
+        return result.toLowerCase();
     }
 
     private static String buildMapperPath(GeneratorDTO generatorDTO) {
-        String mapperResourcesDir = generatorDTO.getMapperResourcesDir();
         StringBuilder resourcePath = new StringBuilder();
-        resourcePath.append("/src/main/resources");
-        if (StrUtil.isEmpty(mapperResourcesDir)) {
-            resourcePath.append("/mapper");
-        } else {
-            if (mapperResourcesDir.indexOf("/") != 0) {
-                mapperResourcesDir = "/" + mapperResourcesDir;
-            }
-            resourcePath.append(mapperResourcesDir);
+        resourcePath.append("/src/main/resources/mapper");
+
+        String boundedContext = generatorDTO.getBoundedContext();
+        if (StrUtil.isNotEmpty(boundedContext)) {
+            resourcePath.append("/").append(boundedContext);
         }
+
         return resourcePath.toString();
     }
 }

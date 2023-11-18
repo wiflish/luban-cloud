@@ -17,98 +17,117 @@
  * limitations under the License.
  * ************
  */
-package ${package.Controller};
+package ${package.Parent}.app.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
+import cn.hutool.core.collection.ListUtil;
+import ${package.Parent}.domain.entity.${luban.entityName};
+import ${package.Parent}.api.dto.${luban.entityName}DTO;
+import ${package.Parent}.api.dto.${luban.entityName}Query;
+import ${package.Parent}.api.dto.cmd.${luban.entityName}EditCmd;
+import ${package.Parent}.api.service.${luban.entityName}AService;
 import com.wiflish.luban.core.dto.ListResponse;
 import com.wiflish.luban.core.dto.OneResponse;
 import com.wiflish.luban.core.dto.Pager;
 import com.wiflish.luban.core.dto.Response;
-import com.wiflish.luban.core.dto.exception.BizException;
-
-<#if package.ModuleName?? && package.ModuleName != "">
-import ${package.ModuleName}.convert.${ClassName}Convert;
-import ${package.ModuleName}.entity.${ClassName}Entity;
-import ${package.ModuleName}.service.${ClassName}Service;
-import ${package.ModuleName}.query.${ClassName}Query;
-import ${package.ModuleName}.vo.${ClassName}VO;
-</#if>
-
-<#if package.ModuleName?? && package.ModuleName != "">
-import org.springdoc.core.annotations.ParameterObject;
-</#if>
-
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**
- * <p>
  * ${table.comment!} Controller
- * </p>
  *
  * @author ${author}
  * @since ${date}
-*/
-@Slf4j
-@RequiredArgsConstructor
+ */
+@Tag(name = "${table.comment!}接口")
 @RestController
-@RequestMapping("${moduleName}/${functionName}")
-@RequestMapping("<#if package.ModuleName?? && package.ModuleName != "">/${package.ModuleName}</#if>/<#if controllerMappingHyphenStyle>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
+@RequestMapping("${luban.mapping!}")
+@RequiredArgsConstructor
+public class ${luban.entityName}Controller {
+    private final ${luban.entityName}AService<${luban.entityName}EditCmd, ${luban.entityName}Query, ${luban.entityName}DTO, ${luban.entityName}> ${luban.entityName}AService;
 
-@Tag(name="${tableComment}")
-public class ${ClassName}Controller {
-    private final ${ClassName}Service ${className}Service;
-
-    @GetMapping("page")
-    @Operation(summary = "分页")
-    @PreAuthorize("hasAuthority('${moduleName}:${functionName}:page')")
-    public Result<PageResult<${ClassName}VO>> page(@ParameterObject @Valid ${ClassName}Query query){
-        PageResult<${ClassName}VO> page = ${className}Service.page(query);
-
-        return Result.ok(page);
+    /**
+     * 新增${table.comment!}.
+     *
+     * @param ${luban.entityName}EditCmd ${luban.entityName}EditCmd
+     * @return Response
+     */
+    @PostMapping("")
+    @Operation(summary = "新增")
+    @PreAuthorize("hasAuthority('${luban.mapping!}:POST')")
+    public OneResponse<Long> add${luban.entityName}(@Valid @RequestBody ${luban.entityName}EditCmd ${luban.entityName}EditCmd) {
+        ${luban.entityName}EditCmd.setPassword(passwordEncoder.encode(${luban.entityName}EditCmd.getPassword()));
+        return ${luban.entityName}AService.save(${luban.entityName}EditCmd);
     }
 
-    @GetMapping("{id}")
-    @Operation(summary = "信息")
-    @PreAuthorize("hasAuthority('${moduleName}:${functionName}:info')")
-    public Result<${ClassName}VO> get(@PathVariable("id") Long id){
-        ${ClassName}Entity entity = ${className}Service.getById(id);
-
-        return Result.ok(${ClassName}Convert.INSTANCE.convert(entity));
+    /**
+     * 编辑${table.comment!}.
+     *
+     * @param ${luban.entityName}EditCmd ${luban.entityName}EditCmd
+     * @return Response
+     */
+    @PutMapping("")
+    @Operation(summary = "编辑")
+    @PreAuthorize("hasAuthority('${luban.mapping!}:PUT')")
+    public OneResponse<Long> edit${luban.entityName}(@Valid @RequestBody ${luban.entityName}EditCmd ${luban.entityName}EditCmd) {
+        return ${luban.entityName}AService.save(${luban.entityName}EditCmd);
     }
 
-    @PostMapping
-    @Operation(summary = "保存")
-    @PreAuthorize("hasAuthority('${moduleName}:${functionName}:save')")
-    public Result<String> save(@RequestBody ${ClassName}VO vo){
-        ${className}Service.save(vo);
-
-        return Result.ok();
-    }
-
-    @PutMapping
-    @Operation(summary = "修改")
-    @PreAuthorize("hasAuthority('${moduleName}:${functionName}:update')")
-    public Result<String> update(@RequestBody @Valid ${ClassName}VO vo){
-        ${className}Service.update(vo);
-
-        return Result.ok();
-    }
-
-    @DeleteMapping
+    /**
+     * 删除${table.comment!}.
+     *
+     * @param id id
+     * @return Response
+     */
+    @DeleteMapping("{id}")
     @Operation(summary = "删除")
-    @PreAuthorize("hasAuthority('${moduleName}:${functionName}:delete')")
-    public Result<String> delete(@RequestBody List<Long> idList){
-        ${className}Service.delete(idList);
+    @PreAuthorize("hasAuthority('${luban.mapping!}:DELETE')")
+    public Response remove${luban.entityName}(@Valid @PathVariable Long id) {
+        return ${luban.entityName}AService.remove(ListUtil.of(id));
+    }
 
-        return Result.ok();
+    /**
+     * 批量删除${table.comment!}.
+     *
+     * @param ids ids
+     * @return Response
+     */
+    @DeleteMapping("batch")
+    @Operation(summary = "删除批量")
+    @PreAuthorize("hasAuthority('${luban.mapping!}:DELETE')")
+    public Response remove${luban.entityName}s(@Valid @RequestBody List<Long> ids) {
+        return ${luban.entityName}AService.remove(ids);
+    }
+
+    /**
+     * 根据id查询${table.comment!}.
+     *
+     * @param id id
+     * @return OneResponse
+     */
+    @GetMapping("{id}")
+    @Operation(summary = "详情")
+    @PreAuthorize("hasAuthority('${luban.mapping!}/detail:GET')")
+    public OneResponse<${luban.entityName}DTO> get${luban.entityName}(@PathVariable Long id) {
+        return ${luban.entityName}AService.get(id);
+    }
+
+    /**
+     * 分页查询所有${table.comment!}.
+     *
+     * @param query ${luban.entityName}Query
+     * @param pager Pager
+     * @return ListResponse
+     */
+    @GetMapping("")
+    @Operation(summary = "分页")
+    @PreAuthorize("hasAuthority('${luban.mapping!}/list:GET')")
+    public ListResponse<${luban.entityName}DTO> get${luban.entityName}s(${luban.entityName}Query query, Pager pager) {
+        return ${luban.entityName}AService.listPage(query, pager);
     }
 }

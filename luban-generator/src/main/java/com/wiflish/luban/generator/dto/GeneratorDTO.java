@@ -26,6 +26,5 @@ public class GeneratorDTO implements Serializable {
     private String author;
     private String baseParentPackage;
     private String boundedContext;
-    private String mapperResourcesDir;
     private String outputBasePath;
 }
