@@ -59,7 +59,7 @@ public class ${luban.entityName}Controller {
      */
     @PostMapping("")
     @Operation(summary = "新增")
-    @PreAuthorize("hasAuthority('${luban.mapping!}:POST')")
+    @PreAuthorize("hasAuthority('${luban.mapping!}:POST') || hasRole('SUPER_ADMIN')")
     public OneResponse<Long> add${luban.entityName}(@Valid @RequestBody ${luban.entityName}EditCmd ${luban.entityName}EditCmd) {
         return ${luban.entityNameCamel}AService.save(${luban.entityName}EditCmd);
     }
@@ -72,7 +72,7 @@ public class ${luban.entityName}Controller {
      */
     @PutMapping("")
     @Operation(summary = "编辑")
-    @PreAuthorize("hasAuthority('${luban.mapping!}:PUT')")
+    @PreAuthorize("hasAuthority('${luban.mapping!}:PUT') || hasRole('SUPER_ADMIN')")
     public OneResponse<Long> edit${luban.entityName}(@Valid @RequestBody ${luban.entityName}EditCmd ${luban.entityName}EditCmd) {
         return ${luban.entityNameCamel}AService.save(${luban.entityName}EditCmd);
     }
@@ -85,7 +85,7 @@ public class ${luban.entityName}Controller {
      */
     @DeleteMapping("{id}")
     @Operation(summary = "删除")
-    @PreAuthorize("hasAuthority('${luban.mapping!}:DELETE')")
+    @PreAuthorize("hasAuthority('${luban.mapping!}:DELETE') || hasRole('SUPER_ADMIN')")
     public Response remove${luban.entityName}(@Valid @PathVariable Long id) {
         return ${luban.entityNameCamel}AService.remove(ListUtil.of(id));
     }
@@ -98,7 +98,7 @@ public class ${luban.entityName}Controller {
      */
     @DeleteMapping("batch")
     @Operation(summary = "删除批量")
-    @PreAuthorize("hasAuthority('${luban.mapping!}:DELETE')")
+    @PreAuthorize("hasAuthority('${luban.mapping!}:DELETE') || hasRole('SUPER_ADMIN')")
     public Response remove${luban.entityName}s(@Valid @RequestBody List<Long> ids) {
         return ${luban.entityNameCamel}AService.remove(ids);
     }
@@ -111,7 +111,7 @@ public class ${luban.entityName}Controller {
      */
     @GetMapping("{id}")
     @Operation(summary = "详情")
-    @PreAuthorize("hasAuthority('${luban.mapping!}/detail:GET')")
+    @PreAuthorize("hasAuthority('${luban.mapping!}/detail:GET') || hasRole('SUPER_ADMIN')")
     public OneResponse<${luban.entityName}DTO> get${luban.entityName}(@PathVariable Long id) {
         return ${luban.entityNameCamel}AService.get(id);
     }
@@ -125,7 +125,7 @@ public class ${luban.entityName}Controller {
      */
     @GetMapping("")
     @Operation(summary = "分页")
-    @PreAuthorize("hasAuthority('${luban.mapping!}/list:GET')")
+    @PreAuthorize("hasAuthority('${luban.mapping!}/list:GET') || hasRole('SUPER_ADMIN')")
     public ListResponse<${luban.entityName}DTO> get${luban.entityName}s(${luban.entityName}Query query, Pager pager) {
         return ${luban.entityNameCamel}AService.listPage(query, pager);
     }

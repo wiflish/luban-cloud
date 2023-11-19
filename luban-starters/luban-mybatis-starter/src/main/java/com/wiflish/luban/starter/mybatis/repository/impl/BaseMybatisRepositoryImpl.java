@@ -87,6 +87,6 @@ public abstract class BaseMybatisRepositoryImpl<Q extends Query, E extends Entit
         Page<PO> pageFromDB = getMapper().selectPage(page, lambdaQueryWrapper);
         List<E> entities = pageFromDB.getRecords().stream().map(po -> getConverter().toEntity(po)).toList();
 
-        return ListResponse.of(entities, pageFromDB.getTotal(), pager.getPage(), pager.getSize());
+        return ListResponse.of(entities, pageFromDB.getTotal(), page.getCurrent(), page.getSize());
     }
 }

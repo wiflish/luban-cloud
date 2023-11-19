@@ -27,4 +27,5 @@ public class BaseConstant {
     public static final int DEFAULT_PAGE_NO = 1;
     public static final int DEFAULT_PAGE_SIZE = 20;
     public static final int DEFAULT_PAGE_SIZE_MAX = 2000;
+    public static final String ROLE_SUPER_ADMIN = "SUPER_ADMIN";
 }
