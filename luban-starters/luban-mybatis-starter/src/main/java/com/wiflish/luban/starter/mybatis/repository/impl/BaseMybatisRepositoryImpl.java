@@ -31,9 +31,7 @@ public abstract class BaseMybatisRepositoryImpl<Q extends Query, E extends Entit
 
     protected abstract BaseConverter<Q, E, PO> getConverter();
 
-    protected QueryFunction<Q, PO> getQueryFunction() {
-        return query -> new LambdaQueryWrapper<>();
-    }
+    protected abstract QueryFunction<Q, PO> getQueryFunction();
 
     @Override
     public Long save(E entity) {

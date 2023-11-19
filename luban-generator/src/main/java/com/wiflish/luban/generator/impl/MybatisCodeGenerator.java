@@ -26,6 +26,7 @@ import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.TemplateType;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
+import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.wiflish.luban.core.infra.po.BasePO;
 import com.wiflish.luban.generator.CodeGenerator;
@@ -37,6 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Slf4j
 public class MybatisCodeGenerator implements CodeGenerator {
@@ -61,66 +63,40 @@ public class MybatisCodeGenerator implements CodeGenerator {
 
         FastAutoGenerator.create(generatorDTO.getDbUrl(), generatorDTO.getDbUsername(), generatorDTO.getDbPassword())
                 .injectionConfig(builder -> {
-
-                    CustomFile.Builder controllerBuilder = new CustomFile.Builder();
-                    controllerBuilder.enableFileOverride()
-                            .templatePath("templates/ftl/Controller.java.ftl")
-                            .packageName("app.controller")
-                            .formatNameFunction(tableInfo -> StrUtil.upperFirst(StrUtil.toCamelCase(tableInfo.getName())))
-                            .fileName("Controller.java");
-                    CustomFile.Builder entityBuilder = new CustomFile.Builder();
-                    entityBuilder.enableFileOverride()
-                            .templatePath("templates/ftl/Entity.java.ftl")
-                            .packageName("domain.entity")
-                            .formatNameFunction(tableInfo -> StrUtil.upperFirst(StrUtil.toCamelCase(tableInfo.getName())))
-                            .fileName(".java")
-                            .filePath(buildDomainCodePath(domainRootPath, generatorDTO));
-                    CustomFile.Builder queryBuilder = new CustomFile.Builder();
-                    queryBuilder.enableFileOverride()
-                            .templatePath("templates/ftl/Query.java.ftl")
-                            .packageName("api.dto.query")
-                            .formatNameFunction(tableInfo -> StrUtil.upperFirst(StrUtil.toCamelCase(tableInfo.getName())) + "Query")
-                            .fileName(".java")
-                            .filePath(buildApiCodePath(apiRootPath, generatorDTO));
-                    CustomFile.Builder dtoBuilder = new CustomFile.Builder();
-                    dtoBuilder.enableFileOverride()
-                            .templatePath("templates/ftl/DTO.java.ftl")
-                            .packageName("api.dto")
-                            .formatNameFunction(tableInfo -> StrUtil.upperFirst(StrUtil.toCamelCase(tableInfo.getName())) + "DTO")
-                            .fileName(".java")
-                            .filePath(buildApiCodePath(apiRootPath, generatorDTO));
-                    CustomFile.Builder cmdBuilder = new CustomFile.Builder();
-                    cmdBuilder.enableFileOverride()
-                            .templatePath("templates/ftl/Cmd.java.ftl")
-                            .packageName("api.dto.cmd")
-                            .formatNameFunction(tableInfo -> StrUtil.upperFirst(StrUtil.toCamelCase(tableInfo.getName())) + "EditCmd")
-                            .fileName(".java")
-                            .filePath(buildApiCodePath(apiRootPath, generatorDTO));
-
                     List<CustomFile> customFiles = CollectionUtil.newArrayList();
                     customFiles.add(buildCustomFile(LubanGeneratorEnum.CONTROLLER, null, generatorDTO));
                     customFiles.add(buildCustomFile(LubanGeneratorEnum.APP_SERVICE, apiRootPath, generatorDTO));
-//                    customFiles.add(buildCustomFile(LubanGeneratorEnum.APP_SERVICE_IMPL, null, generatorDTO));
+                    customFiles.add(buildCustomFile(LubanGeneratorEnum.APP_SERVICE_IMPL, null, generatorDTO));
+                    customFiles.add(buildCustomFile(LubanGeneratorEnum.ASSEMBLER, null, generatorDTO));
                     customFiles.add(buildCustomFile(LubanGeneratorEnum.DTO, apiRootPath, generatorDTO));
                     customFiles.add(buildCustomFile(LubanGeneratorEnum.Cmd, apiRootPath, generatorDTO));
                     customFiles.add(buildCustomFile(LubanGeneratorEnum.Query, apiRootPath, generatorDTO));
-                    customFiles.add(buildCustomFile(LubanGeneratorEnum.CONTROLLER, null, generatorDTO));
-//                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Entity, domainRootPath, generatorDTO));
+                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Repository, domainRootPath, generatorDTO));
+                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Repository_IMPL, null, generatorDTO));
+                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Converter, null, generatorDTO));
+                    customFiles.add(buildCustomFile(LubanGeneratorEnum.QueryWrapper, null, generatorDTO));
+                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Entity, domainRootPath, generatorDTO));
 
                     builder.customFile(customFiles)
                             .beforeOutputFile((tableInfo, map) -> {
                                 String name = tableInfo.getName();
 
                                 LubanGeneratorConfig generatorConfig = new LubanGeneratorConfig();
-
                                 generatorConfig.setEntityName(StrUtil.upperFirst(StrUtil.toCamelCase(name)));
                                 generatorConfig.setEntityNameCamel(StrUtil.toCamelCase(name));
                                 generatorConfig.setMapping(buildMapping(name));
 
+                                Set<String> importPackages = CollectionUtil.newHashSet();
+                                //处理字段依赖的导入包
+                                tableInfo.getFields().forEach(field -> {
+                                    IColumnType columnType = field.getColumnType();
+                                    if (null != columnType && null != columnType.getPkg()) {
+                                        importPackages.add(columnType.getPkg());
+                                    }
+                                });
+                                generatorConfig.setImportPackages(importPackages);
                                 map.put(LUBAN_CONFIG, generatorConfig);
-
                             });
-//                    CustomerFile customerFile = new CustomerFile();
                 })
                 .globalConfig(builder -> {
                     builder.author(generatorDTO.getAuthor()) // 设置作者

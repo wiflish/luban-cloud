@@ -4,6 +4,9 @@ import com.wiflish.luban.core.dto.query.Query;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+<#list luban.importPackages as pkg>
+import ${pkg};
+</#list>
 
 import java.io.Serial;
 import java.io.Serializable;

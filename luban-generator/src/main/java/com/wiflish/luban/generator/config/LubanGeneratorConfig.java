@@ -2,6 +2,8 @@ package com.wiflish.luban.generator.config;
 
 import lombok.Data;
 
+import java.util.Set;
+
 /**
  * @author wiflish
  * @since 2023-11-18
@@ -23,5 +25,8 @@ public class LubanGeneratorConfig {
      */
     private String mapping;
 
-
+    /**
+     * 导入包.
+     */
+    private Set<String> importPackages;
 }

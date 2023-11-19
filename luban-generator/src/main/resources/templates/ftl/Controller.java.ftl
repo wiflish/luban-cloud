@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * ${table.comment!} Controller
+ * ${table.comment!}接口
  *
  * @author ${author}
  * @since ${date}

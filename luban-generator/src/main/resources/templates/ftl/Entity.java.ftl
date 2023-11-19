@@ -3,6 +3,9 @@ package ${package.Parent}.domain.entity;
 import com.wiflish.luban.core.domain.entity.Entity;
 import lombok.Getter;
 import lombok.Setter;
+<#list luban.importPackages as pkg>
+import ${pkg};
+</#list>
 
 import java.io.Serial;
 
