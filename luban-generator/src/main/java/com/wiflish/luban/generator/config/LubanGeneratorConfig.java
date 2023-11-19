@@ -9,9 +9,14 @@ import lombok.Data;
 @Data
 public class LubanGeneratorConfig {
     /**
-     * 领域模型中的实体名称.
+     * 领域模型中的实体名称, 首字母大写.
      */
     private String entityName;
+
+    /**
+     * 领域模型中的实体名称, 首字母小写.
+     */
+    private String entityNameCamel;
 
     /**
      * Controller的映射路径.

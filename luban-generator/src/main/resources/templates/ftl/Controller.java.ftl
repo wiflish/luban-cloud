@@ -49,7 +49,7 @@ import java.util.List;
 @RequestMapping("${luban.mapping!}")
 @RequiredArgsConstructor
 public class ${luban.entityName}Controller {
-    private final ${luban.entityName}AService<${luban.entityName}EditCmd, ${luban.entityName}Query, ${luban.entityName}DTO, ${luban.entityName}> ${luban.entityName}AService;
+    private final ${luban.entityName}AService<${luban.entityName}EditCmd, ${luban.entityName}Query, ${luban.entityName}DTO, ${luban.entityName}> ${luban.entityNameCamel}AService;
 
     /**
      * 新增${table.comment!}.
@@ -61,8 +61,7 @@ public class ${luban.entityName}Controller {
     @Operation(summary = "新增")
     @PreAuthorize("hasAuthority('${luban.mapping!}:POST')")
     public OneResponse<Long> add${luban.entityName}(@Valid @RequestBody ${luban.entityName}EditCmd ${luban.entityName}EditCmd) {
-        ${luban.entityName}EditCmd.setPassword(passwordEncoder.encode(${luban.entityName}EditCmd.getPassword()));
-        return ${luban.entityName}AService.save(${luban.entityName}EditCmd);
+        return ${luban.entityNameCamel}AService.save(${luban.entityName}EditCmd);
     }
 
     /**
@@ -75,7 +74,7 @@ public class ${luban.entityName}Controller {
     @Operation(summary = "编辑")
     @PreAuthorize("hasAuthority('${luban.mapping!}:PUT')")
     public OneResponse<Long> edit${luban.entityName}(@Valid @RequestBody ${luban.entityName}EditCmd ${luban.entityName}EditCmd) {
-        return ${luban.entityName}AService.save(${luban.entityName}EditCmd);
+        return ${luban.entityNameCamel}AService.save(${luban.entityName}EditCmd);
     }
 
     /**
@@ -88,7 +87,7 @@ public class ${luban.entityName}Controller {
     @Operation(summary = "删除")
     @PreAuthorize("hasAuthority('${luban.mapping!}:DELETE')")
     public Response remove${luban.entityName}(@Valid @PathVariable Long id) {
-        return ${luban.entityName}AService.remove(ListUtil.of(id));
+        return ${luban.entityNameCamel}AService.remove(ListUtil.of(id));
     }
 
     /**
@@ -101,7 +100,7 @@ public class ${luban.entityName}Controller {
     @Operation(summary = "删除批量")
     @PreAuthorize("hasAuthority('${luban.mapping!}:DELETE')")
     public Response remove${luban.entityName}s(@Valid @RequestBody List<Long> ids) {
-        return ${luban.entityName}AService.remove(ids);
+        return ${luban.entityNameCamel}AService.remove(ids);
     }
 
     /**
@@ -114,7 +113,7 @@ public class ${luban.entityName}Controller {
     @Operation(summary = "详情")
     @PreAuthorize("hasAuthority('${luban.mapping!}/detail:GET')")
     public OneResponse<${luban.entityName}DTO> get${luban.entityName}(@PathVariable Long id) {
-        return ${luban.entityName}AService.get(id);
+        return ${luban.entityNameCamel}AService.get(id);
     }
 
     /**
@@ -128,6 +127,6 @@ public class ${luban.entityName}Controller {
     @Operation(summary = "分页")
     @PreAuthorize("hasAuthority('${luban.mapping!}/list:GET')")
     public ListResponse<${luban.entityName}DTO> get${luban.entityName}s(${luban.entityName}Query query, Pager pager) {
-        return ${luban.entityName}AService.listPage(query, pager);
+        return ${luban.entityNameCamel}AService.listPage(query, pager);
     }
 }

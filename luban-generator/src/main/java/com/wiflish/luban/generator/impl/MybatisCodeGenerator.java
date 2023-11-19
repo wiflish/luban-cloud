@@ -31,6 +31,7 @@ import com.wiflish.luban.core.infra.po.BasePO;
 import com.wiflish.luban.generator.CodeGenerator;
 import com.wiflish.luban.generator.config.LubanGeneratorConfig;
 import com.wiflish.luban.generator.dto.GeneratorDTO;
+import com.wiflish.luban.generator.enums.LubanGeneratorEnum;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -97,11 +98,14 @@ public class MybatisCodeGenerator implements CodeGenerator {
                             .filePath(buildApiCodePath(apiRootPath, generatorDTO));
 
                     List<CustomFile> customFiles = CollectionUtil.newArrayList();
-                    customFiles.add(controllerBuilder.build());
-                    customFiles.add(queryBuilder.build());
-                    customFiles.add(entityBuilder.build());
-                    customFiles.add(dtoBuilder.build());
-                    customFiles.add(cmdBuilder.build());
+                    customFiles.add(buildCustomFile(LubanGeneratorEnum.CONTROLLER, null, generatorDTO));
+                    customFiles.add(buildCustomFile(LubanGeneratorEnum.APP_SERVICE, apiRootPath, generatorDTO));
+//                    customFiles.add(buildCustomFile(LubanGeneratorEnum.APP_SERVICE_IMPL, null, generatorDTO));
+                    customFiles.add(buildCustomFile(LubanGeneratorEnum.DTO, apiRootPath, generatorDTO));
+                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Cmd, apiRootPath, generatorDTO));
+                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Query, apiRootPath, generatorDTO));
+                    customFiles.add(buildCustomFile(LubanGeneratorEnum.CONTROLLER, null, generatorDTO));
+//                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Entity, domainRootPath, generatorDTO));
 
                     builder.customFile(customFiles)
                             .beforeOutputFile((tableInfo, map) -> {
@@ -110,6 +114,7 @@ public class MybatisCodeGenerator implements CodeGenerator {
                                 LubanGeneratorConfig generatorConfig = new LubanGeneratorConfig();
 
                                 generatorConfig.setEntityName(StrUtil.upperFirst(StrUtil.toCamelCase(name)));
+                                generatorConfig.setEntityNameCamel(StrUtil.toCamelCase(name));
                                 generatorConfig.setMapping(buildMapping(name));
 
                                 map.put(LUBAN_CONFIG, generatorConfig);
@@ -158,6 +163,20 @@ public class MybatisCodeGenerator implements CodeGenerator {
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
 
+    }
+
+    private CustomFile buildCustomFile(LubanGeneratorEnum lubanGeneratorEnum, String rootPath, GeneratorDTO generatorDTO) {
+        CustomFile.Builder builder = new CustomFile.Builder();
+        builder.enableFileOverride()
+                .templatePath(lubanGeneratorEnum.getTemplatePath())
+                .packageName(lubanGeneratorEnum.getPackageName())
+                .formatNameFunction(tableInfo -> StrUtil.upperFirst(StrUtil.toCamelCase(tableInfo.getName())))
+                .fileName(lubanGeneratorEnum.getType());
+        if (lubanGeneratorEnum.getFilePathFunction() != null) {
+            builder.filePath(lubanGeneratorEnum.getFilePathFunction().apply(rootPath, generatorDTO));
+        }
+
+        return builder.build();
     }
 
     private String buildApiCodePath(String apiRootPath, GeneratorDTO generatorDTO) {
