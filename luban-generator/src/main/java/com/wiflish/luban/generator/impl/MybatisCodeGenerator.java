@@ -26,6 +26,7 @@ import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.TemplateType;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.wiflish.luban.core.infra.po.BasePO;
@@ -35,10 +36,7 @@ import com.wiflish.luban.generator.dto.GeneratorDTO;
 import com.wiflish.luban.generator.enums.LubanGeneratorEnum;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 public class MybatisCodeGenerator implements CodeGenerator {
@@ -79,8 +77,14 @@ public class MybatisCodeGenerator implements CodeGenerator {
 
                     builder.customFile(customFiles)
                             .beforeOutputFile((tableInfo, map) -> {
+                                //移出前缀.
                                 String name = tableInfo.getName();
-
+                                if (CollectionUtil.isNotEmpty(generatorDTO.getTablePrefixNames())) {
+                                    Optional<String> prefix = generatorDTO.getTablePrefixNames().stream().filter(name::startsWith).findFirst();
+                                    if (prefix.isPresent()) {
+                                        name = StrUtil.removePrefix(name, prefix.get());
+                                    }
+                                }
                                 LubanGeneratorConfig generatorConfig = new LubanGeneratorConfig();
                                 generatorConfig.setEntityName(StrUtil.upperFirst(StrUtil.toCamelCase(name)));
                                 generatorConfig.setEntityNameCamel(StrUtil.toCamelCase(name));
@@ -146,7 +150,7 @@ public class MybatisCodeGenerator implements CodeGenerator {
         builder.enableFileOverride()
                 .templatePath(lubanGeneratorEnum.getTemplatePath())
                 .packageName(lubanGeneratorEnum.getPackageName())
-                .formatNameFunction(tableInfo -> StrUtil.upperFirst(StrUtil.toCamelCase(tableInfo.getName())))
+                .formatNameFunction(tableInfo -> formatFileName(tableInfo, generatorDTO))
                 .fileName(lubanGeneratorEnum.getType());
         if (lubanGeneratorEnum.getFilePathFunction() != null) {
             builder.filePath(lubanGeneratorEnum.getFilePathFunction().apply(rootPath, generatorDTO));
@@ -155,26 +159,15 @@ public class MybatisCodeGenerator implements CodeGenerator {
         return builder.build();
     }
 
-    private String buildApiCodePath(String apiRootPath, GeneratorDTO generatorDTO) {
-        StringBuilder resourcePath = new StringBuilder();
-        resourcePath.append(apiRootPath);
-        resourcePath.append("/src/main/java");
-        resourcePath.append("/").append(generatorDTO.getBaseParentPackage().replace(".", "/"));
-        if (StrUtil.isNotEmpty(generatorDTO.getBoundedContext())) {
-            resourcePath.append("/").append(generatorDTO.getBoundedContext());
+    private String formatFileName(TableInfo tableInfo, GeneratorDTO generatorDTO) {
+        String name = tableInfo.getName();
+        if (CollectionUtil.isNotEmpty(generatorDTO.getTablePrefixNames())) {
+            Optional<String> prefix = generatorDTO.getTablePrefixNames().stream().filter(name::startsWith).findFirst();
+            if (prefix.isPresent()) {
+                name = StrUtil.removePrefix(name, prefix.get());
+            }
         }
-        return resourcePath.toString();
-    }
-
-    private String buildDomainCodePath(String domainRootPath, GeneratorDTO generatorDTO) {
-        StringBuilder resourcePath = new StringBuilder();
-        resourcePath.append(domainRootPath);
-        resourcePath.append("/src/main/java");
-        resourcePath.append("/").append(generatorDTO.getBaseParentPackage().replace(".", "/"));
-        if (StrUtil.isNotEmpty(generatorDTO.getBoundedContext())) {
-            resourcePath.append("/").append(generatorDTO.getBoundedContext());
-        }
-        return resourcePath.toString();
+        return StrUtil.upperFirst(StrUtil.toCamelCase(name));
     }
 
     private String buildMapping(String name) {
