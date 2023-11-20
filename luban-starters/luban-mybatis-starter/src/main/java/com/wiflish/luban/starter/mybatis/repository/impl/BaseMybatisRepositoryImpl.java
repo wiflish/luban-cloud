@@ -65,6 +65,9 @@ public abstract class BaseMybatisRepositoryImpl<Q extends Query, E extends Entit
     public E find(Q query) {
         LambdaQueryWrapper<PO> lambdaQueryWrapper = getQueryFunction().apply(query);
 
+        //只查询最新更新的一条记录.
+        lambdaQueryWrapper.last(" limit 1 ");
+
         PO fromDB = getMapper().selectOne(lambdaQueryWrapper);
         return getConverter().toEntity(fromDB);
     }

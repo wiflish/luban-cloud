@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidPermissionException.class)
     public ResponseEntity<?> handleInvalidPermissionException(InvalidPermissionException ex) {
-        log.error("权限异常: {}", ex.getMessage());
+        log.error("权限异常: {}", ex.getMessage(), ex);
         Response response = Response.failure(NO_PERMISSION);
         response.setMessage(getLocalizedMessage(NO_PERMISSION.getKey()));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.FORBIDDEN);
@@ -97,7 +97,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<?> accessDeniedException(AccessDeniedException ex) {
-        log.error("权限异常: {}", ex.getMessage());
+        log.error("权限异常: {}", ex.getMessage(), ex);
         Response response = Response.failure(NO_PERMISSION);
         response.setMessage(getLocalizedMessage(NO_PERMISSION.getKey()));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.FORBIDDEN);
@@ -105,7 +105,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<?> authenticationException(AuthenticationException ex) {
-        log.error("认证异常: {}", ex.getMessage());
+        log.error("认证异常: {}", ex.getMessage(), ex);
         Response response = Response.failure(UNAUTHORIZED);
         response.setMessage(getLocalizedMessage(UNAUTHORIZED.getKey()));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
@@ -113,7 +113,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BizException.class)
     public ResponseEntity<?> handleBizException(BizException ex) {
-        log.error("业务异常: {}", ex.getErrCode());
+        log.error("业务异常: {}", ex.getErrCode(), ex);
         Response response = Response.failure(ex.getErrCode());
         response.setMessage(getLocalizedMessage(ex.getErrCode().getKey()));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
