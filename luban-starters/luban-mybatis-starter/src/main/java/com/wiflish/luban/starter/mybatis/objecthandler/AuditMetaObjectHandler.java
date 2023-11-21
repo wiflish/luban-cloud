@@ -57,15 +57,10 @@ public class AuditMetaObjectHandler implements MetaObjectHandler {
     private long getUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
-            CurrentUser principal = null;
-            try {
-                principal = (CurrentUser) authentication.getPrincipal();
-            } catch (Exception e) {
-                log.warn("当前用户转化失败. error: {}", e.getMessage());
-            }
-            if (principal != null) {
+            if (authentication.getPrincipal() instanceof CurrentUser principal) {
                 return principal.getUserId() == null ? 0 : principal.getUserId();
             }
+            log.warn("不是CurrentUser, principal: {}", authentication.getPrincipal());
         }
         return 0;
     }
