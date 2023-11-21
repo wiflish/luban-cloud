@@ -17,7 +17,9 @@ public abstract class BaseServiceImpl<C extends Command, Q extends Query, T exte
     @Override
     public OneResponse<Long> save(@NotNull C cmd) {
         E entity = getAssembler().toEntity(cmd);
-        return OneResponse.of(getRepository().save(entity));
+        Long id = getRepository().save(entity);
+        cmd.setId(id);
+        return OneResponse.of(id);
     }
 
     @Override
