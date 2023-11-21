@@ -73,7 +73,7 @@ public class MybatisCodeGenerator implements CodeGenerator {
                     customFiles.add(buildCustomFile(LubanGeneratorEnum.DTO, apiRootPath, generatorDTO));
                     customFiles.add(buildCustomFile(LubanGeneratorEnum.Cmd, apiRootPath, generatorDTO));
                     customFiles.add(buildCustomFile(LubanGeneratorEnum.Query, apiRootPath, generatorDTO));
-                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Entity, domainRootPath, generatorDTO));
+//                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Entity, domainRootPath, generatorDTO));
 
                     builder.customFile(customFiles)
                             .beforeOutputFile((tableInfo, map) -> {
@@ -105,7 +105,7 @@ public class MybatisCodeGenerator implements CodeGenerator {
                 .globalConfig(builder -> {
                     builder.author(generatorDTO.getAuthor()) // 设置作者
                             .commentDate("yyyy-MM-dd")
-                            .enableSpringdoc()
+//                            .enableSpringdoc()
                             .disableOpenDir()
                             .outputDir(codePath); // 指定输出目录
                 })
