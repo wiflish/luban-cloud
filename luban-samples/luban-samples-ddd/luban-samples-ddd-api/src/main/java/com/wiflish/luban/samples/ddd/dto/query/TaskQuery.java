@@ -20,9 +20,4 @@ public class TaskQuery extends Query {
 
     private String taskName;
     private Integer status;
-
-    @Override
-    public String getWrapperId(){
-        return TaskQuery.class.getName();
-    }
 }
