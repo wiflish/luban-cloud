@@ -36,17 +36,11 @@ public abstract class Query extends DTO {
     @Serial
     private static final long serialVersionUID = 3614146467808258286L;
 
-    private String wrapperId;
-
     private String keyword;
 
     private List<OrderBy> orderBys;
 
     private String groupBy;
-
-    public void setWrapperId(String wrapperId) {
-        this.wrapperId = wrapperId;
-    }
 
     public Query setKeyword(String keyword) {
         this.keyword = keyword;
