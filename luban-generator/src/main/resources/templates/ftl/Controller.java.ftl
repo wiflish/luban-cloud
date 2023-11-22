@@ -52,7 +52,7 @@ public class ${luban.entityName}Controller {
     private final ${luban.entityName}AService<${luban.entityName}EditCmd, ${luban.entityName}Query, ${luban.entityName}DTO, ${luban.entityName}> ${luban.entityNameCamel}AService;
 
     /**
-     * 新增${table.comment!}.
+     * 新增${table.comment!}
      *
      * @param ${luban.entityName}EditCmd ${luban.entityName}EditCmd
      * @return Response
@@ -65,7 +65,7 @@ public class ${luban.entityName}Controller {
     }
 
     /**
-     * 编辑${table.comment!}.
+     * 编辑${table.comment!}
      *
      * @param ${luban.entityName}EditCmd ${luban.entityName}EditCmd
      * @return Response
@@ -78,7 +78,7 @@ public class ${luban.entityName}Controller {
     }
 
     /**
-     * 删除${table.comment!}.
+     * 删除${table.comment!}
      *
      * @param id id
      * @return Response
@@ -91,7 +91,7 @@ public class ${luban.entityName}Controller {
     }
 
     /**
-     * 批量删除${table.comment!}.
+     * 批量删除${table.comment!}
      *
      * @param ids ids
      * @return Response
@@ -104,7 +104,7 @@ public class ${luban.entityName}Controller {
     }
 
     /**
-     * 根据id查询${table.comment!}.
+     * 根据id查询${table.comment!}
      *
      * @param id id
      * @return OneResponse
@@ -117,7 +117,7 @@ public class ${luban.entityName}Controller {
     }
 
     /**
-     * 分页查询所有${table.comment!}.
+     * 分页查询所有${table.comment!}
      *
      * @param query ${luban.entityName}Query
      * @param pager Pager
