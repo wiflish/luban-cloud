@@ -24,8 +24,18 @@
         </dependency>
 
         <dependency>
+            <groupId>com.wiflish.luban</groupId>
+            <artifactId>luban-tools</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
         </dependency>
 
         <dependency>
