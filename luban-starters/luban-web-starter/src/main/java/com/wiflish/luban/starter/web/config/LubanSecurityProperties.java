@@ -15,4 +15,11 @@ public class LubanSecurityProperties {
     private Boolean disable = false;
 
     private List<String> permitUrls;
+
+    private Boolean loginMulti = true;
+
+    private List<String> corsAllowedOrigins;
+    private List<String> corsAllowedMethods;
+    private List<String> corsAllowedHeaders;
+
 }
