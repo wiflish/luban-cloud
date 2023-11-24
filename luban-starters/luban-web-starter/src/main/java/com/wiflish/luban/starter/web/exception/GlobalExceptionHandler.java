@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidParamException.class)
     public ResponseEntity<?> handleInvalidParamException(InvalidParamException ex) {
-        log.error("参数异常: {}", ex.getMessage());
+        log.error("参数异常: {}", ex.getMessage(), ex);
         Response response = Response.failure(INVALID_PARAM_CODE);
         response.setMessage(getLocalizedMessage(INVALID_PARAM_CODE.getKey()));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.BAD_REQUEST);
@@ -66,7 +66,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity<?> handleBindException(BindException ex) {
-        log.error("参数异常: {}", ex.getMessage());
+        log.error("参数异常: {}", ex.getMessage(), ex);
         int idx = 0;
         StringBuilder message = new StringBuilder();
         for (FieldError fieldError : ex.getFieldErrors()) {
