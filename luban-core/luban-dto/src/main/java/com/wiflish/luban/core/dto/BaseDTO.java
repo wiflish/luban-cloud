@@ -21,5 +21,4 @@ public class BaseDTO extends DTO {
     private Long updateId;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
-    private Long deleted;
 }

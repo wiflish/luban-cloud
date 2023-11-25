@@ -48,16 +48,16 @@ public class AuditLogAspect {
         try {
             Object result = joinPoint.proceed();
 
-            saveLog(joinPoint, auditLog, startTime, BaseConstant.SUCCESS);
+            saveLog(joinPoint, auditLog, startTime, BaseConstant.SUCCESS, null);
             
             return result;
         } catch (Exception ex) {
-            saveLog(joinPoint, auditLog, startTime, BaseConstant.FAILURE);
+            saveLog(joinPoint, auditLog, startTime, BaseConstant.FAILURE, ex.getMessage());
             throw ex;
         }
     }
 
-    private void saveLog(ProceedingJoinPoint joinPoint, AuditLog auditLog, LocalDateTime startTime, Integer result) {
+    private void saveLog(ProceedingJoinPoint joinPoint, AuditLog auditLog, LocalDateTime startTime, Integer result, String errorMessage) {
         try {
             AuditLogDTO auditLogDTO = new AuditLogDTO();
 
@@ -65,14 +65,17 @@ public class AuditLogAspect {
             long duration = LocalDateTimeUtil.between(startTime, LocalDateTime.now()).toMillis();
             auditLogDTO.setDuration((int) duration);
             auditLogDTO.setAuditType(auditLog.type().getValue());
-            auditLogDTO.setModule(auditLog.module());
+            auditLogDTO.setModuleName(auditLog.module());
             auditLogDTO.setFuncName(auditLog.funcName());
+            if (StrUtil.isNotEmpty(errorMessage)) {
+                auditLogDTO.setResultMsg(errorMessage.length() > 490 ? errorMessage.substring(0, 490) : errorMessage);
+            }
 
             // 默认从类上的Swagger注解Tag读取
-            if (StrUtil.isEmpty(auditLogDTO.getModule())) {
+            if (StrUtil.isEmpty(auditLogDTO.getModuleName())) {
                 Tag tag = getClassAnnotation(joinPoint, Tag.class);
                 if (tag != null) {
-                    auditLogDTO.setModule(tag.name());
+                    auditLogDTO.setModuleName(tag.name());
                 }
             }
             // 默认从Swagger注解Operation读取

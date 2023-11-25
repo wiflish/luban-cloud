@@ -19,17 +19,19 @@
  */
 package com.wiflish.luban.core.dto.exception;
 
+import java.io.Serial;
+
 /**
- * 1000以下为系统错误码.
+ * 记录不存在.
  *
  * @author wiflish
- * @since 2023-03-22
+ * @since 2022-03-17
  */
-public abstract class BaseErrorCodeConstant {
-    public static final ErrorCode SUCCESS_CODE = ErrorCode.of("0");
-    public static final ErrorCode INVALID_PARAM_CODE = ErrorCode.of("400");
-    public static final ErrorCode UNAUTHORIZED = ErrorCode.of("401");
-    public static final ErrorCode NO_PERMISSION = ErrorCode.of("403");
-    public static final ErrorCode RECORD_NOT_FOUND = ErrorCode.of("404");
-    public static final ErrorCode SERVER_ERROR_CODE = ErrorCode.of("500");
+public class RecordNotFoundException extends BaseException {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    public RecordNotFoundException() {
+        super(BaseErrorCodeConstant.RECORD_NOT_FOUND);
+    }
 }

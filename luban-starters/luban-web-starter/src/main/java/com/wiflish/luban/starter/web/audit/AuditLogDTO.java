@@ -29,7 +29,7 @@ public class AuditLogDTO implements Serializable {
     /**
      * 模块名
      */
-    private String module;
+    private String moduleName;
 
     /**
      * 功能名
@@ -80,4 +80,9 @@ public class AuditLogDTO implements Serializable {
      * 操作结果
      */
     private Integer result;
+
+    /**
+     * 返回消息
+     */
+    private String resultMsg;
 }
