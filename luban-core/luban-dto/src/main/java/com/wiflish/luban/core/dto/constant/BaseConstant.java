@@ -30,4 +30,5 @@ public class BaseConstant {
     public static final String ROLE_SUPER_ADMIN = "SUPER_ADMIN";
     public static final int SUCCESS = 1;
     public static final int FAILURE = 0;
+    public static final String PROD_ENV = "prod";
 }
