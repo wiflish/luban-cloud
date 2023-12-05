@@ -23,6 +23,7 @@ public class QiniuServiceImpl implements StoreService {
     private  static final String defaultFileNameTmp = defaultFilePathTmp + defaultFileName;
 
     private static final String imageReturnBody = "{\"key\": \"$(key)\", \"hash\": \"$(etag)\", \"w\": \"$(imageInfo.width)\", \"h\": \"$(imageInfo.height)\"}";
+    private static final String fileReturnBody = "{\"key\": \"$(key)\", \"hash\": \"$(etag)\", \"fname\": $(fname)}";
 
     @Value("${spring.profiles.active:test}")
     private String activeEnv;
@@ -51,6 +52,8 @@ public class QiniuServiceImpl implements StoreService {
         putPolicy.put("saveKey", saveKey);
         if (storeUploadCmd.getType() != null && storeUploadCmd.getType() == 1) {
             putPolicy.put("returnBody", imageReturnBody);
+        } else {
+            putPolicy.put("returnBody", fileReturnBody);
         }
 
         return auth.uploadToken(bucket, null, lubanStoreProperties.getExpireSeconds(), putPolicy);

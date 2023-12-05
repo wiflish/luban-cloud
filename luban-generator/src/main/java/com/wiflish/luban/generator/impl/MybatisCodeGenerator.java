@@ -73,7 +73,7 @@ public class MybatisCodeGenerator implements CodeGenerator {
                     customFiles.add(buildCustomFile(LubanGeneratorEnum.DTO, apiRootPath, generatorDTO));
                     customFiles.add(buildCustomFile(LubanGeneratorEnum.Cmd, apiRootPath, generatorDTO));
                     customFiles.add(buildCustomFile(LubanGeneratorEnum.Query, apiRootPath, generatorDTO));
-//                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Entity, domainRootPath, generatorDTO));
+                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Entity, domainRootPath, generatorDTO));
 
                     builder.customFile(customFiles)
                             .beforeOutputFile((tableInfo, map) -> {

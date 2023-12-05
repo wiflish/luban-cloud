@@ -78,6 +78,7 @@ public class GlobalExceptionHandler {
                 message.append(", ");
             }
 
+            message.append(fieldError.getField());
             message.append(MessageFormat.format(errorMessage, fieldError.getField()));
         }
 
