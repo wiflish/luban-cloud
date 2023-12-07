@@ -62,14 +62,14 @@ public class MybatisCodeGenerator implements CodeGenerator {
         FastAutoGenerator.create(generatorDTO.getDbUrl(), generatorDTO.getDbUsername(), generatorDTO.getDbPassword())
                 .injectionConfig(builder -> {
                     List<CustomFile> customFiles = CollectionUtil.newArrayList();
-                    customFiles.add(buildCustomFile(LubanGeneratorEnum.CONTROLLER, null, generatorDTO));
-                    customFiles.add(buildCustomFile(LubanGeneratorEnum.APP_SERVICE, apiRootPath, generatorDTO));
-                    customFiles.add(buildCustomFile(LubanGeneratorEnum.APP_SERVICE_IMPL, null, generatorDTO));
-                    customFiles.add(buildCustomFile(LubanGeneratorEnum.ASSEMBLER, null, generatorDTO));
-                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Repository, domainRootPath, generatorDTO));
-                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Repository_IMPL, null, generatorDTO));
-                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Converter, null, generatorDTO));
-                    customFiles.add(buildCustomFile(LubanGeneratorEnum.QueryWrapper, null, generatorDTO));
+//                    customFiles.add(buildCustomFile(LubanGeneratorEnum.CONTROLLER, null, generatorDTO));
+//                    customFiles.add(buildCustomFile(LubanGeneratorEnum.APP_SERVICE, apiRootPath, generatorDTO));
+//                    customFiles.add(buildCustomFile(LubanGeneratorEnum.APP_SERVICE_IMPL, null, generatorDTO));
+//                    customFiles.add(buildCustomFile(LubanGeneratorEnum.ASSEMBLER, null, generatorDTO));
+//                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Repository, domainRootPath, generatorDTO));
+//                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Repository_IMPL, null, generatorDTO));
+//                    customFiles.add(buildCustomFile(LubanGeneratorEnum.Converter, null, generatorDTO));
+//                    customFiles.add(buildCustomFile(LubanGeneratorEnum.QueryWrapper, null, generatorDTO));
                     customFiles.add(buildCustomFile(LubanGeneratorEnum.DTO, apiRootPath, generatorDTO));
                     customFiles.add(buildCustomFile(LubanGeneratorEnum.Cmd, apiRootPath, generatorDTO));
                     customFiles.add(buildCustomFile(LubanGeneratorEnum.Query, apiRootPath, generatorDTO));
