@@ -21,10 +21,7 @@ package com.wiflish.luban.starter.web.exception;
 
 import cn.hutool.core.util.StrUtil;
 import com.wiflish.luban.core.dto.Response;
-import com.wiflish.luban.core.dto.exception.BizException;
-import com.wiflish.luban.core.dto.exception.InvalidParamException;
-import com.wiflish.luban.core.dto.exception.InvalidPermissionException;
-import com.wiflish.luban.core.dto.exception.SysException;
+import com.wiflish.luban.core.dto.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -93,7 +90,7 @@ public class GlobalExceptionHandler {
         log.error("权限异常: {}", ex.getMessage(), ex);
         Response response = Response.failure(NO_PERMISSION);
         response.setMessage(getLocalizedMessage(NO_PERMISSION.getKey()));
-        return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
@@ -110,6 +107,14 @@ public class GlobalExceptionHandler {
         Response response = Response.failure(UNAUTHORIZED);
         response.setMessage(getLocalizedMessage(UNAUTHORIZED.getKey()));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(RecordNotFoundException.class)
+    public ResponseEntity<?> handleRecordNotFoundException(RecordNotFoundException ex) {
+        log.error("数据异常: {}", ex.getErrCode(), ex);
+        Response response = Response.failure(ex.getErrCode());
+        response.setMessage(getLocalizedMessage(ex.getErrCode().getKey()));
+        return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(BizException.class)
