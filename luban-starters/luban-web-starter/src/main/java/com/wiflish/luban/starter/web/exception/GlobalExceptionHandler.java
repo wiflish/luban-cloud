@@ -122,7 +122,7 @@ public class GlobalExceptionHandler {
         log.error("业务异常: {}", ex.getErrCode(), ex);
         Response response = Response.failure(ex.getErrCode());
         response.setMessage(getLocalizedMessage(ex.getErrCode().getKey()));
-        return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.OK);
     }
 
     @ExceptionHandler(SysException.class)
