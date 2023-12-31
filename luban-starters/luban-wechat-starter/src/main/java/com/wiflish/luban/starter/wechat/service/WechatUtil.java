@@ -5,6 +5,7 @@ import com.wiflish.luban.core.dto.exception.BizException;
 import com.wiflish.luban.core.dto.exception.InvalidParamException;
 import com.wiflish.luban.starter.wechat.dto.WechatLoginDTO;
 import com.wiflish.luban.starter.wechat.dto.WechatPhoneDTO;
+import com.wiflish.luban.starter.wechat.dto.cmd.WechatQrCodeCmd;
 import com.wiflish.luban.starter.wechat.invoker.WechatInvoker;
 import com.wiflish.luban.starter.wechat.util.WechatCacheKeyUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -80,5 +81,19 @@ public class WechatUtil {
         String openAccessToken = this.getOpenAccessToken(appId, appSecret);
 
         return wechatInvoker.getPhoneNumber(openAccessToken, code);
+    }
+
+    /**
+     * 获取小程序二维码
+     *
+     * @param appId
+     * @param appSecret
+     * @param cmd
+     * @return
+     */
+    public byte[] getUnlimitedQRCode(String appId, String appSecret, WechatQrCodeCmd cmd) {
+        String openAccessToken = this.getOpenAccessToken(appId, appSecret);
+
+        return wechatInvoker.getUnlimitedQRCode(openAccessToken, cmd);
     }
 }

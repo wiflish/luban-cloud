@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.wiflish.luban.core.dto.exception.BizException;
 import com.wiflish.luban.starter.wechat.dto.WechatLoginDTO;
 import com.wiflish.luban.starter.wechat.dto.WechatPhoneDTO;
+import com.wiflish.luban.starter.wechat.dto.cmd.WechatQrCodeCmd;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,7 @@ public class WechatInvoker {
     private static final String code2SessionApiTpl = baseUrl + "/sns/jscode2session?grant_type=authorization_code&appid=%s&secret=%s&js_code=%s";
 
     private static final String phoneNumberApiTpl = baseUrl + "/wxa/business/getuserphonenumber?access_token=%s";
+    private static final String unlimitedQRCodeApiTpl = baseUrl + "/wxa/getwxacodeunlimit?access_token=%s";
 
     private final RestTemplate restTemplate;
 
@@ -46,7 +48,6 @@ public class WechatInvoker {
         return JSONObject.parseObject(sessionResponse, WechatLoginDTO.class);
     }
 
-
     public WechatPhoneDTO getPhoneNumber(String accessToken, String code) {
         String url = String.format(phoneNumberApiTpl, accessToken);
 
@@ -64,5 +65,19 @@ public class WechatInvoker {
         String phoneInfo = jsonObject.getString("phone_info");
 
         return JSON.parseObject(phoneInfo, WechatPhoneDTO.class);
+    }
+
+    public byte[] getUnlimitedQRCode(String accessToken, WechatQrCodeCmd cmd) {
+        if (cmd == null || cmd.getScene() == null) {
+            return null;
+        }
+        String url = String.format(unlimitedQRCodeApiTpl, accessToken);
+
+        try {
+            return restTemplate.postForObject(url, JSON.toJSONString(cmd), byte[].class);
+        } catch (Exception ex) {
+            log.error("get unlimited qrcode error", ex);
+        }
+        return null;
     }
 }
