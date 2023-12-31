@@ -8,4 +8,6 @@ import com.wiflish.luban.starter.store.cmd.StoreUploadCmd;
  */
 public interface StoreService {
     String getUploadToken(StoreUploadCmd storeUploadCmd);
+
+    String uploadFile(StoreUploadCmd storeUploadCmd, byte[] fileData);
 }
