@@ -89,7 +89,11 @@ public class AuditLogAspect {
             HttpServletRequest request = RequestContextUtil.getHttpServletRequest();
             if (request != null) {
                 auditLogDTO.setIp(RequestContextUtil.getClientIP());
-                auditLogDTO.setAddress(CommonInvoker.getRealAddress(auditLogDTO.getIp()));
+                String ip = auditLogDTO.getIp();
+                if (!ip.contains(":")) {
+                    ip = CommonInvoker.getRealAddress(ip);
+                }
+                auditLogDTO.setAddress(ip);
                 auditLogDTO.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
                 auditLogDTO.setPath(request.getRequestURI());
 
