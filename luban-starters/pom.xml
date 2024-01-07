@@ -29,5 +29,6 @@
         <module>luban-web-starter</module>
         <module>luban-cache-starter</module>
         <module>luban-wechat-starter</module>
+        <module>luban-sms-starter</module>
     </modules>
 </project>

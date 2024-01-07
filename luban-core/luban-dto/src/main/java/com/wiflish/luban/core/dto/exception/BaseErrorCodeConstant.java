@@ -33,4 +33,6 @@ public abstract class BaseErrorCodeConstant {
     public static final ErrorCode RECORD_NOT_FOUND = ErrorCode.of("404");
     public static final ErrorCode SERVER_ERROR_CODE = ErrorCode.of("500");
     public static final ErrorCode USER_NOT_LOGIN = ErrorCode.of("600");
+
+    public static final ErrorCode USER_LOGIN_VERIFY_CODE = ErrorCode.of("690");
 }
