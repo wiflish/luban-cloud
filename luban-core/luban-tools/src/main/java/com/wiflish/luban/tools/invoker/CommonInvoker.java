@@ -27,6 +27,10 @@ public class CommonInvoker {
      * @return
      */
     public static String getRealAddress(String ip) {
+        if (StrUtil.isEmpty(ip) || ip.indexOf("172") == 0 || ip.indexOf("localhost") == 0
+                || ip.indexOf("192") == 0 || ip.indexOf("10") == 0 || ip.contains(":")) {
+            return ip;
+        }
         try {
             Map<String, Object> paramMap = new HashMap<>();
             paramMap.put("ip", ip);
