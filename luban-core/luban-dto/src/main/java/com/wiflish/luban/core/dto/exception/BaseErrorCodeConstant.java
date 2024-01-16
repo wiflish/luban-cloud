@@ -36,4 +36,5 @@ public abstract class BaseErrorCodeConstant {
     public static final ErrorCode USER_ADMIN_NOT_ALLOWED = ErrorCode.of("601");
 
     public static final ErrorCode USER_LOGIN_VERIFY_CODE = ErrorCode.of("690");
+    public static final ErrorCode SUBMIT_DUPLICATION_ERROR_CODE = ErrorCode.of("700");
 }
