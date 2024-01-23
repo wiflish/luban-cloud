@@ -1,5 +1,6 @@
 package com.wiflish.luban.starter.wechat.invoker;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.wiflish.luban.core.dto.exception.BizException;
@@ -71,10 +72,16 @@ public class WechatInvoker {
         if (cmd == null || cmd.getScene() == null) {
             return null;
         }
+
+        if (StrUtil.isEmpty(cmd.getEnvVersion())) {
+            cmd.setEnvVersion("release");
+        }
+        String data = JSON.toJSONString(cmd);
         String url = String.format(unlimitedQRCodeApiTpl, accessToken);
 
         try {
-            return restTemplate.postForObject(url, JSON.toJSONString(cmd), byte[].class);
+            log.info("为用户生成分享二维码: {}", data);
+            return restTemplate.postForObject(url, data, byte[].class);
         } catch (Exception ex) {
             log.error("get unlimited qrcode error", ex);
         }
