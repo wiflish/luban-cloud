@@ -52,8 +52,14 @@ public class OrderBy implements Serializable {
      * @param field 排序字段
      */
     public OrderBy(String field) {
-        this.field = field;
-        this.direction = ASC;
+        if (field.contains("#")) {
+            String[] split = field.split("#");
+            this.field = split[0];
+            this.direction = split[1];
+        } else {
+            this.field = field;
+            this.direction = ASC;
+        }
     }
 
     public OrderBy(String field, String direction) {
